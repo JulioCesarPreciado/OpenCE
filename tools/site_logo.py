@@ -17,7 +17,7 @@
   halo.exe's, the Android launcher's and the web page's.
 - logo-wide.png again becomes the loading screen's picture
   (port/assets/logo/loading.tga, which tools/embed_assets.py builds into the
-  game): the logo, dim, with LOADING... under it in the titles' font, as
+  game): the logo, dim, with CARGANDO... under it in the titles' font, as
   light on black. The game takes a texel's lightness alone, and sweeps a
   light over the picture.
 
@@ -59,7 +59,7 @@ LOADING = LOGOS / "loading.tga"
 LOADING_SIZE = (320, 240)
 LOADING_LOGO_WIDTH = 248
 LOADING_LOGO_LIGHT = 0.55
-LOADING_TEXT = "LOADING..."
+LOADING_TEXT = "CARGANDO..."
 LOADING_TEXT_LIGHT = 240
 LOADING_CAP_HEIGHT = 9
 TITLE_FONT = ROOT / "port/assets/fonts/OpenCE-Regular.ttf"

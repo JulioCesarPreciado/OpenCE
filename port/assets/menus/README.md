@@ -30,6 +30,36 @@ file, the line and the problem, and the game uses the Xbox's menus. The
 setting `display.menus = "xbox"` also uses them. `debug.menu_open` starts on
 one screen (by its name, `main_menu/settings_select/...`), for looking at it.
 
+## Language
+
+The menus' text is Spanish in this fork. `tools/ce_menus.py` and
+`tools/port_settings.py` write it in English, and `tools/menu_language.py`
+replaces what the menus show (a widget's `text`, a `<string>`'s, each value
+of a spinner's `strings`) with its Spanish from the catalog,
+`language/es.json`: English text, as the files have it, to Spanish. The
+catalog's `kept` lists what stays English on purpose: names (maps,
+gametypes), and the campaign's text, which no menu reaches.
+
+```sh
+python3 tools/menu_language.py            # translate ce/*.xml (the generators run it too)
+python3 tools/menu_language.py --missing  # the text with no entry yet
+```
+
+To change a translation, edit the catalog's Spanish and write the menus
+again; a text already translated is not looked up again, so the files must
+come from the generators (or from git) first. A translation keeps its
+text's line breaks (`\n`), its `%s` and `%d` in their order, and about its
+lines' width: the boxes do not wrap.
+
+The screens' titles and the main menu's items are pictures of text.
+`tools/menu_titles.py` draws them in Spanish, with OpenCE's letters as
+outlines in the redraws' place, size and colours (the redraws' own letters
+have no J, no accents and no ñ), into `own/`; the port's own titles
+(`port_settings.TITLES`) take their text from the catalog's `titles`. Its
+tables say what each one reads. The campaign's titles are left, and the
+text `menu_functions.c` writes itself (the lobby's lines, the controls'
+names) is still English.
+
 ## Writing them again
 
 `tools/ce_menus.py` writes every file in `ce/` and `menus.json` again,
