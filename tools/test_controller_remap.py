@@ -291,7 +291,10 @@ def test_generated_controller_submenu_and_stock_keyboard_menu():
     assert any(widget.get('name', '').endswith('/pad_player') and widget.get('strings') == 'P1|P2|P3|P4'
                for widget in root.iter('widget'))
     for filename in (prefix + '.controller_remapping.xml', prefix + '.gamepad_setup.xml', prefix + '.controls_setup.xml'):
-        assert (ROOT / 'port/assets/menus/ce' / filename).read_text() == '\n'.join(files[filename])
+        # (the files hold the generator's text in this fork's language: tools/menu_language.py)
+        import menu_language
+        assert (ROOT / 'port/assets/menus/ce' / filename).read_text() == menu_language.translate_xml(
+            '\n'.join(files[filename]))
 
 
 def test_profile_fallback_context_and_viewport_prompt_mapping(tmp_path):

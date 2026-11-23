@@ -31,7 +31,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/map_download_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/labels" string_index="0" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/map_download_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ON|OFF" setting="network.map_download" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/map_download_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="network.map_download" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/op_map_seed" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -40,7 +40,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/map_seed_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/labels" string_index="1" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/map_seed_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ON|OFF" setting="network.map_seed" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/map_seed_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="network.map_seed" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/op_map_seed_upload" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -79,18 +79,18 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/labels">
-		<string text="DOWNLOAD MAPS:"/>
-		<string text="HELP SEND MAPS:"/>
-		<string text="UPLOAD LIMIT:"/>
-		<string text="MCC PACKAGES:"/>
-		<string text="MCC DOWNLOADS:"/>
+		<string text="DESCARGAR MAPAS:"/>
+		<string text="AYUDAR A ENVIAR:"/>
+		<string text="LÍMITE DE SUBIDA:"/>
+		<string text="PAQUETES DE MCC:"/>
+		<string text="DESCARGAS DE MCC:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/map_sharing/help_strings">
 		<string text=""/>
-		<string text="Allow shared map downloads. CE uses players; MCC\nuses the host and asks before downloading."/>
-		<string text="In another's game, send its map to players who\njoin without it, as a torrent's peers do."/>
-		<string text="The most you send of maps to other players, so\nthat the game keeps the rest of your upload."/>
-		<string text="Installed MCC maps, campaign mission order and\noptional Workshop collection folders."/>
-		<string text="Storage and removal of copies received from hosts.\nOriginal packages and saves are kept."/>
+		<string text="Permite descargar mapas compartidos. CE usa a los\njugadores; MCC usa al anfitrión y pregunta antes."/>
+		<string text="En la partida de otro, envía su mapa a quienes\nentran sin él, como en un torrent."/>
+		<string text="Lo máximo que envías de mapas a otros jugadores,\npara que la partida conserve el resto de tu subida."/>
+		<string text="Mapas de MCC instalados, orden de misiones de\ncampaña y carpetas de colecciones de Workshop."/>
+		<string text="Espacio y borrado de las copias recibidas de otros.\nLos paquetes originales y las partidas se conservan."/>
 	</strings>
 </menus>

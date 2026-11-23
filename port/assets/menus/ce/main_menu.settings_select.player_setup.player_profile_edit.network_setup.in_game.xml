@@ -67,16 +67,16 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/in_game/labels">
-		<string text="MAP SHARING:"/>
-		<string text="MULTIPLAYER HUD:"/>
-		<string text="STREAMER MODE:"/>
-		<string text="DISCORD ACCOUNT:"/>
+		<string text="COMPARTIR MAPAS:"/>
+		<string text="HUD MULTIJUGADOR:"/>
+		<string text="MODO STREAMER:"/>
+		<string text="CUENTA DE DISCORD:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/in_game/help_strings">
 		<string text=""/>
-		<string text="Download CE maps or approved MCC packages.\nManage sharing and downloaded MCC copies."/>
-		<string text="Players' names above their heads, the\nscoreboard, the text chat and the match clock."/>
-		<string text="Hide offensive words in names and text from\nother players, maps and mods, as stars."/>
-		<string text="Link a Discord account, which lets you join\nservers that block VPNs while you use one."/>
+		<string text="Descarga mapas de CE o paquetes de MCC aprobados.\nAdministra lo compartido y las copias de MCC."/>
+		<string text="Los nombres sobre los jugadores, el\nmarcador, el chat de texto y el reloj."/>
+		<string text="Oculta con asteriscos las palabras ofensivas en\nnombres y textos de jugadores, mapas y mods."/>
+		<string text="Vincula una cuenta de Discord, para entrar a\nservidores que bloquean VPN mientras usas una."/>
 	</strings>
 </menus>

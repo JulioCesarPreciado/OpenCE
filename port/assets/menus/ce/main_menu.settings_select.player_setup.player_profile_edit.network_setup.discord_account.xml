@@ -73,7 +73,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/link_action_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/labels" string_index="5" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/link_action_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="NO CHANGE|WITH MASTER 1|WITH MASTER 2|WITH MASTER 3|WITH MASTER 4|UNLINK ALL" setting="link.action" values="none|link_1|link_2|link_3|link_4|unlink" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/link_action_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SIN CAMBIO|CON MAESTRO 1|CON MAESTRO 2|CON MAESTRO 3|CON MAESTRO 4|DESVINCULAR TODO" setting="link.action" values="none|link_1|link_2|link_3|link_4|unlink" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/op_link_share" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -82,7 +82,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/link_share_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/labels" string_index="6" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/link_share_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="WHEN ASKED|ALWAYS|NEVER" setting="network.link_share" values="when_needed|always|never" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/link_share_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SI LO PIDEN|SIEMPRE|NUNCA" setting="network.link_share" values="when_needed|always|never" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/button_defaults" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" string_list="strings/common_button_captions" string_index="3" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
@@ -96,32 +96,32 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/labels">
-		<string text="DISCORD ACCOUNT:"/>
-		<string text="MASTER 1:"/>
-		<string text="MASTER 2:"/>
-		<string text="MASTER 3:"/>
-		<string text="MASTER 4:"/>
-		<string text="LINK:"/>
-		<string text="SHOW TO SERVERS:"/>
+		<string text="CUENTA DE DISCORD:"/>
+		<string text="MAESTRO 1:"/>
+		<string text="MAESTRO 2:"/>
+		<string text="MAESTRO 3:"/>
+		<string text="MAESTRO 4:"/>
+		<string text="VINCULAR:"/>
+		<string text="MOSTRAR A SERVIDORES:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/words">
-		<string text="NOT LINKED"/>
-		<string text="LINKED AS"/>
-		<string text="WAITING: CODE"/>
-		<string text="REVOKED"/>
-		<string text="EXPIRED:"/>
-		<string text="OF"/>
-		<string text="A SERVER NEEDS IT"/>
-		<string text="NONE"/>
+		<string text="SIN VINCULAR"/>
+		<string text="VINCULADA COMO"/>
+		<string text="ESPERANDO: CÓDIGO"/>
+		<string text="REVOCADA"/>
+		<string text="EXPIRADA:"/>
+		<string text="DE"/>
+		<string text="UN SERVIDOR LA PIDE"/>
+		<string text="NINGUNO"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/discord_account/help_strings">
 		<string text=""/>
-		<string text="The Discord account linked to this game, and with\nhow many of the master servers."/>
-		<string text="A master server (masters.txt) and the account\nlinked with it: a server it lists lets it in."/>
-		<string text="A master server (masters.txt) and the account\nlinked with it: a server it lists lets it in."/>
-		<string text="A master server (masters.txt) and the account\nlinked with it: a server it lists lets it in."/>
-		<string text="A master server (masters.txt) and the account\nlinked with it: a server it lists lets it in."/>
-		<string text="WITH MASTER n opens that master's page in the\nbrowser (on OK). UNLINK ALL forgets the account."/>
-		<string text="Which servers see your Discord account: WHEN\nASKED, those that block VPNs, joined from one."/>
+		<string text="La cuenta de Discord vinculada a este juego,\ny con cuántos de los servidores maestros."/>
+		<string text="Un servidor maestro (masters.txt) y la cuenta\nvinculada con él: un servidor que lista la deja entrar."/>
+		<string text="Un servidor maestro (masters.txt) y la cuenta\nvinculada con él: un servidor que lista la deja entrar."/>
+		<string text="Un servidor maestro (masters.txt) y la cuenta\nvinculada con él: un servidor que lista la deja entrar."/>
+		<string text="Un servidor maestro (masters.txt) y la cuenta\nvinculada con él: un servidor que lista la deja entrar."/>
+		<string text="CON MAESTRO n abre la página de ese maestro en el\nnavegador (al aceptar). DESVINCULAR TODO la olvida."/>
+		<string text="Qué servidores ven tu cuenta de Discord: SI LO\nPIDEN, los que bloquean VPN, si entras desde una."/>
 	</strings>
 </menus>

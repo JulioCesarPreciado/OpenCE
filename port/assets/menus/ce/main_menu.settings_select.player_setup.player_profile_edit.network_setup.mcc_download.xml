@@ -13,27 +13,27 @@
 		<child widget="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/cancel" x="150" y="420"/>
 		<child widget="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/title" x="40" y="24"/>
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/title" type="text" width="560" height="40" text="MCC HOST DOWNLOAD" font="ui\large_ui" color="#FF2896FF">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/title" type="text" width="560" height="40" text="DESCARGA DE MCC" font="ui\large_ui" color="#FF2896FF">
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/description" type="text" controller="1" width="560" height="200" font="ui\small_ui" color="#FFFFFFFF">
 		<data input="port mcc share text"/>
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/download" type="text" width="340" height="32" text="DOWNLOAD FROM HOST" font="ui\large_ui" color="#FF2896FF" align="center">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/download" type="text" width="340" height="32" text="BAJAR DEL ANFITRIÓN" font="ui\large_ui" color="#FF2896FF" align="center">
 		<on event="a" run="port mcc share download"/>
 		<on event="start" run="port mcc share download"/>
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/workshop" type="text" width="340" height="32" text="OPEN IN STEAM" font="ui\large_ui" color="#FF2896FF" align="center">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/workshop" type="text" width="340" height="32" text="ABRIR EN STEAM" font="ui\large_ui" color="#FF2896FF" align="center">
 		<on event="a" run="port mcc share workshop"/>
 		<on event="start" run="port mcc share workshop"/>
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/browser" type="text" width="340" height="32" text="OPEN IN BROWSER" font="ui\large_ui" color="#FF2896FF" align="center">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/browser" type="text" width="340" height="32" text="ABRIR EN NAVEGADOR" font="ui\large_ui" color="#FF2896FF" align="center">
 		<on event="a" run="port mcc share browser"/>
 		<on event="start" run="port mcc share browser"/>
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/cancel" type="text" width="340" height="32" text="CANCEL" font="ui\large_ui" color="#FF2896FF" align="center">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/mcc_download/cancel" type="text" width="340" height="32" text="CANCELAR" font="ui\large_ui" color="#FF2896FF" align="center">
 		<on event="a" run="port mcc share cancel"/>
 		<on event="start" run="port mcc share cancel"/>
 		<on event="left_mouse" run="mouse emit accept event"/>

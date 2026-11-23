@@ -5,7 +5,7 @@
 		<child widget="main_menu/settings_select/multiplayer_setup/opence_options_edit/header_opence"/>
 		<child widget="main_menu/settings_select/multiplayer_setup/opence_options_edit/opence_menu"/>
 	</widget>
-	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/header_opence" controller="1" left="35" top="11" width="363" height="59" type="text" text="OPENCE OPTIONS" font="ui\large_ui" color="#FFFFFFFF" text_x="13" text_y="16">
+	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/header_opence" controller="1" left="35" top="11" width="363" height="59" type="text" text="OPC. DE OPENCE" font="ui\large_ui" color="#FFFFFFFF" text_x="13" text_y="16">
 	</widget>
 	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/opence_help" type="text" controller="1" left="68" top="341" width="482" height="79" string_list="main_menu/settings_select/multiplayer_setup/opence_options_edit/cap_opence" font="ui\large_ui" color="#FFFFFFFF">
 	</widget>
@@ -44,7 +44,7 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/var_oce_mode">
-		<string text="NONE"/>
+		<string text="NINGUNO"/>
 		<string text="SWAT"/>
 		<string text="INFECTION"/>
 		<string text="GUN GAME"/>
@@ -59,8 +59,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/var_oce_hardcore">
-		<string text="OFF"/>
-		<string text="ON"/>
+		<string text="NO"/>
+		<string text="SÍ"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/op_inf_zombies" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/opence_options_edit/inf_zombies_label"/>
@@ -121,12 +121,12 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/var_inf_respawn">
-		<string text="1 SECOND"/>
-		<string text="3 SECONDS"/>
-		<string text="5 SECONDS"/>
-		<string text="10 SECONDS"/>
-		<string text="15 SECONDS"/>
-		<string text="30 SECONDS"/>
+		<string text="1 SEGUNDO"/>
+		<string text="3 SEGUNDOS"/>
+		<string text="5 SEGUNDOS"/>
+		<string text="10 SEGUNDOS"/>
+		<string text="15 SEGUNDOS"/>
+		<string text="30 SEGUNDOS"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/op_inf_countdown" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/opence_options_edit/inf_countdown_label"/>
@@ -138,11 +138,11 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/var_inf_countdown">
-		<string text="NONE"/>
-		<string text="5 SECONDS"/>
-		<string text="10 SECONDS"/>
-		<string text="15 SECONDS"/>
-		<string text="30 SECONDS"/>
+		<string text="NINGUNO"/>
+		<string text="5 SEGUNDOS"/>
+		<string text="10 SEGUNDOS"/>
+		<string text="15 SEGUNDOS"/>
+		<string text="30 SEGUNDOS"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/op_inf_shields" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/opence_options_edit/inf_shields_label"/>
@@ -154,8 +154,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/var_inf_shields">
-		<string text="OFF"/>
-		<string text="ON"/>
+		<string text="NO"/>
+		<string text="SÍ"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/op_gg_order" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/opence_options_edit/gg_order_label"/>
@@ -167,9 +167,9 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/var_gg_order">
-		<string text="STRONGEST FIRST"/>
-		<string text="WEAKEST FIRST"/>
-		<string text="RANDOM"/>
+		<string text="FUERTES PRIMERO"/>
+		<string text="DÉBILES PRIMERO"/>
+		<string text="AL AZAR"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/opence_options_edit/op_gg_melee" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/opence_options_edit/gg_melee_label"/>
@@ -181,64 +181,64 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/var_gg_melee">
-		<string text="OFF"/>
-		<string text="ON"/>
+		<string text="NO"/>
+		<string text="SÍ"/>
 	</strings>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/opence_labels">
-		<string text="MODE:"/>
+		<string text="MODO:"/>
 		<string text="HARDCORE:"/>
-		<string text="FIRST ZOMBIES:"/>
-		<string text="ZOMBIE SPEED:"/>
-		<string text="SKULL DAMAGE:"/>
-		<string text="ZOMBIE RESPAWN:"/>
-		<string text="COUNTDOWN:"/>
-		<string text="ZOMBIE SHIELDS:"/>
-		<string text="WEAPON ORDER:"/>
-		<string text="MELEE DEMOTES:"/>
+		<string text="PRIMEROS ZOMBIES:"/>
+		<string text="VELOCIDAD ZOMBIE:"/>
+		<string text="DAÑO DE CALAVERA:"/>
+		<string text="REAPARECEN EN:"/>
+		<string text="CUENTA ATRÁS:"/>
+		<string text="ESCUDOS ZOMBIE:"/>
+		<string text="ORDEN DE ARMAS:"/>
+		<string text="GOLPE DEGRADA:"/>
 	</strings>
 	<strings name="main_menu/settings_select/multiplayer_setup/opence_options_edit/cap_opence">
-		<string text="The game type's own rules."/>
-		<string text="No shields, and a shot to the head kills. Slayer only."/>
-		<string text="Humans killed join the zombies, who win when\nno human is left. Team Slayer only."/>
-		<string text="Each kill gives the next weapon; a kill with the\nlast wins. Free for all Slayer only."/>
-		<string text="The motion sensor and aim assist as the game\ntype has them."/>
-		<string text="No motion sensor, no aim assist, and a kill\nrestores the killer's health and shields."/>
-		<string text="The zombies chosen when the round starts\n(a human is always left)."/>
-		<string text="The zombies chosen when the round starts\n(a human is always left)."/>
-		<string text="The zombies chosen when the round starts\n(a human is always left)."/>
-		<string text="The zombies chosen when the round starts\n(a human is always left)."/>
-		<string text="The zombies chosen when the round starts\n(a human is always left)."/>
-		<string text="The zombies chosen when the round starts\n(a human is always left)."/>
-		<string text="How fast zombies move, of a human's speed."/>
-		<string text="How fast zombies move, of a human's speed."/>
-		<string text="How fast zombies move, of a human's speed."/>
-		<string text="How fast zombies move, of a human's speed."/>
-		<string text="How fast zombies move, of a human's speed."/>
-		<string text="How fast zombies move, of a human's speed."/>
-		<string text="The damage of a zombie's skull's melee."/>
-		<string text="The damage of a zombie's skull's melee."/>
-		<string text="The damage of a zombie's skull's melee."/>
-		<string text="The damage of a zombie's skull's melee."/>
-		<string text="How long a dead zombie waits to respawn."/>
-		<string text="How long a dead zombie waits to respawn."/>
-		<string text="How long a dead zombie waits to respawn."/>
-		<string text="How long a dead zombie waits to respawn."/>
-		<string text="How long a dead zombie waits to respawn."/>
-		<string text="How long a dead zombie waits to respawn."/>
-		<string text="How long the round waits, once two players are\nalive, before the first zombies are chosen."/>
-		<string text="How long the round waits, once two players are\nalive, before the first zombies are chosen."/>
-		<string text="How long the round waits, once two players are\nalive, before the first zombies are chosen."/>
-		<string text="How long the round waits, once two players are\nalive, before the first zombies are chosen."/>
-		<string text="How long the round waits, once two players are\nalive, before the first zombies are chosen."/>
-		<string text="Zombies have no shields."/>
-		<string text="Zombies have shields, as humans do."/>
-		<string text="From the rocket launcher to the pistol."/>
-		<string text="From the pistol to the rocket launcher."/>
-		<string text="In an order the host draws for each game."/>
-		<string text="A melee kill takes nothing from the victim."/>
-		<string text="A melee kill takes the victim back a weapon."/>
+		<string text="Las reglas propias del tipo de juego."/>
+		<string text="Sin escudos, y un tiro a la cabeza mata. Solo Slayer."/>
+		<string text="Los humanos caídos se unen a los zombies, que ganan\ncuando no queda ningún humano. Solo Team Slayer."/>
+		<string text="Cada baja da el arma siguiente; una baja con la\núltima gana. Solo Slayer todos contra todos."/>
+		<string text="El sensor de movimiento y la asistencia de\npuntería como los tiene el tipo de juego."/>
+		<string text="Sin sensor de movimiento ni asistencia de puntería,\ny una baja restaura la salud y los escudos."/>
+		<string text="Los zombies elegidos al empezar la ronda\n(siempre queda un humano)."/>
+		<string text="Los zombies elegidos al empezar la ronda\n(siempre queda un humano)."/>
+		<string text="Los zombies elegidos al empezar la ronda\n(siempre queda un humano)."/>
+		<string text="Los zombies elegidos al empezar la ronda\n(siempre queda un humano)."/>
+		<string text="Los zombies elegidos al empezar la ronda\n(siempre queda un humano)."/>
+		<string text="Los zombies elegidos al empezar la ronda\n(siempre queda un humano)."/>
+		<string text="Qué tan rápido se mueven los zombies, respecto a un humano."/>
+		<string text="Qué tan rápido se mueven los zombies, respecto a un humano."/>
+		<string text="Qué tan rápido se mueven los zombies, respecto a un humano."/>
+		<string text="Qué tan rápido se mueven los zombies, respecto a un humano."/>
+		<string text="Qué tan rápido se mueven los zombies, respecto a un humano."/>
+		<string text="Qué tan rápido se mueven los zombies, respecto a un humano."/>
+		<string text="El daño del golpe con la calavera del zombie."/>
+		<string text="El daño del golpe con la calavera del zombie."/>
+		<string text="El daño del golpe con la calavera del zombie."/>
+		<string text="El daño del golpe con la calavera del zombie."/>
+		<string text="Cuánto espera un zombie muerto para reaparecer."/>
+		<string text="Cuánto espera un zombie muerto para reaparecer."/>
+		<string text="Cuánto espera un zombie muerto para reaparecer."/>
+		<string text="Cuánto espera un zombie muerto para reaparecer."/>
+		<string text="Cuánto espera un zombie muerto para reaparecer."/>
+		<string text="Cuánto espera un zombie muerto para reaparecer."/>
+		<string text="Cuánto espera la ronda, con dos jugadores\nvivos, antes de elegir a los primeros zombies."/>
+		<string text="Cuánto espera la ronda, con dos jugadores\nvivos, antes de elegir a los primeros zombies."/>
+		<string text="Cuánto espera la ronda, con dos jugadores\nvivos, antes de elegir a los primeros zombies."/>
+		<string text="Cuánto espera la ronda, con dos jugadores\nvivos, antes de elegir a los primeros zombies."/>
+		<string text="Cuánto espera la ronda, con dos jugadores\nvivos, antes de elegir a los primeros zombies."/>
+		<string text="Los zombies no tienen escudos."/>
+		<string text="Los zombies tienen escudos, como los humanos."/>
+		<string text="Del lanzacohetes a la pistola."/>
+		<string text="De la pistola al lanzacohetes."/>
+		<string text="En un orden que el anfitrión sortea en cada partida."/>
+		<string text="Una baja a golpes no le quita nada a la víctima."/>
+		<string text="Una baja a golpes regresa a la víctima un arma."/>
 	</strings>
-	<widget name="main_menu/settings_select/multiplayer_setup/playlist_edit/playlist_edit_opence_item" type="text" left="51" top="309" width="232" height="32" bitmap="bitmaps/list_item_bkd" text="OPENCE OPTIONS" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="5">
+	<widget name="main_menu/settings_select/multiplayer_setup/playlist_edit/playlist_edit_opence_item" type="text" left="51" top="309" width="232" height="32" bitmap="bitmaps/list_item_bkd" text="OPC. DE OPENCE" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="5">
 		<on event="a" open="main_menu/settings_select/multiplayer_setup/opence_options_edit/opence_screen"/>
 		<on event="start" open="main_menu/settings_select/multiplayer_setup/opence_options_edit/opence_screen"/>
 		<on event="left_mouse" run="mouse emit accept event"/>

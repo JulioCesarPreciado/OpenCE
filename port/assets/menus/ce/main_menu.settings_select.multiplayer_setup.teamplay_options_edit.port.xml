@@ -11,8 +11,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/var_force_team_spawns">
-		<string text="OFF"/>
-		<string text="ON"/>
+		<string text="NO"/>
+		<string text="SÍ"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/op_voice_mode" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/voice_mode_label"/>
@@ -24,11 +24,11 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/var_voice_mode">
-		<string text="OFF"/>
-		<string text="TEAM NEAR"/>
-		<string text="ANYONE NEAR"/>
-		<string text="TEAM"/>
-		<string text="TEAM, ENEMIES NEAR"/>
+		<string text="NO"/>
+		<string text="EQUIPO CERCA"/>
+		<string text="TODOS CERCA"/>
+		<string text="EQUIPO"/>
+		<string text="EQUIPO, ENEMIGOS CERCA"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/op_voice_lobby" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/voice_lobby_label"/>
@@ -40,8 +40,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/var_voice_lobby">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/op_voice_kbps" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/voice_kbps_label"/>
@@ -88,8 +88,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/var_votekick">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<widget name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/op_text_chat" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/text_chat_label"/>
@@ -101,8 +101,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/teamplay_options_edit/var_text_chat">
-		<string text="ON"/>
-		<string text="WITH LINKS"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="CON ENLACES"/>
+		<string text="NO"/>
 	</strings>
 </menus>

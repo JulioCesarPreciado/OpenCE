@@ -49,6 +49,7 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from hud_assets import bleed, render_svg  # noqa: E402
+import menu_language  # noqa: E402
 import port_settings  # noqa: E402
 import site_logo  # noqa: E402
 
@@ -656,6 +657,8 @@ def regenerate_settings():
         (CE / name).write_text("\n".join(lines))
     from mcc_menu_patches import regenerate
     regenerate(CE)
+    # (in this fork's language, as the files are kept: tools/menu_language.py)
+    menu_language.apply()
     manifest = MENUS / "menus.json"
     data = json.loads(manifest.read_text())
     files = set(data["files"]) | {"ce/" + name for name in screens}
@@ -737,7 +740,8 @@ def main() -> None:
              "<!-- The PC version's menus' bitmaps, drawn from the redraws, else the PC version's own pictures"
              " (NON_HANDDRAWN.md; tools/ce_menus.py) -->", "<menus>"]
     lines += [art.bitmap(tag) for tag in sorted(bitmaps)]
-    lines += [art.title(name, text) for name, text in sorted(port_settings.TITLES.items())]
+    # (the port's own titles, their text in this fork's language: tools/menu_titles.py)
+    lines += [art.title(name, menu_language.translated(text)) for name, text in sorted(port_settings.TITLES.items())]
     lines += pause_art(art)
     # (voice chat's speaker, of a player who talks and of one muted: Lucide's
     # icons, port/assets/icons/lucide, white for network_voice.c to tint)
@@ -759,6 +763,8 @@ def main() -> None:
         ('<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"/>\n', 4, 4)]))
     lines.append("</menus>")
     (CE / "bitmaps.xml").write_text("\n".join(lines) + "\n")
+    # (the text in this fork's language, as the files are kept: tools/menu_language.py)
+    menu_language.apply()
     # what is not hand-drawn
     report = [
         "# Menu pictures that are not redraws",

@@ -52,6 +52,28 @@ partida, assets propios, motor propio.
 - El nombre del jugador nuevo se escribe con el teclado en pantalla del
   juego; la página todavía no lo pide.
 
+### Español
+
+- Los textos de los menús están en español: 1,556 textos traducidos en
+  `port/assets/menus/language/es.json`, que `tools/menu_language.py` aplica
+  sobre los archivos de menú. Los nombres propios (mapas, tipos de juego) y
+  los textos de la campaña se dejaron en inglés a propósito.
+- Solo se revisaron en pantalla Multiplayer, los ajustes del perfil y Video.
+  El resto se comprobó por reglas (mismos `%s`, mismas líneas, ancho parecido
+  al original), no viéndolo: puede haber textos que se salgan de su caja.
+- Los títulos de las pantallas y los ítems del menú principal, que son
+  imágenes, también están en español: `python tools/menu_titles.py` los
+  dibuja con la fuente OpenCE (26 títulos, 4 ítems y los 9 títulos propios
+  del port). Para cambiar uno se edita la tabla de ese archivo. La imagen
+  de carga dice "CARGANDO...".
+- Siguen en inglés: los textos que escribe el código (la sala, los nombres
+  de los controles, la pantalla de nombre), los textos dentro de la partida
+  (salen de los mapas del disco), los títulos de la campaña (no se
+  alcanzan) y los errores de los importadores de la página.
+- Al crear una partida, el selector de mapas ya no ofrece los niveles de
+  campaña ni los mapas de un jugador (`network.host_campaign`, apagado en
+  este fork; el proyecto original siempre los ofrece).
+
 ### Campaña
 
 - La página ya solo copia los mapas multijugador (`campaign: false` en

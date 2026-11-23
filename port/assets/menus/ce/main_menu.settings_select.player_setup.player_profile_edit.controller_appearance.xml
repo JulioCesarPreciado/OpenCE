@@ -35,7 +35,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/menu_button_glyphs_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/labels" string_index="0" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/menu_button_glyphs_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ON|OFF" setting="display.menu_button_glyphs" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/menu_button_glyphs_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="display.menu_button_glyphs" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_keyboard_glyphs" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -44,7 +44,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/keyboard_glyphs_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/labels" string_index="1" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/keyboard_glyphs_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ON|OFF" setting="display.keyboard_glyphs" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/keyboard_glyphs_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="display.keyboard_glyphs" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_auto_button_detection" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -53,7 +53,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/auto_button_detection_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/labels" string_index="2" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/auto_button_detection_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ON|OFF" setting="input.auto_button_detection" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/auto_button_detection_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="input.auto_button_detection" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_hud_button_style" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -62,7 +62,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_label" type="text" controller="1" width="300" height="22" string_index="3" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="XBOX CLASSIC|XBOX GEMS|XBOX DARK GEMS|XBOX MODERN|PS CLASSIC|PS GEMS|PS DARK GEMS|PS MODERN|SWITCH CLASSIC|SWITCH GEMS|SWITCH MODERN|KEYBOARD" setting="display.hud_button_style" values="classic|gems|menu_gems|xbox_modern|ps_classic|ps_gems|ps_dark_gems|ps_modern|switch_classic|switch_gems|switch_modern|keyboard" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="XBOX CLÁSICO|XBOX GEMAS|XBOX GEMAS OSCURAS|XBOX MODERNO|PS CLÁSICO|PS GEMAS|PS GEMAS OSCURAS|PS MODERNO|SWITCH CLÁSICO|SWITCH GEMAS|SWITCH MODERNO|TECLADO" setting="display.hud_button_style" values="classic|gems|menu_gems|xbox_modern|ps_classic|ps_gems|ps_dark_gems|ps_modern|switch_classic|switch_gems|switch_modern|keyboard" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_hud_button_style_xbox" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -71,7 +71,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_xbox_label" type="text" controller="1" width="300" height="22" string_index="4" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_xbox_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="XBOX CLASSIC|XBOX GEMS|XBOX DARK GEMS|XBOX MODERN" setting="display.hud_button_style_xbox" values="classic|gems|menu_gems|xbox_modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_xbox_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="XBOX CLÁSICO|XBOX GEMAS|XBOX GEMAS OSCURAS|XBOX MODERNO" setting="display.hud_button_style_xbox" values="classic|gems|menu_gems|xbox_modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_hud_button_style_ps" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -80,7 +80,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_ps_label" type="text" controller="1" width="300" height="22" string_index="5" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_ps_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="PS CLASSIC|PS GEMS|PS DARK GEMS|PS MODERN" setting="display.hud_button_style_ps" values="ps_classic|ps_gems|ps_dark_gems|ps_modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_ps_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="PS CLÁSICO|PS GEMAS|PS GEMAS OSCURAS|PS MODERNO" setting="display.hud_button_style_ps" values="ps_classic|ps_gems|ps_dark_gems|ps_modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_hud_button_style_switch" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -89,7 +89,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_switch_label" type="text" controller="1" width="300" height="22" string_index="6" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_switch_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SWITCH CLASSIC|SWITCH GEMS|SWITCH MODERN" setting="display.hud_button_style_switch" values="switch_classic|switch_gems|switch_modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_button_style_switch_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SWITCH CLÁSICO|SWITCH GEMAS|SWITCH MODERNO" setting="display.hud_button_style_switch" values="switch_classic|switch_gems|switch_modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_detected_button_style" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -98,7 +98,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/detected_button_style_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/labels" string_index="7" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/detected_button_style_value" type="text" controller="1" width="212" height="22" text="KEYBOARD" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" text_flags="no_focus_test">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/detected_button_style_value" type="text" controller="1" width="212" height="22" text="TECLADO" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" text_flags="no_focus_test">
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/op_hud_bumper_style" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_bumper_style_label"/>
@@ -106,7 +106,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_bumper_style_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/labels" string_index="8" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_bumper_style_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ORIGINAL XBOX|MODERN XBOX" setting="display.hud_bumper_style" values="original|modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/hud_bumper_style_spinner" type="spinner" left="3" top="2" width="252" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="XBOX ORIGINAL|XBOX MODERNO" setting="display.hud_bumper_style" values="original|modern" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 254 19 260">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/button_defaults" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" string_list="strings/common_button_captions" string_index="3" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
@@ -120,26 +120,26 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/labels">
-		<string text="MENU GLYPHS:"/>
-		<string text="KEYBOARD GLYPHS:"/>
-		<string text="AUTO BUTTON DETECTION:"/>
-		<string text="BUTTON STYLE:"/>
-		<string text="BUTTON STYLE:"/>
-		<string text="BUTTON STYLE:"/>
-		<string text="BUTTON STYLE:"/>
-		<string text="BUTTON STYLE:"/>
-		<string text="BUMPER STYLE:"/>
+		<string text="ICONOS EN MENÚS:"/>
+		<string text="ICONOS DE TECLADO:"/>
+		<string text="DETECTAR BOTONES:"/>
+		<string text="ESTILO DE BOTONES:"/>
+		<string text="ESTILO DE BOTONES:"/>
+		<string text="ESTILO DE BOTONES:"/>
+		<string text="ESTILO DE BOTONES:"/>
+		<string text="ESTILO DE BOTONES:"/>
+		<string text="ESTILO DE BUMPERS:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/controller_appearance/help_strings">
 		<string text=""/>
-		<string text="Use the selected keyboard/controller style in\nexisting PC-menu face-button legends."/>
-		<string text="Opt in to automatic keyboard/mouse keycaps.\nRequires Auto Button Detection."/>
-		<string text="Detect controller artwork and, with Keyboard\nGlyphs enabled, follow keyboard/mouse activity."/>
-		<string text="Manual style when auto detection is off. Keyboard\nuses current bindings; controllers need High-Res HUD."/>
-		<string text="Preferred Xbox artwork for automatic detection.\nRequires High-Res HUD in Graphics."/>
-		<string text="Preferred PlayStation artwork for auto detection.\nRequires High-Res HUD in Graphics."/>
-		<string text="Preferred Switch artwork for automatic detection.\nRequires High-Res HUD in Graphics."/>
-		<string text="Keyboard/mouse is active. Prompts use your current\nbindings. Turn detection off to choose a fixed style."/>
-		<string text="Original: black/white buttons. Modern: LB/RB.\nKept when automatic detection is on."/>
+		<string text="Usa el estilo de teclado o control elegido en\nlas leyendas de botones de los menús de PC."/>
+		<string text="Activa las teclas de teclado y mouse\nautomáticas. Requiere Detectar botones."/>
+		<string text="Detecta el arte del control y, con Iconos de\nteclado, sigue la actividad de teclado y mouse."/>
+		<string text="Estilo manual sin detección. El teclado usa tus\nteclas; los controles requieren HUD en alta resolución."/>
+		<string text="Arte de Xbox preferido para la detección automática.\nRequiere HUD en alta resolución en Gráficos."/>
+		<string text="Arte de PlayStation preferido para la detección.\nRequiere HUD en alta resolución en Gráficos."/>
+		<string text="Arte de Switch preferido para la detección automática.\nRequiere HUD en alta resolución en Gráficos."/>
+		<string text="Teclado y mouse activos. Los avisos usan tus teclas.\nApaga la detección para elegir un estilo fijo."/>
+		<string text="Original: botones negro y blanco. Moderno:\nLB/RB. Se conserva con la detección automática."/>
 	</strings>
 </menus>

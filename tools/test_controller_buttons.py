@@ -176,8 +176,10 @@ def test_artwork_mapping_transparency_labels_and_regeneration():
 
 def test_menu_generated_and_default_on():
     import port_settings
+    # (the files hold the generator's text in this fork's language: tools/menu_language.py)
+    import menu_language
     for name, lines in port_settings.settings_files().items():
-        assert (ROOT / 'port/assets/menus/ce' / name).read_text() == '\n'.join(lines)
+        assert (ROOT / 'port/assets/menus/ce' / name).read_text() == menu_language.translate_xml('\n'.join(lines))
     # Dynamic captions must not be overwritten or resized to the static string
     # by ui_widget's text update before the next frame.
     import xml.etree.ElementTree as ET
