@@ -56,11 +56,11 @@ try {
     pages.push(page);
   }
   for (const [index, page] of pages.entries()) {
-    await page.waitForFunction(() => /1 of 1 other browsers connected/.test(document.querySelector('#room-status').textContent),
+    await page.waitForFunction(() => /1 de 1 navegadores conectados/.test(document.querySelector('#room-status').textContent),
       null, { timeout: 60000 });
     const status = await page.textContent('#room-status');
     console.log(`browser ${index}: ${status}`);
-    if (!/Your address: 10\.\d+\.\d+\.\d+/.test(status)) fail('no address in the room');
+    if (!/Tu dirección: 10\.\d+\.\d+\.\d+/.test(status)) fail('no address in the room');
   }
   // the room's link, as the page gives it to copy
   const link = await pages[0].evaluate(() => location.href);

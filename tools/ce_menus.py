@@ -63,6 +63,8 @@ TITLE_FONT = ROOT / "port/assets/fonts/OpenCE-Regular.ttf"
 LEFT_OUT = {
     "ui\\shell\\main_menu\\multiplayer_type_select\\join_game\\header_gamespy_logo",
     "ui\\shell\\main_menu\\main_menu_item_credits",
+    # (this fork plays multiplayer alone: the main menu's Campaign)
+    "ui\\shell\\main_menu\\main_menu_item_load_camp",
     # (the "checking for updates" dialogs, which asked the PC version's
     # servers: Create > Internet and Join > Server Browser skip them,
     # port_settings.WIDGET_PATCHES)

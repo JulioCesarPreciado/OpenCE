@@ -59,7 +59,6 @@
 		<child widget="main_menu/multiplayer_type_select/multiplayer_type_create_item" x="-32" y="210"/>
 		<child widget="main_menu/multiplayer_type_select/multiplayer_type_create_internet_item" y="243"/>
 		<child widget="main_menu/multiplayer_type_select/multiplayer_type_create_lan_item" y="276"/>
-		<child widget="main_menu/multiplayer_type_select/multiplayer_type_coop_item" y="309"/>
 		<child widget="main_menu/multiplayer_type_select/multiplayer_type_gametypes_item" y="358"/>
 		<child widget="main_menu/multiplayer_type_select/multiplayer_type_button_bar" y="414"/>
 	</widget>
