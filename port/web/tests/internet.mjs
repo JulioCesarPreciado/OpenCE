@@ -86,7 +86,7 @@ async function browser(name) {
   await page.goto(pageUrl);
   await page.waitForFunction(() => document.querySelectorAll('#checks li').length >= 5, null, { timeout: 60000 });
   await page.setInputFiles('#folder-input', maps);
-  await page.waitForFunction(() => /Copied|cannot/.test(document.querySelector('#import-text').textContent), null,
+  await page.waitForFunction(() => /Se copiaron|cannot/.test(document.querySelector('#import-text').textContent), null,
     { timeout: 600000 });
   const log = side(name);
   page.on('console', (message) => log.add(message.text()));

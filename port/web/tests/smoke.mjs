@@ -50,10 +50,10 @@ try {
   const checks = await page.$$eval('#checks li', (items) => items.map((item) => [item.className, item.textContent]));
   console.log(checks.map(([state, text]) => `${state}: ${text}`).join('\n'));
   if (checks.some(([state]) => state !== 'good')) fail('a check did not pass');
-  await page.waitForFunction(() => !/Looking/.test(document.querySelector('#data-status').textContent));
+  await page.waitForFunction(() => !/Revisando/.test(document.querySelector('#data-status').textContent));
   const data = await page.textContent('#data-status');
   console.log('data: ' + data);
-  if (!/No game data/.test(data)) fail('the page should have no game data');
+  if (!/Aún no hay mapas/.test(data)) fail('the page should have no game data');
   if (!(await page.isDisabled('#play'))) fail('Play should wait for the game data');
 
   // an empty maps folder, marked complete: the game starts and looks for a

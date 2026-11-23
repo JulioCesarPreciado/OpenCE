@@ -22,7 +22,9 @@ then fills the page.
   the next time), ?play starts the game at once when it can.
 - ?join=<invite> (a halo://join/ link's code, which native builds and the
   game here make: port/linux/src/p2p.c) joins that internet game once the
-  game starts; the Servers panel (servers.js) sets it with Play here.
+  game starts.
+- site-config.js names this copy of the site and the server its Play joins
+  when the address names no game and no room.
 */
 
 'use strict';
@@ -32,6 +34,22 @@ const params = new URLSearchParams(location.search);
 // the Xbox window ends the game's memory: tools/web_build.py WEB_MEMORY_BYTES
 const WEB_MEMORY_BYTES = 0x88000000;
 const MAXIMUM_LOG_LINES = 20000;
+
+// ---------- this copy of the site (site-config.js): its name, and the
+// server Play joins unless the address names a game or a room
+
+const site = window.SiteConfig || {};
+const siteInvite = /([0-9a-f]{64})\s*$/i.exec(typeof site.server === 'string' ? site.server : '');
+let joinSiteServer = !!siteInvite && !params.has('join') && !params.has('room');
+
+function applySite() {
+  if (typeof site.name === 'string' && site.name) {
+    document.title = site.name;
+    $('site-name').textContent = site.name;
+  }
+  $('site-tagline').textContent = typeof site.tagline === 'string' ? site.tagline : '';
+  if (typeof site.source === 'string' && /^https:\/\//.test(site.source)) $('about-source').href = site.source;
+}
 
 // ---------- the log: the game's output, for the player to send
 
@@ -114,7 +132,7 @@ async function checkForUpdate() {
   try {
     const latest = await (await fetch('version.json?latest', { cache: 'no-store' })).json();
     if (latest.version && latest.version !== stamp.version) {
-      $('update-text').textContent = latest.build ? `Build ${latest.build} is out.` : 'A new build is out.';
+      $('update-text').textContent = latest.build ? `Hay una versión nueva (${latest.build}).` : 'Hay una versión nueva.';
       $('update').hidden = false;
     }
   } catch {
@@ -124,10 +142,10 @@ async function checkForUpdate() {
 
 $('update-button').addEventListener('click', () => {
   $('update-button').disabled = true;
-  $('update-text').textContent = 'Updating…';
+  $('update-text').textContent = 'Actualizando…';
   navigator.serviceWorker.addEventListener('message', (event) => {
     if (event.data === 'updated') location.reload();
-    else if (event.data === 'update-failed') $('update-text').textContent = 'The update could not be downloaded.';
+    else if (event.data === 'update-failed') $('update-text').textContent = 'No se pudo descargar la actualización.';
   });
   navigator.serviceWorker.controller.postMessage('update');
 });
@@ -146,7 +164,7 @@ async function isolate() {
   // once: a page the worker still does not isolate stays as it is
   if (!sessionStorage.getItem('opence-isolating')) {
     sessionStorage.setItem('opence-isolating', '1');
-    $('checks-note').textContent = 'Preparing the page (it loads once more)…';
+    $('checks-note').textContent = 'Preparando la página (se recarga una vez)…';
     $('checks-note').hidden = false;
     location.reload();
     await new Promise(() => {});
@@ -199,19 +217,19 @@ function memoryAvailable() {
 
 async function runChecks() {
   $('checks').textContent = '';
-  addCheck('secure', window.isSecureContext ? 'good' : 'bad', 'A secure page (https)');
-  addCheck('isolated', window.crossOriginIsolated ? 'good' : 'bad', 'Threads (cross-origin isolation)',
-    window.crossOriginIsolated ? '' : 'reload the page; a private window may not allow it');
+  addCheck('secure', window.isSecureContext ? 'good' : 'bad', 'Página segura (https)');
+  addCheck('isolated', window.crossOriginIsolated ? 'good' : 'bad', 'Hilos (aislamiento de origen)',
+    window.crossOriginIsolated ? '' : 'recarga la página; una ventana privada puede no permitirlo');
   const webgl = typeof OffscreenCanvas !== 'undefined' && await workerWebGL2();
-  addCheck('webgl', webgl ? 'good' : 'bad', 'WebGL 2 from a worker');
+  addCheck('webgl', webgl ? 'good' : 'bad', 'WebGL 2 desde un worker');
   const opfs = !!(navigator.storage && navigator.storage.getDirectory);
-  addCheck('opfs', opfs ? 'good' : 'bad', "The site's private storage (OPFS)");
+  addCheck('opfs', opfs ? 'good' : 'bad', 'Almacenamiento privado del sitio (OPFS)');
   const locks = !!(navigator.locks && navigator.locks.request && navigator.locks.query);
-  addCheck('locks', locks ? 'good' : 'bad', 'Safe storage between tabs (Web Locks)',
-    locks ? '' : 'use a current desktop Chrome, Edge or Firefox');
+  addCheck('locks', locks ? 'good' : 'bad', 'Almacenamiento seguro entre pestañas (Web Locks)',
+    locks ? '' : 'usa Chrome, Edge o Firefox de escritorio actualizado');
   const memory = window.crossOriginIsolated && memoryAvailable();
-  addCheck('memory', memory ? 'good' : 'bad', 'Memory for the game (2.1 GB)',
-    memory ? '' : 'this browser could not give the game that much: a 64-bit browser on a computer has it');
+  addCheck('memory', memory ? 'good' : 'bad', 'Memoria para el juego (2.1 GB)',
+    memory ? '' : 'este navegador no pudo dar tanta: uno de 64 bits en una computadora sí');
   const required = ['secure', 'isolated', 'webgl', 'opfs', 'locks', 'memory'];
   return required.every((name) => results[name] === 'good');
 }
@@ -227,13 +245,13 @@ function formatBytes(bytes) {
 
 async function refreshData() {
   dataReady = false;
-  let text = 'No game data yet: choose your disc image of Halo: Combat Evolved for the Xbox.';
+  let text = 'Aún no hay mapas.';
   try {
     const root = await navigator.storage.getDirectory();
     const maps = await root.getDirectoryHandle('maps');
     const marker = await (await maps.getFileHandle('.complete')).getFile();
     const complete = JSON.parse(await marker.text());
-    text = `${complete.files.length} files of maps (${formatBytes(complete.bytes)}), ready.`;
+    text = `${complete.files.length} archivos (${formatBytes(complete.bytes)})`;
     dataReady = true;
   } catch {
     // none, or a copy that did not finish
@@ -248,8 +266,8 @@ async function refreshStorage() {
   if (!navigator.storage || !navigator.storage.estimate) return;
   const { usage, quota } = await navigator.storage.estimate();
   const persisted = navigator.storage.persisted ? await navigator.storage.persisted() : false;
-  $('storage-status').textContent = `This site keeps ${formatBytes(usage || 0)} of the ${formatBytes(quota || 0)} ` +
-    `the browser allows it. ${persisted ? 'The browser keeps it.' : 'The browser may clear it when space runs low.'}`;
+  $('storage-status').textContent = `Este sitio ocupa ${formatBytes(usage || 0)} de los ${formatBytes(quota || 0)} ` +
+    `que el navegador le permite. ${persisted ? 'El navegador los conserva.' : 'El navegador puede borrarlos si falta espacio.'}`;
   $('persist').disabled = persisted;
 }
 
@@ -277,7 +295,7 @@ async function importData(message) {
   catch (error) { await release(); $('import-text').textContent = error.message; return; }
   $('import-progress').hidden = false;
   $('import-bar').style.width = '0';
-  $('import-text').textContent = 'Reading…';
+  $('import-text').textContent = 'Leyendo…';
   setImporting(true);
   // (asked before the copy: the maps are 2 GB the browser should not drop)
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
@@ -285,13 +303,13 @@ async function importData(message) {
     const data = event.data;
     if (data.type === 'progress') {
       $('import-bar').style.width = (100 * data.done / data.total).toFixed(1) + '%';
-      $('import-text').textContent = `Copying ${data.file}: ${formatBytes(data.done)} of ${formatBytes(data.total)}`;
+      $('import-text').textContent = `Copiando ${data.file}: ${formatBytes(data.done)} de ${formatBytes(data.total)}`;
       return;
     }
     worker.terminate();
     await release();
     if (data.type === 'done') {
-      $('import-text').textContent = `Copied ${data.files} files.`;
+      $('import-text').textContent = `Se copiaron ${data.files} archivos.`;
       logLine(`import: ${data.files} files, ${data.bytes} bytes`);
     } else {
       $('import-text').textContent = data.message;
@@ -302,7 +320,7 @@ async function importData(message) {
   worker.onerror = async (event) => {
     worker.terminate();
     await release();
-    $('import-text').textContent = 'The copy failed: ' + event.message;
+    $('import-text').textContent = 'La copia falló: ' + event.message;
   };
   worker.postMessage(message);
 }
@@ -352,8 +370,8 @@ async function refreshCustomMaps() {
             (await window.HaloMapStorage.dispatch('visible', { folder: name })).visible) counts.mcc++;
       }
     }
-    $('custom-maps-list').textContent = `${counts.ce} CE maps and ${counts.mcc} MCC packages in this browser.`;
-  } catch (error) { $('custom-maps-list').textContent = 'Could not list custom maps: ' + error.message; }
+    $('custom-maps-list').textContent = `${counts.ce} mapas de CE y ${counts.mcc} paquetes de MCC en este navegador.`;
+  } catch (error) { $('custom-maps-list').textContent = 'No se pudieron listar los mapas custom: ' + error.message; }
 }
 
 function mapImport(family, selected) {
@@ -363,7 +381,7 @@ function mapImport(family, selected) {
   setImporting(false);
   $('map-import-cancel').hidden = false;
   $('map-import-cancel').disabled = false;
-  $('map-import-status').textContent = 'Checking the selected files…';
+  $('map-import-status').textContent = 'Revisando los archivos elegidos…';
   updatePlay();
   if (navigator.storage.persist) navigator.storage.persist().catch(() => {});
   async function finished(message) {
@@ -377,12 +395,12 @@ function mapImport(family, selected) {
   worker.onmessage = event => {
     const data = event.data;
     if (data.type === 'progress') {
-      $('map-import-status').textContent = `Copying ${data.file}: ${formatBytes(data.done)} of ${formatBytes(data.total)}`;
+      $('map-import-status').textContent = `Copiando ${data.file}: ${formatBytes(data.done)} de ${formatBytes(data.total)}`;
     } else if (data.type === 'done') {
-      finished(`Imported ${data.title}: ${data.files} files (${formatBytes(data.bytes)}).`);
+      finished(`Se importó ${data.title}: ${data.files} archivos (${formatBytes(data.bytes)}).`);
     } else if (data.type === 'error') finished(data.message);
   };
-  worker.onerror = event => finished('Import stopped: ' + event.message + '. Storage recovery will run before the next game.');
+  worker.onerror = event => finished('La importación se detuvo: ' + event.message + '. El almacenamiento se repara antes de la siguiente partida.');
   worker.postMessage({ type: 'import', files: selected, options: { name: $('mcc-package-name').value } });
 }
 
@@ -395,7 +413,7 @@ for (const [id, family] of [['ce-files-input', 'ce'], ['ce-folder-input', 'ce'],
 $('map-import-cancel').addEventListener('click', () => {
   if (!mapImportWorker) return;
   $('map-import-cancel').disabled = true;
-  $('map-import-status').textContent = 'Cancelling and removing the unfinished import…';
+  $('map-import-status').textContent = 'Cancelando y quitando lo que quedó a medias…';
   mapImportWorker.postMessage({ type: 'cancel' });
 });
 
@@ -439,17 +457,17 @@ async function refreshMods() {
     detail.className = 'detail';
     detail.textContent = ` ${folder}`;
     label.append(detail);
-    remove.textContent = 'Remove';
+    remove.textContent = 'Quitar';
     remove.className = 'danger';
     remove.addEventListener('click', () => {
-      if (confirm(`Remove the mod ${name} from this browser?`)) modTask({ type: 'remove', name: folder });
+      if (confirm(`¿Quitar el mod ${name} de este navegador?`)) modTask({ type: 'remove', name: folder });
     });
     item.append(label, remove);
     return item;
   }));
-  $('mods-status').textContent = found.length ? `${found.length} mod${found.length === 1 ? '' : 's'} in this browser.` :
-    'No mods yet.';
-  summarize('summary-mods', null, found.length ? `${found.length} mod${found.length === 1 ? '' : 's'}` : 'None yet');
+  $('mods-status').textContent = found.length ? `${found.length} mod${found.length === 1 ? '' : 's'} en este navegador.` :
+    'Aún no hay mods.';
+  summarize('summary-mods', null, found.length ? `${found.length} mod${found.length === 1 ? '' : 's'}` : 'Ninguno');
   await refreshStorage();
 }
 
@@ -464,7 +482,7 @@ async function modTask(message) {
   worker.onmessage = async (event) => {
     const data = event.data;
     if (data.type === 'progress') {
-      $('mods-status').textContent = `Copying ${data.file}: ${formatBytes(data.done)} of ${formatBytes(data.total)}`;
+      $('mods-status').textContent = `Copiando ${data.file}: ${formatBytes(data.done)} de ${formatBytes(data.total)}`;
       return;
     }
     worker.terminate();
@@ -481,7 +499,7 @@ async function modTask(message) {
     $('mod-label').classList.remove('disabled');
     $('mod-input').disabled = false;
     await refreshMods();
-    $('mods-status').textContent = 'The copy failed: ' + event.message;
+    $('mods-status').textContent = 'La copia falló: ' + event.message;
   };
   worker.postMessage(message);
 }
@@ -493,7 +511,7 @@ $('mod-input').addEventListener('change', (event) => {
 });
 
 $('delete-data').addEventListener('click', async () => {
-  if (!confirm('Delete the maps copied into this browser? Saved games stay.')) return;
+  if (!confirm('¿Borrar los mapas copiados a este navegador? Las partidas guardadas se quedan.')) return;
   const release = await beginStorageTask('data-status');
   if (!release) return;
   try {
@@ -588,7 +606,7 @@ async function collect(directory, prefix, entries) {
 
 $('export-saves').addEventListener('click', async () => {
   if (gameStarted && !gameStopped) {
-    alert('Quit the game first: its files are open while it runs.');
+    alert('Sal del juego primero: sus archivos están abiertos mientras corre.');
     return;
   }
   const entries = [];
@@ -601,7 +619,7 @@ $('export-saves').addEventListener('click', async () => {
   const config = await readStorageText('config.toml');
   if (config != null) entries.push({ name: 'config.toml', data: new TextEncoder().encode(config) });
   if (!entries.length) {
-    alert('There are no saved games yet.');
+    alert('Aún no hay partidas guardadas.');
     return;
   }
   download('opence-saves.zip', zip(entries));
@@ -622,19 +640,27 @@ function canPlay() {
   return checksPassed && dataReady && !gameStarted && !mapImportWorker && !launcherStorageActive;
 }
 
-// the Ready to play screen's rows: a row good or bad, and its value
+// the start screen's rows: a row good or bad, and its value
 function summarize(id, good, text) {
   $(id).classList.toggle('good', good === true);
   $(id).classList.toggle('bad', good === false);
   $(id + '-value').textContent = text;
 }
 
+// what the start screen shows is what is missing: the browser's checks when
+// one failed, the disc image's step while there are no maps
 function updatePlay() {
+  const invited = joinSiteServer || /[0-9a-f]{64}\s*$/i.test(params.get('join') || '');
   $('play').disabled = !canPlay();
-  $('play-note').textContent = !checksPassed ? 'This browser cannot run the game: see This browser, below.' :
-    !dataReady ? 'The game data is needed first.' : '';
-  summarize('summary-browser', checksPassed, checksPassed ? 'Runs the game' : 'Cannot run the game');
-  summarize('summary-data', dataReady, dataReady ? $('data-status').textContent : 'Needed first');
+  $('play-note').textContent = !checksPassed ? 'Este navegador no puede correr el juego: esto es lo que falta.' : '';
+  summarize('summary-browser', checksPassed, checksPassed ? 'Listo' : 'No puede correr el juego');
+  summarize('summary-data', dataReady, dataReady ? 'Listos' : 'Faltan');
+  $('checks-box').hidden = checksPassed;
+  $('data-step').hidden = !checksPassed || dataReady;
+  $('summary-server').hidden = !invited;
+  $('summary-server-value').textContent = joinSiteServer && typeof site.serverName === 'string' && site.serverName ?
+    site.serverName : 'Por invitación';
+  $('play-menus').hidden = !joinSiteServer || gameStarted;
 }
 
 // init.txt in the data folder: the console commands the game runs as it
@@ -685,15 +711,18 @@ function showRoom(status) {
   $('room-copy').hidden = !inRoom;
   $('room-leave').hidden = !inRoom || gameStarted;
   if (!inRoom) return;
-  const brokers = status.brokers ? '' : ' (finding the message brokers…)';
+  const brokers = status.brokers ? '' : ' (buscando los brokers de mensajes…)';
   $('room-status').textContent = status.peers ?
-    `In a room with ${status.connected} of ${status.peers} other browsers connected${brokers}. Your address: ${status.address}.` :
-    `In a room, alone so far${brokers}: send its link to your friends.`;
+    `En una sala: ${status.connected} de ${status.peers} navegadores conectados${brokers}. Tu dirección: ${status.address}.` :
+    `En una sala, por ahora sin nadie más${brokers}: manda el enlace a tus amigos.`;
 }
 
 async function joinRoom(secret) {
   const brokers = (params.get('brokers') || '').split(',').filter((url) => /^wss?:\/\//.test(url));
+  // (a room's games are found in the game's menus, not by the site's invite)
+  joinSiteServer = false;
   showRoom(await window.HaloNet.join(secret, brokers));
+  updatePlay();
   history.replaceState(null, '', `?${new URLSearchParams({ ...Object.fromEntries(params), room: secret })}`);
 }
 
@@ -705,10 +734,10 @@ $('room-copy').addEventListener('click', async () => {
   if (!status) return;
   try {
     await navigator.clipboard.writeText(roomLink(status.secret));
-    $('room-copy').textContent = 'Copied';
-    setTimeout(() => { $('room-copy').textContent = "Copy the room's link"; }, 1500);
+    $('room-copy').textContent = 'Copiado';
+    setTimeout(() => { $('room-copy').textContent = 'Copiar el enlace de la sala'; }, 1500);
   } catch {
-    prompt("The room's link:", roomLink(status.secret));
+    prompt('El enlace de la sala:', roomLink(status.secret));
   }
 });
 $('room-leave').addEventListener('click', () => {
@@ -728,8 +757,9 @@ function gameArguments() {
   // internet play's brokers (port/linux/src/p2p_signal.c), if not its own
   const brokers = (params.get('brokers') || '').split(',').filter((url) => /^wss?:\/\/[^,\s]+$/.test(url));
   if (brokers.length) args.push('--HALO_WEB_BROKERS=' + brokers.join(','));
-  // an invite to join (its code, or a whole link)
-  const invite = /([0-9a-f]{64})\s*$/i.exec(params.get('join') || '');
+  // an invite to join (its code, or a whole link): the address's, else the
+  // site's own server's
+  const invite = /([0-9a-f]{64})\s*$/i.exec(params.get('join') || '') || (joinSiteServer ? siteInvite : null);
   if (invite) args.push('halo://join/' + invite[1].toLowerCase());
   return args;
 }
@@ -749,7 +779,7 @@ function showInvite(text) {
   const code = /([0-9a-f]{64})/.exec(text);
   if (!code) return;
   $('invite-link').value = `${location.origin}${location.pathname}?join=${code[1]}`;
-  $('invite-copy').textContent = 'Copy';
+  $('invite-copy').textContent = 'Copiar';
   $('invite').hidden = false;
 }
 
@@ -757,18 +787,18 @@ function showInvite(text) {
 // page opens a tab only when it is clicked, so the dialog's button opens it
 function showLinkPage(url) {
   if (!/^https?:\/\/[^\s]+\/link\?/.test(url)) return;
-  $('ask-title').textContent = 'Link Discord';
-  $('ask-text').textContent = 'The master server\'s page links your Discord account to this game. '
-    + 'Check that it shows the code Settings > Network Setup > Discord Account shows.';
+  $('ask-title').textContent = 'Vincular Discord';
+  $('ask-text').textContent = 'La página del servidor maestro vincula tu cuenta de Discord con este juego. '
+    + 'Revisa que muestre el código de Settings > Network Setup > Discord Account.';
   const open = document.createElement('button');
-  open.textContent = 'Open the page';
+  open.textContent = 'Abrir la página';
   open.className = 'primary';
   open.addEventListener('click', () => {
     $('ask').hidden = true;
     window.open(url, '_blank', 'noopener');
   });
   const close = document.createElement('button');
-  close.textContent = 'Close';
+  close.textContent = 'Cerrar';
   close.addEventListener('click', () => { $('ask').hidden = true; });
   $('ask-buttons').replaceChildren(open, close);
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
@@ -780,11 +810,11 @@ function showLinkPage(url) {
 function showMccWorkshop(id) {
   if (typeof id !== 'string' || !id.length || id.length > 20 || /[^0-9]/.test(id)) return;
   $('ask-title').textContent = 'Steam Workshop';
-  $('ask-text').textContent = `Open Workshop item ${id}. Check the item before subscribing.`;
+  $('ask-text').textContent = `Abrir el elemento ${id} del Workshop. Revísalo antes de suscribirte.`;
   const buttons = [];
   for (const [label, url] of [
-    ['Open in Steam', `steam://url/CommunityFilePage/${id}`],
-    ['Open in browser', `https://steamcommunity.com/sharedfiles/filedetails/?id=${id}`],
+    ['Abrir en Steam', `steam://url/CommunityFilePage/${id}`],
+    ['Abrir en el navegador', `https://steamcommunity.com/sharedfiles/filedetails/?id=${id}`],
   ]) {
     const button = document.createElement('button');
     button.textContent = label;
@@ -792,7 +822,7 @@ function showMccWorkshop(id) {
     buttons.push(button);
   }
   const close = document.createElement('button');
-  close.textContent = 'Close';
+  close.textContent = 'Cerrar';
   close.addEventListener('click', () => { $('ask').hidden = true; });
   $('ask-buttons').replaceChildren(...buttons, close);
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
@@ -802,27 +832,12 @@ function showMccWorkshop(id) {
 $('invite-copy').addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText($('invite-link').value);
-    $('invite-copy').textContent = 'Copied';
+    $('invite-copy').textContent = 'Copiado';
   } catch {
     $('invite-link').select();
   }
 });
 $('invite-close').addEventListener('click', () => { $('invite').hidden = true; });
-
-// Play here on the Servers panel (servers.js): the server's invite as ?join=,
-// and the game starts at once when it can
-function joinServer(code) {
-  if (!/^[0-9a-f]{64}$/.test(code) || gameStarted) return;
-  params.set('join', code);
-  history.replaceState(null, '', `?${params}`);
-  if (canPlay()) {
-    play();
-    return;
-  }
-  location.hash = '#play-panel';
-  updatePlay();
-  $('play-note').textContent += ' Play then joins the server you chose.';
-}
 
 function loadScript(src) {
   return new Promise((resolve, reject) => {
@@ -866,7 +881,7 @@ async function play() {
       printErr: (text) => {
         logLine(text);
         console.warn(text);
-        if (!$('starting').hidden && /data root:/.test(text)) $('starting-text').textContent = 'Loading the menus…';
+        if (!$('starting').hidden && /data root:/.test(text)) $('starting-text').textContent = 'Cargando los menús…';
       },
       haloNetSend: (address, reliable, bytes) => window.HaloNet.send(address, reliable, bytes),
       // internet play's WebRTC connections (p2p.js)
@@ -901,9 +916,9 @@ async function play() {
         if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
         $('ask').hidden = false;
       },
-      onAbort: (what) => showFatal('The game stopped: ' + what),
+      onAbort: (what) => showFatal('El juego se detuvo: ' + what),
       onExit: (status) => {
-        if (status) showFatal(`The game stopped (status ${status}). The log below says why.`);
+        if (status) showFatal(`El juego se detuvo (estado ${status}). El registro de abajo dice por qué.`);
         else location.reload();
       },
     };
@@ -956,13 +971,18 @@ function watchFrames() {
       changed = performance.now();
       $('starting').hidden = true;
     } else if (performance.now() - changed > 600 && $('starting').hidden) {
-      $('starting-text').textContent = 'Loading…';
+      $('starting-text').textContent = 'Cargando…';
       $('starting').hidden = false;
     }
   }, 200);
 }
 
 $('play').addEventListener('click', play);
+// the game's own menus, without the site's server
+$('play-menus').addEventListener('click', () => {
+  joinSiteServer = false;
+  play();
+});
 
 $('fullscreen').addEventListener('click', async () => {
   try {
@@ -978,7 +998,7 @@ $('fullscreen').addEventListener('click', async () => {
 });
 
 $('leave').addEventListener('click', () => {
-  if (confirm('Quit the game? Progress since the last checkpoint is lost.')) location.reload();
+  if (confirm('¿Salir del juego?')) location.reload();
 });
 
 // Tab is the game's (switch weapons, the scoreboard), not the page's focus;
@@ -1004,11 +1024,12 @@ document.addEventListener('visibilitychange', async () => {
 // ---------- start
 
 (async () => {
+  applySite();
   await isolate();
   await loadStamp();
   checksPassed = await runChecks();
   if (!checksPassed) {
-    $('checks-note').textContent = 'Desktop Chrome, Edge and Firefox run the game; Safari 17 or later may.';
+    $('checks-note').textContent = 'Chrome, Edge y Firefox de escritorio corren el juego; Safari 17 o posterior quizá.';
     $('checks-note').hidden = false;
   }
   if (results.opfs === 'good') {
@@ -1019,11 +1040,6 @@ document.addEventListener('visibilitychange', async () => {
     updatePlay();
   }
   checkForUpdate();
-  window.HaloServers.start({
-    networkVersion: () => stamp.network_version,
-    visible: () => !gameStarted,
-    onPlay: joinServer,
-  });
   if (/^[0-9a-f]{32}$/.test(params.get('room') || '')) await joinRoom(params.get('room'));
   if (params.has('play')) play();
 })();

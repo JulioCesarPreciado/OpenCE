@@ -165,6 +165,16 @@ hash of the secret and every message is sealed with a key derived from it,
 so the brokers see nothing of the room. A network that lets no WebRTC
 through (some company and school networks) keeps a browser out of rooms.
 
+### This copy of the site
+
+`port/web/site/site-config.js` names the site (`name`, `tagline`) and the
+server its Play button joins (`server`: the server's invite, 64 hex digits
+or a link that ends with them; `serverName`: what the page calls it). With a
+server set, the page shows it and offers the game's own menus under Play; an
+address with `?join=` or `?room=` wins over it. Run `ninja web` after
+changing the file. The page's text is Spanish; the importers' own error
+messages are still English.
+
 ### Address parameters
 
 For testing, the page's address takes:
