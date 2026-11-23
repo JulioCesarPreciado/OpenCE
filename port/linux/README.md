@@ -122,7 +122,9 @@ question:
   image next to the executable, it uses that image and shows no file picker.
   Otherwise it opens a file picker: select the disc image, or cancel to see
   the question again. The game copies `maps/` next to the executable and
-  shows the progress. If the copy from the image found next to the
+  shows the progress. It copies `ui.map` and the multiplayer maps (about
+  300 MB), not the campaign's levels or the disc's loading screen picture,
+  as the Android app and the web page do. If the copy from the image found next to the
   executable fails, the next "Yes" opens the file picker.
 
 On Linux, the file picker needs the desktop portal or `zenity`. If neither

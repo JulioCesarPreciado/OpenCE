@@ -103,9 +103,12 @@ partida, assets propios, motor propio.
   página ya no la copia. En el navegador esa pantalla no llega a verse: solo
   aparece mientras un mapa se copia a la caché, y ahí el navegador no
   muestra cuadros. En escritorio y Android sí se vería, sin probar.
-- Los extractores de escritorio y de Android (`xiso.c`,
-  `XisoExtractor.java`) todavía escriben la imagen del disco junto a los
-  mapas, aunque el juego ya no la lee.
+- Los tres importadores de disco copian lo mismo: `ui.map` y los mapas
+  multijugador, sin la campaña ni la imagen de carga del disco. El de
+  escritorio (`xiso.c`) y el de Android (`XisoExtractor.java`) lo tienen
+  fijo en el código; el de la página lo toma de `site-config.js`.
+  `tools/test_xiso_parity.py` comprueba que los tres coinciden. Los de
+  escritorio y Android no se compilaron ni se corrieron en esos builds.
 - Ya no hay imágenes de relleno ("PLACE HOLDER"): las 13 que había, y tres
   más que le faltaban a la pantalla Multiplayer, son iconos de Lucide en el
   azul de los menús. `python tools/menu_pictures.py` los vuelve a dibujar

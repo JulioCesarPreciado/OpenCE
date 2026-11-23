@@ -30,7 +30,8 @@ OpenCE does not include the game data. You **must provide your own Xbox disc ima
    to the executable is used without the file picker. Where no file picker
    can be shown (on Linux, without the desktop portal or `zenity`), the game
    says to put the disc image next to the executable, and stops.
-3. The game extracts the `maps` folder. Then the game starts.
+3. The game extracts the `maps` folder: `ui.map` and the multiplayer maps
+   (about 300 MB), not the campaign's levels. Then the game starts.
 
 The `maps` folder holds the Xbox maps only. If it holds Halo PC's maps
 instead (a Halo PC or Custom Edition install's `maps` folder), the game says
