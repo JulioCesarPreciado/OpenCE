@@ -639,6 +639,10 @@ static const struct config_setting config_settings[] =
 		_platform_all,
 		"Join the game of an invite link found on the clipboard when the game\n"
 		"comes to the front." },
+	{ "network.host_campaign", _config_boolean, "false", "HALO_NET_HOST_CAMPAIGN", _environment_value, _platform_all,
+		"Create Game's Map screen offers the singleplayer kinds too (the\n"
+		"campaign's levels, custom and MCC singleplayer maps), to host as network\n"
+		"co-op. false: multiplayer maps alone, as this fork plays." },
 	{ "network.join_invite_at_start", _config_boolean, "false", "HALO_NET_JOIN_INVITE_AT_START", _environment_value,
 		_platform_all,
 		"Started with an invite link (a web page's ?join=, a link opened): go\n"

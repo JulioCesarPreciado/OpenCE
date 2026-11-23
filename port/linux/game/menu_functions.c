@@ -3730,7 +3730,10 @@ static boolean map_list_initialize(struct widget_instance *list)
 	short last_used = 0;
 	short mcc_kind = map_list.kind;
 
-	map_list.hosting = global_network_game_server_get() != NULL && !network_game_is_splitscreen_local();
+	/* (hosting, and the singleplayer kinds offered to host as network co-op:
+	network.host_campaign, off in this fork, which plays multiplayer alone) */
+	map_list.hosting = global_network_game_server_get() != NULL && !network_game_is_splitscreen_local() &&
+		config_boolean("network.host_campaign");
 	mcc_maps_rescan();
 	csmemset(&mcc_host_list, 0, sizeof(mcc_host_list));
 	mcc_host_list.multiplayer_only = !map_list.hosting;
