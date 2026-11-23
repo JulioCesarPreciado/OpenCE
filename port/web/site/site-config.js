@@ -20,6 +20,11 @@ window.SiteConfig = {
   server: '',
   // the server's name, as the page says it
   serverName: '',
+  // a file beside the page with the server's invite as it is now, which
+  // wins over server: {"invite": "...", "name": "..."}. A server makes a new
+  // invite each time it starts, and its host writes the file then
+  // (deploy/local/server.sh). No such file: as without a server.
+  serverFile: 'server.json',
   // false: the disc image's campaign levels are not copied, only its
   // multiplayer maps and the menus' (about 300 MB instead of 1.9 GB). A
   // browser that already has them keeps them until its maps are deleted.

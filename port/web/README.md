@@ -171,7 +171,14 @@ through (some company and school networks) keeps a browser out of rooms.
 server its Play button joins (`server`: the server's invite, 64 hex digits
 or a link that ends with them; `serverName`: what the page calls it). With a
 server set, the page shows it and offers the game's own menus under Play; an
-address with `?join=` or `?room=` wins over it. `campaign: false` copies
+address with `?join=` or `?room=` wins over it. A dedicated server makes a
+new invite each time it starts, so the page first reads `serverFile`
+(`server.json`, beside the page: `{"invite": "...", "name": "..."}`), which
+the server's host writes then (`deploy/local/server.sh` does), and which
+wins over `server`; it is never cached. Started with an invite, the game
+goes through its menus to that game itself
+(`network.join_invite_at_start`, which the page sets; `port/linux/README.md`,
+the settings table). `campaign: false` copies
 only the multiplayer maps and the menus' map out of the disc image (about
 300 MB instead of 1.9 GB): the campaign's ten levels, by the names the game
 opens them by, are left out. A browser that already has them keeps them
