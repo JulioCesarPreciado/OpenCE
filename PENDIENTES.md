@@ -6,8 +6,11 @@ Notas de trabajo del fork. No son parte del proyecto original (OpenCE).
 
 1. ~~Página de entrada minimalista, con entrada directa al servidor.~~ Hecho.
 2. ~~Menú del juego sin campaña ni co-op.~~ Hecho.
+   ~~Importar solo los mapas multijugador.~~ Hecho.
 3. Servidor dedicado en un VPS Linux x86 (Docker), con rotación de Slayer,
-   Team Slayer e Infection y mapas custom.
+   Team Slayer e Infection y mapas custom. Ensayado en local
+   (`deploy/local`); falta un VPS personal: no usar `pgm-apps`, que aloja
+   sistemas de trabajo.
 4. Servicio de estadísticas y rangos, mostrados en la página.
 5. Decidir si los colores de armadura libres justifican romper la
    compatibilidad de red con el proyecto original.
@@ -30,18 +33,28 @@ partida, assets propios, motor propio.
 - `manifest.webmanifest` todavía dice "OpenCE" como nombre de la aplicación.
 - "Arena" es un nombre provisional: se cambia en
   `port/web/site/site-config.js`.
-- Confirmar, al montar el servidor, si su invitación se mantiene igual entre
-  reinicios. De eso depende que el `server` fijo de `site-config.js` sirva.
+- La invitación del servidor cambia cada vez que arranca, así que un
+  `server` fijo en `site-config.js` deja de servir al primer reinicio. Dos
+  salidas: que la página lea la invitación vigente de un archivo que el
+  servidor publique, o que el servidor conserve su invitación (cambio en el
+  motor, y entonces hay que compilar una imagen propia del servidor).
+- Entrar con una invitación solo conecta con el servidor: el jugador todavía
+  tiene que ir a Multiplayer, Join Game, LAN y elegir la partida. Entrar
+  solo requiere un cambio en el juego (el modo de pruebas ya lo hace).
 
 ### Campaña
 
-- Importar solo los mapas multijugador. De los 1.86 GB que se copian del
-  disco, la campaña ocupa unos 1.56 GB (10 mapas) y el multijugador unos
-  0.3 GB (13 mapas y `ui.map`). El encabezado de los mapas de Xbox no dice
-  de qué tipo es cada uno, así que habría que distinguirlos por nombre, y
-  probar que el juego arranca y aloja partidas sin los mapas de campaña.
-- La campaña sigue alcanzable por la consola del juego (`map_name`) mientras
-  sus mapas estén importados.
+- La página ya solo copia los mapas multijugador (`campaign: false` en
+  `site-config.js`): 297 MB en lugar de 1.86 GB. Los niveles de campaña se
+  reconocen por nombre (`a10.map` … `d40.map`, la lista del propio juego),
+  porque el encabezado de los mapas de Xbox no dice de qué tipo son.
+- Un navegador que importó antes de este cambio conserva los mapas de
+  campaña hasta que se borren (Más opciones, Datos guardados, Borrar los
+  mapas) y se vuelva a importar.
+- El servidor dedicado lee una carpeta `maps/` normal: hay que no copiarle
+  los diez mapas de campaña a mano.
+- El código de la campaña sigue en el juego; sin sus mapas no hay forma de
+  entrar a ella.
 
 ### Menús
 
@@ -72,11 +85,34 @@ partida, assets propios, motor propio.
 
 ## Entorno local (macOS)
 
+El sitio:
+
 ```sh
 source ~/emsdk/emsdk_env.sh
 ninja web                    # build/web/site/
 python tools/web_serve.py    # http://localhost:8000/
 ```
+
+El servidor dedicado, en un contenedor (Docker Desktop):
+
+```sh
+node tools/extract_multiplayer_maps.mjs <imagen de disco>   # una vez: assets/maps
+deploy/local/server.sh up      # lo arranca y da el enlace para entrar
+deploy/local/server.sh link    # el enlace otra vez, y la contraseña del panel
+deploy/local/server.sh down
+```
+
+- En una Mac con Apple Silicon corre emulado. Con un jugador usó cerca del
+  30 % de un núcleo y 160 MB de memoria.
+- Los mapas de Custom Edition no funcionan en el servidor emulado (su
+  ventana de memoria está ocupada): hay que probarlos en un servidor x86.
+- La rotación se cambia con `HALO_SERVER_ROTATION` al arrancar, por ejemplo
+  `HALO_SERVER_ROTATION="wizard:slayer, hangemhigh:infection"`.
+- La imagen es la del proyecto original, fijada al build de la misma
+  versión de red que este fork (44). Si el fork cambia lo que las máquinas
+  se envían, hará falta una imagen propia.
+- Otra computadora de la misma red puede entrar si abre el sitio servido
+  desde esta Mac por https o con las cabeceras de aislamiento; no se probó.
 
 Instalado fuera del repositorio: `ninja` (Homebrew), Emscripten 6.0.10 en
 `~/emsdk`, y Chromium de Playwright en `~/Library/Caches/ms-playwright`.
