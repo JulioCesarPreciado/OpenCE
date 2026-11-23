@@ -31,9 +31,11 @@ The image is the player's file and nothing read from it is trusted. Only the
 root's table and the maps folder's are read, each whole and at most 4 MB;
 the walk of a table visits each offset once, goes at most 64 links deep and
 looks at most 4096 entries; and a file is written only under a plain name
-that no file before it had (ignoring case). The root's default.xbe, read
-whole and at most 64 MB, is searched for the loading screen's picture
-(xiso_write_loading_picture) when the maps folder has no loading.tga.
+that no file before it had (ignoring case). The campaign's levels are left
+out (XISO_COPY_CAMPAIGN). The root's default.xbe, read whole and at most
+64 MB, could be searched for the loading screen's picture
+(xiso_write_loading_picture) when the maps folder has no loading.tga, but
+this fork draws its own (XISO_COPY_DISC_LOADING_PICTURE).
 
 The game takes a data root as having data once it has a maps folder, so the
 copy is written to maps.partial (emptied first of what an earlier attempt
@@ -90,6 +92,23 @@ default.xbe; the executable is a few MB */
 #define XISO_TGA_HEADER_SIZE 18
 #define XISO_LOADING_TGA_SIZE (XISO_TGA_HEADER_SIZE + XISO_LOADING_PIXELS * 3)
 #define XISO_MAXIMUM_XBE_SIZE (64UL * 1024 * 1024)
+
+/* what is copied: this fork plays multiplayer alone, so neither the
+campaign's levels nor the disc's loading screen picture (the game draws its
+own: progress_bar.c) are, as the web page's importer copies neither
+(site-config.js's campaign and discLoadingPicture) and the Android app's
+does not (XisoExtractor.java). tools/test_xiso_parity.py checks that the
+three agree */
+#define XISO_COPY_CAMPAIGN 0
+#define XISO_COPY_DISC_LOADING_PICTURE 0
+
+/* the campaign's levels, as the game names them (scenario_paths in
+source/interface/ui_widget.c and source/main/main.c): the game opens each by
+its file's name in the maps folder */
+static const char *const xiso_campaign_levels[] =
+{
+	"a10", "a30", "a50", "b30", "b40", "c10", "c20", "c40", "d20", "d40",
+};
 
 /* where the game partition may start, in the order they are tried */
 static const unsigned long xiso_partition_starts[] =
@@ -164,6 +183,21 @@ static int xiso_name_is(const char *bytes, int length, const char *name)
 			return 0;
 	}
 	return 1;
+}
+
+/* whether a file of the maps folder is one of the campaign's levels */
+static int xiso_campaign_level(const char *name)
+{
+	char level[16];
+	int index;
+
+	for (index = 0; index < (int)(sizeof(xiso_campaign_levels) / sizeof(xiso_campaign_levels[0])); index++)
+	{
+		snprintf(level, sizeof(level), "%s.map", xiso_campaign_levels[index]);
+		if (xiso_name_is(name, (int)strlen(name), level))
+			return 1;
+	}
+	return 0;
 }
 
 /* no path, no . or .., and only printable ASCII that every desktop file
@@ -605,7 +639,7 @@ int xiso_extract_maps(const char *image_path, const char *destination, xiso_prog
 	unsigned long root_sector, root_size, maps_sector = 0, maps_size = 0;
 	unsigned long long done = 0, total = 0;
 	posix_ulong size_low, size_high;
-	int count, index, found, has_loading, out_of_memory, succeeded = 0;
+	int count, index, kept, found, has_loading, out_of_memory, succeeded = 0;
 
 	memset(&image, 0, sizeof(image));
 	memset(&xbe, 0, sizeof(xbe));
@@ -689,6 +723,21 @@ int xiso_extract_maps(const char *image_path, const char *destination, xiso_prog
 		xiso_error(error, error_size, "Out of memory.");
 		goto done;
 	}
+	/* (less what this fork leaves out: XISO_COPY_CAMPAIGN and
+	XISO_COPY_DISC_LOADING_PICTURE) */
+	for (kept = 0, index = 0; index < count; index++)
+	{
+		const char *name = entries[index].name;
+
+		if (!XISO_COPY_CAMPAIGN && xiso_campaign_level(name))
+			continue;
+		if (!XISO_COPY_DISC_LOADING_PICTURE && xiso_name_is(name, (int)strlen(name), "loading.tga"))
+			continue;
+		if (kept != index)
+			entries[kept] = entries[index];
+		kept++;
+	}
+	count = kept;
 	for (found = 0, has_loading = 0, index = 0; index < count; index++)
 	{
 		found |= xiso_name_is(entries[index].name, (int)strlen(entries[index].name), "ui.map");
@@ -738,7 +787,7 @@ int xiso_extract_maps(const char *image_path, const char *destination, xiso_prog
 			goto done;
 		}
 	}
-	if (!has_loading)
+	if (XISO_COPY_DISC_LOADING_PICTURE && !has_loading)
 		xiso_write_loading_picture(&image, &xbe, partial_path, file_path, XISO_MAXIMUM_PATH);
 	if (rename(partial_path, maps_path) != 0)
 	{

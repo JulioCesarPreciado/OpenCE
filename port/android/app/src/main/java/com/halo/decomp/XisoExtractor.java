@@ -46,11 +46,12 @@ import java.util.Locale;
  * deep and looks at most 4096 entries; and a file is written only under a
  * plain name that no file before it had (ignoring case).
  *
- * The loading screen's picture, which the retail disc has no file of, is
- * taken out of the root's default.xbe (read whole, at most 64 MB) and
- * written beside the maps as the loading.tga the game reads, when the maps
- * folder has none (loadingPicture, as xiso.c's xiso_write_loading_picture);
- * without it the light sweeps over black, as the game's own does.
+ * The campaign's levels are left out (COPY_CAMPAIGN). The loading screen's
+ * picture, which the retail disc has no file of, could be taken out of the
+ * root's default.xbe (read whole, at most 64 MB) and written beside the maps
+ * as the loading.tga the game reads, when the maps folder has none
+ * (loadingPicture, as xiso.c's xiso_write_loading_picture), but this fork
+ * draws its own (COPY_DISC_LOADING_PICTURE).
  *
  * The app starts the game once maps/ui.map exists, and makes the maps folder
  * itself, so the copy is written to maps.partial (emptied first of what an
@@ -85,6 +86,23 @@ final class XisoExtractor {
     private static final int TGA_HEADER_SIZE = 18;
     private static final long MAXIMUM_XBE_SIZE = 64 * 1024 * 1024;
     private static final String LOADING_PICTURE = "loading.tga";
+    /*
+     * What is copied: this fork plays multiplayer alone, so neither the
+     * campaign's levels nor the disc's loading screen picture (the game draws
+     * its own: progress_bar.c) are, as the desktop games' xiso.c and the web
+     * page's importer (site-config.js's campaign and discLoadingPicture) copy
+     * neither. tools/test_xiso_parity.py checks that the three agree.
+     */
+    private static final boolean COPY_CAMPAIGN = false;
+    private static final boolean COPY_DISC_LOADING_PICTURE = false;
+    /**
+     * the campaign's levels, as the game names them (scenario_paths in
+     * source/interface/ui_widget.c and source/main/main.c): the game opens
+     * each by its file's name in the maps folder
+     */
+    private static final String[] CAMPAIGN_LEVELS = {
+        "a10", "a30", "a50", "b30", "b40", "c10", "c20", "c40", "d20", "d40",
+    };
 
     /** Told as the copy goes: the file being copied, and the bytes copied of all the files'. */
     interface Progress {
@@ -180,6 +198,9 @@ final class XisoExtractor {
         // its files
         byte[] table = readTable(image, partition, maps.sector, maps.size, "The disc image's maps folder is damaged.");
         List<Entry> files = walkTable(table, false);
+        // (less what this fork leaves out: COPY_CAMPAIGN and COPY_DISC_LOADING_PICTURE)
+        files.removeIf(file -> (!COPY_CAMPAIGN && isCampaignLevel(file.name))
+            || (!COPY_DISC_LOADING_PICTURE && file.name.equalsIgnoreCase(LOADING_PICTURE)));
         Entry userInterface = null;
         boolean hasLoading = false;
         for (Entry file : files) {
@@ -216,7 +237,7 @@ final class XisoExtractor {
         long done = 0;
         for (Entry file : files)
             done = copyFile(image, partition, file, new File(partial, file.name), buffer, done, total, progress);
-        if (!hasLoading && writeLoadingPicture(image, imageSize, partition, xbe, new File(partial, LOADING_PICTURE)))
+        if (COPY_DISC_LOADING_PICTURE && !hasLoading && writeLoadingPicture(image, imageSize, partition, xbe, new File(partial, LOADING_PICTURE)))
             files.add(new Entry(LOADING_PICTURE, 0, 0));
 
         // then into maps, ui.map (the app's sign that the data is there) last
@@ -233,6 +254,15 @@ final class XisoExtractor {
                 throw new ExtractException("Could not move " + file.name + " into " + mapsFolder.getPath() + ".");
         }
         partial.delete();
+    }
+
+    /** Whether a file of the maps folder is one of the campaign's levels. */
+    static boolean isCampaignLevel(String name) {
+        for (String level : CAMPAIGN_LEVELS) {
+            if (name.equalsIgnoreCase(level + ".map"))
+                return true;
+        }
+        return false;
     }
 
     /** No path, no . or .., and only printable ASCII that every file system takes as a plain name. */

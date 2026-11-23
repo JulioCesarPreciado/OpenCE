@@ -149,8 +149,8 @@ To install the data with the app:
 2. Start the app.
 3. Push the button. The file picker of the system opens.
 4. Select the disc image.
-5. Wait while the app extracts the data (approximately 1.8 GB). Then the
-   game starts.
+5. Wait while the app extracts the data (about 300 MB: `ui.map` and the
+   multiplayer maps, not the campaign's levels). Then the game starts.
 6. You can delete the disc image.
 
 To install the data from a computer:
