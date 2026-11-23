@@ -1,18 +1,23 @@
 #!/bin/sh
 # The local dedicated server (compose.yaml beside this file):
 #
-#   deploy/local/server.sh up      start it, then print the link that joins it
-#   deploy/local/server.sh link    print that link again, and the admin page's password
+#   deploy/local/server.sh up      start it, tell the site its invite, print how to join
+#   deploy/local/server.sh link    print that again, and the admin page's password
 #   deploy/local/server.sh logs    follow its log
 #   deploy/local/server.sh down    stop it (its settings stay in the volume)
 #
-# The server makes a new invite each time it starts, so the link changes
-# with every up.
+# The server makes a new invite each time it starts. up writes it to
+# server.json in the built site (build/web/site, or ARENA_SITE_FOLDER), which
+# the page reads as it loads (site-config.js's serverFile): its Play then
+# joins this server. down removes the file.
 set -eu
 
 here=$(cd "$(dirname "$0")" && pwd)
 compose="docker compose -f $here/compose.yaml"
 site=${ARENA_SITE:-http://localhost:8000/}
+site_folder=${ARENA_SITE_FOLDER:-$here/../../build/web/site}
+name=${HALO_SERVER_NAME:-Arena local}
+export HALO_SERVER_NAME="$name"
 
 address() {
   # (the address of the interface the default route leaves by)
@@ -30,8 +35,15 @@ link() {
     echo "The server has printed no invite yet: deploy/local/server.sh logs" >&2
     return 1
   fi
-  echo "Join:       ${site}?join=${invite}"
-  echo "            (then Multiplayer, Join Game, LAN in the game's menus)"
+  if [ -d "$site_folder" ]; then
+    # (the name without what JSON would need escaped)
+    printf '{"invite": "%s", "name": "%s"}\n' "$invite" "$(printf '%s' "$name" | tr -d '"\\' | tr -c '[:print:]' ' ')" \
+      > "$site_folder/server.json"
+    echo "Join:       ${site}  (Jugar joins this server: server.json in $(cd "$site_folder" && pwd))"
+  else
+    echo "Join:       ${site}?join=${invite}"
+    echo "            (no built site at $site_folder to tell: the address carries the invite)"
+  fi
   echo "Admin page: http://127.0.0.1:8080/"
   printf '%s\n' "$logs" | grep -o "admin password: .*" | tail -1 | sed 's/^admin password: /Password:   /' || true
 }
@@ -69,7 +81,10 @@ case "${1:-}" in
     case "$1" in
       link) link ;;
       logs) $compose logs -f server ;;
-      down) $compose down ;;
+      down)
+        $compose down
+        rm -f "$site_folder/server.json"
+        ;;
     esac
     ;;
   *)

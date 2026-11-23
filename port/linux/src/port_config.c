@@ -639,6 +639,12 @@ static const struct config_setting config_settings[] =
 		_platform_all,
 		"Join the game of an invite link found on the clipboard when the game\n"
 		"comes to the front." },
+	{ "network.join_invite_at_start", _config_boolean, "false", "HALO_NET_JOIN_INVITE_AT_START", _environment_value,
+		_platform_all,
+		"Started with an invite link (a web page's ?join=, a link opened): go\n"
+		"through the menus to its game without the player's presses (Multiplayer,\n"
+		"Direct Link, the game's row). false: the game is listed under Direct\n"
+		"Link, for the player to choose." },
 	{ "network.tunnel_port", _config_integer, "0", "HALO_NET_TUNNEL_PORT", _environment_value, _platform_all,
 		"The UDP port internet play uses; 0 picks one. A fixed one can be\n"
 		"forwarded on the router, for networks whose NAT stops connections." },

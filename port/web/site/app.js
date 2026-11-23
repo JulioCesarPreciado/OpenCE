@@ -24,7 +24,11 @@ then fills the page.
   game here make: port/linux/src/p2p.c) joins that internet game once the
   game starts.
 - site-config.js names this copy of the site and the server its Play joins
-  when the address names no game and no room.
+  when the address names no game and no room: an invite of its own, or the
+  one a file beside the page holds (server.json, which the server's host
+  writes as it starts: a server makes a new invite each time). A game
+  started with an invite goes through its menus to that game itself
+  (network.join_invite_at_start).
 */
 
 'use strict';
@@ -39,7 +43,9 @@ const MAXIMUM_LOG_LINES = 20000;
 // server Play joins unless the address names a game or a room
 
 const site = window.SiteConfig || {};
-const siteInvite = /([0-9a-f]{64})\s*$/i.exec(typeof site.server === 'string' ? site.server : '');
+const INVITE = /([0-9a-f]{64})\s*$/i;
+let siteInvite = INVITE.exec(typeof site.server === 'string' ? site.server : '');
+let siteServerName = typeof site.serverName === 'string' ? site.serverName : '';
 let joinSiteServer = !!siteInvite && !params.has('join') && !params.has('room');
 // whether the campaign's levels are copied with the maps (xiso-worker.js)
 const siteCampaign = site.campaign !== false;
@@ -63,6 +69,31 @@ function applySite() {
     (siteCampaign ? 'Los mapas se copian a este navegador (unos 2 GB, cerca de un minuto)' :
       'Solo se copian los mapas multijugador a este navegador (unos 300 MB)') + ' y no se sube nada.';
   if (typeof site.source === 'string' && /^https:\/\//.test(site.source)) $('about-source').href = site.source;
+}
+
+// The server's invite as it is now: a file of the site's own folder
+// (site-config.js's serverFile) that the server's host writes when the
+// server starts, {"invite": 64 hex digits or a link that ends with them,
+// "name": the server's}. None, or one that says nothing usable: the site's
+// own server (site-config.js's), if it names one.
+const MAXIMUM_SERVER_FILE = 4096;
+
+async function loadServer() {
+  if (typeof site.serverFile !== 'string' || !/^[\w.-]+\.json$/.test(site.serverFile)) return;
+  try {
+    const response = await fetch(site.serverFile, { cache: 'no-store' });
+    if (!response.ok) return;
+    const text = await response.text();
+    if (text.length > MAXIMUM_SERVER_FILE) return;
+    const server = JSON.parse(text);
+    const invite = INVITE.exec(server && typeof server.invite === 'string' ? server.invite : '');
+    if (!invite) return;
+    siteInvite = invite;
+    siteServerName = typeof server.name === 'string' ? server.name.slice(0, 64) : '';
+    joinSiteServer = !params.has('join') && !params.has('room');
+  } catch {
+    // (no file, or not JSON: as without one)
+  }
 }
 
 // ---------- the log: the game's output, for the player to send
@@ -672,8 +703,7 @@ function updatePlay() {
   $('checks-box').hidden = checksPassed;
   $('data-step').hidden = !checksPassed || dataReady;
   $('summary-server').hidden = !invited;
-  $('summary-server-value').textContent = joinSiteServer && typeof site.serverName === 'string' && site.serverName ?
-    site.serverName : 'Por invitación';
+  $('summary-server-value').textContent = joinSiteServer && siteServerName ? siteServerName : 'Por invitación';
   $('play-menus').hidden = !joinSiteServer || gameStarted;
 }
 
@@ -773,8 +803,14 @@ function gameArguments() {
   if (brokers.length) args.push('--HALO_WEB_BROKERS=' + brokers.join(','));
   // an invite to join (its code, or a whole link): the address's, else the
   // site's own server's
-  const invite = /([0-9a-f]{64})\s*$/i.exec(params.get('join') || '') || (joinSiteServer ? siteInvite : null);
-  if (invite) args.push('halo://join/' + invite[1].toLowerCase());
+  const invite = INVITE.exec(params.get('join') || '') || (joinSiteServer ? siteInvite : null);
+  if (invite) {
+    args.push('halo://join/' + invite[1].toLowerCase());
+    // (and through the menus to its game, unless the address says otherwise)
+    if (!params.getAll('set').some((value) => value.startsWith('HALO_NET_JOIN_INVITE_AT_START='))) {
+      args.push('--HALO_NET_JOIN_INVITE_AT_START=1');
+    }
+  }
   return args;
 }
 
@@ -1040,6 +1076,7 @@ document.addEventListener('visibilitychange', async () => {
 (async () => {
   applySite();
   await isolate();
+  await loadServer();
   await loadStamp();
   checksPassed = await runChecks();
   if (!checksPassed) {
