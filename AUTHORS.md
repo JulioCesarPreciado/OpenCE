@@ -2,8 +2,11 @@
 
 ## Art
 
-- **The game's icon** (the Android app's launcher icon, `halo.exe`'s icon
-  and the desktop windows' icon): by ORION (`port/assets/icon`).
+- **This fork's logo and icon** (the web page's title and icons, the main
+  menu's logo, the Android app's launcher icon, `halo.exe`'s icon and the
+  desktop windows' icon): by Julio (`port/assets/logo`; `tools/site_logo.py`
+  makes `port/assets/icon` from it). The original project's icon, which
+  these replace, is by ORION.
 - **The controller's A, B, X and Y buttons** (the menus' button icons and
   the HUD messages'): redraws by saulob (`port/assets/buttons`).
 - **The high-res HUD** (its meters, icons, scopes and messages, and the

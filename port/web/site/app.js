@@ -49,6 +49,13 @@ function applySite() {
     document.title = site.name;
     $('site-name').textContent = site.name;
   }
+  // (the logo for the name: a file of the site's own folder)
+  if (typeof site.logo === 'string' && /^[\w.-]+\.(png|svg|webp)$/.test(site.logo)) {
+    const logo = document.createElement('img');
+    logo.src = site.logo;
+    logo.alt = $('site-name').textContent;
+    $('site-name').replaceChildren(logo);
+  }
   $('site-tagline').textContent = typeof site.tagline === 'string' ? site.tagline : '';
   $('data-help').textContent = 'Elige la imagen de tu propio disco del juego (un .iso de Xbox). ' +
     (siteCampaign ? 'Los mapas se copian a este navegador (unos 2 GB, cerca de un minuto)' :

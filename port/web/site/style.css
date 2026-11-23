@@ -86,6 +86,8 @@ a:hover { color: #9fd6ff; }
   overflow-wrap: anywhere;
   color: var(--label);
 }
+/* (the logo for the name: the column's width, its own shape) */
+.start h1 img { display: block; width: 100%; height: auto; }
 .tagline { margin: -8px 0 12px; color: var(--soft); }
 .tagline:empty { display: none; }
 

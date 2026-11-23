@@ -9,7 +9,10 @@ What this copy of the site calls itself and the game its Play button joins
 
 window.SiteConfig = {
   // the page's title and the line under it
-  name: 'Arena',
+  name: 'OpenCE Arena',
+  // the picture shown as the title, in the site's folder (tools/site_logo.py
+  // makes it); empty: the name in the title's font
+  logo: 'logo.png',
   tagline: 'Partidas privadas entre amigos.',
   // the server Play joins: its invite, 64 hex digits or a whole link that
   // ends with them (the server's log and its web page show it). Empty: Play

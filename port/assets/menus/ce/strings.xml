@@ -329,7 +329,7 @@
 		<string text="Message" map="2"/>
 		<string text="Getting Server Info..." map="3"/>
 		<string text="Getting Message of the Day..." map="4"/>
-		<string text="Welcome to Halo Multiplayer!" map="5"/>
+		<string text="Welcome to OpenCE Arena!"/>
 		<string text="SERVERS:" map="6"/>
 		<string text="PLAYERS:" map="7"/>
 		<string text="PAGE" map="8"/>
@@ -433,7 +433,7 @@
 		<string text="Empty game\nsetting slot" map="5"/>
 	</strings>
 	<strings name="main_menu/quit_select/header_quit_game_prompt" map="ui\shell\main_menu\quit_select\header_quit_game_prompt">
-		<string text="Are you sure you wish to\nexit Halo?" map="0"/>
+		<string text="Are you sure you wish to\nexit OpenCE Arena?"/>
 		<string text="Quit?" map="1"/>
 	</strings>
 	<strings name="main_menu/settings_select/multiplayer_setup/indicator_options_edit/cap_indicator_options" map="ui\shell\main_menu\settings_select\multiplayer_setup\indicator_options_edit\cap_indicator_options">
@@ -1139,7 +1139,7 @@
 		<string text="You'll traverse the map in the Rocket Warthog, a\nhardy jeep with a rocket launcher mounted in the back." map="14"/>
 		<string text="Command the skies in the Banshee." map="15"/>
 		<string text="Defend the lands with the powerful Covenant Gun\nTurret." map="16"/>
-		<string text="Every vehicle the map places will spawn, as in\nHalo PC."/>
+		<string text="Every vehicle the map places will spawn, as in\nthe PC version."/>
 		<string text="Customize the set of vehicles which will spawn\nin the map." map="17"/>
 		<string text="No Warthogs will spawn in the map." map="18"/>
 		<string text="Up to one Warthog will spawn in the map." map="19"/>
@@ -1409,7 +1409,7 @@
 		<string text="Choose a window or the full\nscreen, the frame rate and more.\n\nProfile:"/>
 		<string text="Internet play, updates and the\nmultiplayer HUD.\n\nProfile:"/>
 		<string text="Change the current profile's\nfree-for-all multiplayer color.\n\nProfile:" map="7"/>
-		<string text="Halo: Combat Evolved, the Xbox\ngame, on this computer.\n\nProfile:"/>
+		<string text="OpenCE Arena, on this\ncomputer.\n\nProfile:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/profile_edit_options" map="ui\shell\main_menu\settings_select\player_setup\player_profile_edit\profile_edit_options">
 		<string text="CHANGE NAME" map="0"/>
@@ -1506,7 +1506,7 @@
 		<string text="Unable to join game \nbecause it is closed." map="2"/>
 		<string text="Unable to join game." map="3"/>
 		<string text="The game has\nclosed down." map="4"/>
-		<string text="Halo can't connect to\nthe network." map="5"/>
+		<string text="OpenCE Arena can't\nconnect to the network."/>
 		<string text="Network connection lost." map="6"/>
 		<string text="Failed to join the game." map="7"/>
 		<string text="Your game has\ngone out of sync with\nthe others in\nthe game. Resetting..." map="8"/>
@@ -1537,7 +1537,7 @@
 		<string text="Insufficient free space to\nsave game." map="33"/>
 		<string text="Insufficient free save slots." map="34"/>
 		<string text="An error has occurred\nloading a map file." map="35"/>
-		<string text="You have reached the\nmaximum number of Halo\ngame files. Unable to\ncreate additional ones." map="36"/>
+		<string text="You have reached the\nmaximum number of game\nfiles. Unable to\ncreate additional ones."/>
 		<string text="Unable to create new\nplayer profile." map="37"/>
 		<string text="Unable to create new\nmultiplayer game\nsettings entry." map="38"/>
 		<string text="Unable to load saved\nprogress for this\nprofile." map="39"/>

@@ -380,7 +380,7 @@ static BOOL data_extract(const char *image, const char *destination, char *error
 	/* (waited for through extraction.finished; the Windows port's threads
 	cannot be joined) */
 	pthread_detach(thread);
-	window = SDL_CreateWindow("Halo", 640, 150, 0);
+	window = SDL_CreateWindow("OpenCE Arena", 640, 150, 0);
 	if (window)
 	{
 		renderer = SDL_CreateRenderer(window, NULL);
@@ -1267,7 +1267,7 @@ BOOL platform_video_initialize(unsigned long width, unsigned long height)
 
 		if (scale < 1)
 			scale = 1;
-		platform_window = SDL_CreateWindow("Halo", (int)(width * scale), (int)(height * scale),
+		platform_window = SDL_CreateWindow("OpenCE Arena", (int)(width * scale), (int)(height * scale),
 			SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
 	}
 #else
@@ -1278,7 +1278,7 @@ BOOL platform_video_initialize(unsigned long width, unsigned long height)
 	(void)width;
 	(void)height;
 	platform_window_size_setting(&platform_window_width, &platform_window_height);
-	platform_window = SDL_CreateWindow("Halo", (int)platform_window_width, (int)platform_window_height,
+	platform_window = SDL_CreateWindow("OpenCE Arena", (int)platform_window_width, (int)platform_window_height,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY |
 		(config_boolean("debug.hidden_window") ? SDL_WINDOW_HIDDEN : 0) |
 		(platform_fullscreen_setting() ? SDL_WINDOW_FULLSCREEN : 0));
