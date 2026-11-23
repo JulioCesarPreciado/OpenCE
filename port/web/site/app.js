@@ -41,6 +41,8 @@ const MAXIMUM_LOG_LINES = 20000;
 const site = window.SiteConfig || {};
 const siteInvite = /([0-9a-f]{64})\s*$/i.exec(typeof site.server === 'string' ? site.server : '');
 let joinSiteServer = !!siteInvite && !params.has('join') && !params.has('room');
+// whether the campaign's levels are copied with the maps (xiso-worker.js)
+const siteCampaign = site.campaign !== false;
 
 function applySite() {
   if (typeof site.name === 'string' && site.name) {
@@ -48,6 +50,9 @@ function applySite() {
     $('site-name').textContent = site.name;
   }
   $('site-tagline').textContent = typeof site.tagline === 'string' ? site.tagline : '';
+  $('data-help').textContent = 'Elige la imagen de tu propio disco del juego (un .iso de Xbox). ' +
+    (siteCampaign ? 'Los mapas se copian a este navegador (unos 2 GB, cerca de un minuto)' :
+      'Solo se copian los mapas multijugador a este navegador (unos 300 MB)') + ' y no se sube nada.';
   if (typeof site.source === 'string' && /^https:\/\//.test(site.source)) $('about-source').href = site.source;
 }
 
@@ -341,12 +346,12 @@ function setImporting(importing) {
 $('image-input').addEventListener('change', (event) => {
   const file = event.target.files[0];
   event.target.value = '';
-  if (file) importData({ type: 'image', file });
+  if (file) importData({ type: 'image', file, campaign: siteCampaign });
 });
 $('folder-input').addEventListener('change', (event) => {
   const files = [...event.target.files];
   event.target.value = '';
-  if (files.length) importData({ type: 'folder', files });
+  if (files.length) importData({ type: 'folder', files, campaign: siteCampaign });
 });
 
 // CE and MCC imports have separate format policy and storage roots. The

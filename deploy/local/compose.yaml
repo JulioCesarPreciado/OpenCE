@@ -1,0 +1,39 @@
+# A dedicated server on this computer, to try the site with (deploy/local/server.sh
+# starts it). On an Apple Silicon Mac the image runs emulated: enough for a
+# few players, and Custom Edition maps cannot run in it (their memory window
+# is taken). A real server is deploy/docker's, on an x86 Linux machine.
+#
+# The image is the original project's, of the build this fork's network
+# version matches (port/linux/include/halo_port_limits.h): change the tag
+# with it. The data is assets/ (assets/maps: tools/extract_multiplayer_maps.mjs).
+name: arena-local
+
+services:
+  server:
+    image: ghcr.io/opencommunityedition/opence-server:build-387
+    platform: linux/amd64
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp
+    ports:
+      - "2302:2302/udp"
+      # (the admin page, on this computer alone)
+      - "127.0.0.1:8080:8080/tcp"
+    volumes:
+      - ../../assets:/data:ro
+      - state:/state
+    environment:
+      - HALO_SERVER_NAME=${HALO_SERVER_NAME:-Arena local}
+      - HALO_SERVER_ROTATION=${HALO_SERVER_ROTATION:-bloodgulch:slayer, sidewinder:team_slayer, hangemhigh:infection}
+      # (joined by its invite alone: in no one's server browser)
+      - HALO_SERVER_PUBLIC=false
+      - HALO_SERVER_AUTO_UPDATE=off
+      # (this computer's address on its network, which a browser here or on
+      # the same network reaches the container's port through)
+      - HALO_NET_PUBLIC_ADDRESS=${HALO_LOCAL_ADDRESS:?set HALO_LOCAL_ADDRESS to this computer's network address}:2302
+    stop_grace_period: 15s
+
+volumes:
+  state:

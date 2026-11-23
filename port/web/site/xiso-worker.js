@@ -41,7 +41,9 @@ none (loadingPicture; xiso.c's xiso_write_loading_picture does the same).
 Without it the light sweeps over black, as the game's own does.
 
 Messages from the page: { type: 'image', file } (the disc image) or
-{ type: 'folder', files } (a chosen folder's File objects). To the page:
+{ type: 'folder', files } (a chosen folder's File objects), either with
+campaign: false to leave the campaign's levels out (a site that plays
+multiplayer alone: site-config.js). To the page:
 { type: 'progress', file, done, total }, then { type: 'done', files, bytes }
 or { type: 'error', message }. A new copy first removes the old maps folder
 and writes maps/.complete ({"files":[...],"bytes":n}) last: the page takes
@@ -67,6 +69,10 @@ const MAXIMUM_ENTRIES = 4096;
 const MAP_HEADER_SIZE = 0x800;
 const MAP_BUILDS = ['01.10.12.2276', '01.01.14.2342'];
 const COPY_CHUNK = 4 * 1024 * 1024;
+// the campaign's levels, as the game names them (scenario_paths in
+// source/interface/ui_widget.c and source/main/main.c): the game opens each
+// by its file's name in the maps folder
+const CAMPAIGN_LEVELS = ['a10', 'a30', 'a50', 'b30', 'b40', 'c10', 'c20', 'c40', 'd20', 'd40'];
 // the loading screen's picture (source/interface/progress_bar.c), out of
 // default.xbe; the executable is a few MB
 const LOADING_WIDTH = 320;
@@ -158,6 +164,11 @@ async function readTable(file, partition, sector, size, message) {
   return table;
 }
 
+// Whether a file of the maps folder is one of the campaign's levels.
+function campaignLevel(name) {
+  return CAMPAIGN_LEVELS.some((level) => sameName(name, level + '.map'));
+}
+
 // ---------- the maps
 
 // Why the game would not load a map whose first bytes are header, or null.
@@ -178,11 +189,13 @@ function mapProblem(header) {
 
 // The files to copy, of those given ({ name, size, read }): the maps (each
 // checked) and loading.tga, under plain names, the first of names that
-// differ only in case; throws why they cannot be used.
-async function checkedFiles(candidates) {
+// differ only in case; without the campaign's levels when options.campaign
+// is false; throws why they cannot be used.
+async function checkedFiles(candidates, options = {}) {
   const kept = [];
   for (const candidate of candidates) {
     if (!plainName(candidate.name)) continue;
+    if (options.campaign === false && campaignLevel(candidate.name)) continue;
     if (kept.some((file) => sameName(file.name, candidate.name))) continue;
     const lower = asciiLower(candidate.name);
     if (lower.endsWith('.map')) {
@@ -213,7 +226,7 @@ function mapsFolder(directories, language) {
 
 // The maps folder's files in a disc image, as { name, size, read(offset,
 // size) }; throws why it cannot be used.
-async function imageFiles(file) {
+async function imageFiles(file, options = {}) {
   const volume = await findVolume(file);
   if (!volume) throw new Error('This file is not an Xbox disc image (no XDVDFS volume was found).');
   const { partition } = volume;
@@ -241,7 +254,7 @@ async function imageFiles(file) {
       },
     });
   }
-  const files = await checkedFiles(candidates);
+  const files = await checkedFiles(candidates, options);
   if (!files.some((entry) => sameName(entry.name, 'loading.tga'))) {
     const picture = await loadingPictureFile(file, partition, rootEntries);
     if (picture) files.push(picture);
@@ -250,12 +263,12 @@ async function imageFiles(file) {
 }
 
 // The same, from the files of a chosen folder.
-async function folderFiles(list) {
+async function folderFiles(list, options = {}) {
   return checkedFiles(list.map((file) => ({
     name: file.name,
     size: file.size,
     read: (offset, size) => readBytes(file, offset, offset + size),
-  })));
+  })), options);
 }
 
 // ---------- the loading screen's picture
@@ -381,7 +394,9 @@ if (typeof onmessage !== 'undefined' || typeof WorkerGlobalScope !== 'undefined'
   onmessage = async (event) => {
     try {
       const message = event.data;
-      const files = message.type === 'folder' ? await folderFiles(message.files) : await imageFiles(message.file);
+      const options = { campaign: message.campaign !== false };
+      const files = message.type === 'folder' ? await folderFiles(message.files, options) :
+        await imageFiles(message.file, options);
       postMessage({ type: 'done', ...(await copy(files)) });
     } catch (error) {
       postMessage({ type: 'error', message: error && error.message ? error.message : String(error) });
@@ -391,5 +406,6 @@ if (typeof onmessage !== 'undefined' || typeof WorkerGlobalScope !== 'undefined'
 
 // (for the tests: port/web/tests)
 if (typeof module !== 'undefined') {
-  module.exports = { findVolume, walkDirectory, mapProblem, imageFiles, folderFiles, plainName, mapsFolder, loadingPicture };
+  module.exports = { findVolume, walkDirectory, mapProblem, imageFiles, folderFiles, plainName, mapsFolder, loadingPicture,
+    campaignLevel };
 }

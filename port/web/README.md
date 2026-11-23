@@ -171,8 +171,12 @@ through (some company and school networks) keeps a browser out of rooms.
 server its Play button joins (`server`: the server's invite, 64 hex digits
 or a link that ends with them; `serverName`: what the page calls it). With a
 server set, the page shows it and offers the game's own menus under Play; an
-address with `?join=` or `?room=` wins over it. Run `ninja web` after
-changing the file. The page's text is Spanish; the importers' own error
+address with `?join=` or `?room=` wins over it. `campaign: false` copies
+only the multiplayer maps and the menus' map out of the disc image (about
+300 MB instead of 1.9 GB): the campaign's ten levels, by the names the game
+opens them by, are left out. A browser that already has them keeps them
+until its maps are deleted (Datos guardados, Borrar los mapas). Run
+`ninja web` after changing the file. The page's text is Spanish; the importers' own error
 messages are still English.
 
 ### Address parameters
