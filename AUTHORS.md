@@ -28,5 +28,11 @@
   a mod that cannot be played): `triangle-alert` and `circle-x` from
   [Lucide](https://lucide.dev) 1.53.0, under the same licence.
 
+- **The pictures of the menus' option lists** (Multiplayer's rows, the
+  gametype editor's and the profile settings', where the original project
+  drew a placeholder): sixteen icons from [Lucide](https://lucide.dev)
+  1.53.0, under the same licence, drawn in the menus' blue by
+  `tools/menu_pictures.py`.
+
 - **Additional controller button styles**: supplied by the contributor
   (`port/assets/controller_buttons`); original artist attribution is unverified.

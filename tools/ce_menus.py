@@ -56,6 +56,9 @@ ROOT = Path(__file__).resolve().parent.parent
 MENUS = ROOT / "port/assets/menus"
 CE = MENUS / "ce"
 SVG_COPIES = MENUS / "svg"
+# this fork's own drawings of frames the redraws have none of, by the frames'
+# names as the redraws have theirs: looked for first (tools/menu_pictures.py)
+OWN_REDRAWS = MENUS / "own"
 MAIN_MENU = "ui\\shell\\main_menu\\main_menu"
 TITLE_FONT = ROOT / "port/assets/fonts/OpenCE-Regular.ttf"
 # the widgets left out, with their pictures (and all they alone lead to):
@@ -164,7 +167,6 @@ OWN_BITMAPS = {"ui\\shell\\main_menu\\halo_logo": port_settings.LOGO_BITMAP}
 # the same picture, or for the profile settings the Xbox's for the same
 # thing (Change Name; its Controller Setup for Gamepads)
 XBOX_FRAMES = {
-    "shell/main_menu/multiplayer_type_select/mp_options__2": 3,
     "shell/main_menu/settings_select/multiplayer_setup/playlist_edit/gametype_options__2": 2,
     "shell/main_menu/settings_select/multiplayer_setup/playlist_edit/gametype_options__5": 4,
     "shell/main_menu/settings_select/player_setup/player_profile_edit/profile_options__0": 0,
@@ -435,13 +437,22 @@ class Art:
         for index in indices:
             width, height = data[index]["width"], data[index]["height"]
             name = self.frame_sources(relative, index, len(data))[-1]
-            if name in XBOX_FRAMES and not any((self.redraws / f"{source}.svg").is_file()
+            if name in XBOX_FRAMES and not any((folder / f"{source}.svg").is_file()
+                                               for folder in (OWN_REDRAWS, self.redraws)
                                                for source in self.frame_sources(relative, index, len(data))):
                 self.xbox_frames.append((name, tag, XBOX_FRAMES[name]))
                 lines.append(f"\t\t<frame{attributes([('map', tag), ('index', XBOX_FRAMES[name])])}/>")
                 continue
             png = f"ce/{relative}__{index}.png"
             self.draw(relative, index, len(data), width, height, MENUS / png, self.shown.get(tag, []))
+            self.pngs.append(png)
+            lines.append(f"\t\t<frame{attributes([('png', png), ('width', width), ('height', height)])}/>")
+        # (this fork's frames after them, for the rows the PC version's bitmap
+        # has no frame for: its own drawings, the size of the first frame)
+        for index in range(len(data), len(data) + port_settings.OWN_FRAMES.get(our_name(tag), 0)):
+            width, height = data[0]["width"], data[0]["height"]
+            png = f"ce/{relative}__{index}.png"
+            self.draw(relative, index, len(data) + 1, width, height, MENUS / png, self.shown.get(tag, []))
             self.pngs.append(png)
             lines.append(f"\t\t<frame{attributes([('png', png), ('width', width), ('height', height)])}/>")
         # (the port's frames after them: the Xbox map's, scaled)
@@ -455,18 +466,19 @@ class Art:
              shown: list) -> None:
         output.parent.mkdir(parents=True, exist_ok=True)
         for name in self.frame_sources(relative, index, count):
-            svg = self.redraws / f"{name}.svg"
-            if svg.is_file():
-                copy = SVG_COPIES / f"{name}.svg"
-                copy.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(svg, copy)
-                self.svgs.append(copy)
-                scale = max(1, min(SCALE, MAXIMUM_SIZE // max(width, height)))
-                image = render_svg(copy, scale)
-                if image.shape[:2] != (height * scale, width * scale):
-                    sys.exit(f"{svg}: {image.shape[1]}x{image.shape[0]}, not {scale}x {width}x{height}")
-                Image.fromarray(bleed(image), "RGBA").save(output, optimize=True)
-                return
+            for folder in (OWN_REDRAWS, self.redraws):
+                svg = folder / f"{name}.svg"
+                if svg.is_file():
+                    copy = SVG_COPIES / f"{name}.svg"
+                    copy.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(svg, copy)
+                    self.svgs.append(copy)
+                    scale = max(1, min(SCALE, MAXIMUM_SIZE // max(width, height)))
+                    image = render_svg(copy, scale)
+                    if image.shape[:2] != (height * scale, width * scale):
+                        sys.exit(f"{svg}: {image.shape[1]}x{image.shape[0]}, not {scale}x {width}x{height}")
+                    Image.fromarray(bleed(image), "RGBA").save(output, optimize=True)
+                    return
         # (no redraw: the placeholder, as large as fits, in the middle of where
         # the PC version's picture is (only its bounds are read), else of the
         # part the widgets show: a widget draws its bitmap from the top left,
@@ -769,6 +781,9 @@ def main() -> None:
         "",
         f"The main menu's logo (`{site_logo.MENU_LOGO_PNG}`) is this fork's, drawn from",
         "`port/assets/logo/logo-wide.png` (`tools/site_logo.py`) in place of `ui\\shell\\main_menu\\halo_logo`.",
+        "",
+        "The option lists' pictures the PC version's have no redraw of are Lucide icons in the menus' blue",
+        "(`own/`, drawn by `tools/menu_pictures.py`): none is a placeholder.",
         "",
         "These frames are drawn from a frame of the Xbox map's bitmap of the same name, whose other frames differ:",
         "the same picture, or for the profile settings the Xbox's picture for the same thing.",

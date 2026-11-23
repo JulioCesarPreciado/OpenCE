@@ -80,8 +80,14 @@ partida, assets propios, motor propio.
 - Los extractores de escritorio y de Android (`xiso.c`,
   `XisoExtractor.java`) todavía escriben la imagen del disco junto a los
   mapas, aunque el juego ya no la lee.
-- La pantalla Multiplayer muestra un "PLACE HOLDER" en el panel de la
-  derecha (ya estaba así en el proyecto original).
+- Ya no hay imágenes de relleno ("PLACE HOLDER"): las 13 que había, y tres
+  más que le faltaban a la pantalla Multiplayer, son iconos de Lucide en el
+  azul de los menús. `python tools/menu_pictures.py` los vuelve a dibujar
+  (necesita `rsvg-convert`, Pillow, NumPy y SciPy); para cambiar un icono se
+  edita la tabla de ese archivo. Suman unos 3 MB al juego.
+- Para sustituir un icono por arte propio: poner el SVG (512×256) en
+  `port/assets/menus/own/`, con el nombre del cuadro, y correr la
+  herramienta.
 
 ## Límites conocidos
 

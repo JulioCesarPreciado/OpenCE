@@ -33,6 +33,11 @@ QUIT_ITEM_PLACE = (192, 427)
 LOGO_BITMAP = "main_menu/logo"
 LOGO_SIZE = (543, 181)
 LOGO_PLACE = (48, 66)
+# the frames this fork adds after a PC bitmap's own, of its own drawings
+# (tools/ce_menus.py's OWN_REDRAWS; tools/menu_pictures.py draws them):
+# Multiplayer's list shows a picture for each of its six rows, and the PC
+# version's bitmap has three
+OWN_FRAMES = {"main_menu/multiplayer_type_select/mp_options": 3}
 YES_NO = [("YES", "true"), ("NO", "false")]
 ON_OFF = [("ON", "true"), ("OFF", "false")]
 # the multiplayer armor colors, in the profile's order (player_profile.c)
@@ -1086,7 +1091,6 @@ STRING_OVERRIDES.update({
         "Join a game by its invite link,\\nor one a Discord invite\\nreached.",
         "Host a game on the Internet:\\nplayers join by its invite\\nlink or Discord.",
         "Host a game on your LAN\\nonly.",
-        "Play the campaign with a\\nfriend in split screen:\\nplayer 2 on a gamepad.",
         "Set all the attributes for your \\nmultiplayer gametypes and\\nkeep them for future use.",
     ],
     # (and the port's OPENCE: OpenCE's gametypes, port/linux/game/game_modes.c)
@@ -1137,7 +1141,7 @@ STRING_OVERRIDES.update({
 OVERRIDE_ORIGINALS = {
     f"{PE}/profile_edit_descriptions": [0, None, None, None, None, None, None, 7, None],
     f"{MT}/multiplayer_options": [0, 1, 2, 3, None, 5, None, None],
-    f"{MT}/multiplayer_option_descriptions": [0, 1, None, None, 4, None, 5],
+    f"{MT}/multiplayer_option_descriptions": [0, 1, None, None, 4, 5],
     "main_menu/gametype_select/var_gametype_banks": [0, None, 2],
     "main_menu/settings_select/multiplayer_setup/item_options_edit/item_options_labels": [0, 1, 2, 3, 4] + [None] * 4,
     # (the first's note that infinite grenades work only with 4 players or
