@@ -39,14 +39,18 @@ partida, assets propios, motor propio.
   builds: no se compilaron en esta Mac.
 - La app de Android y la ventana de escritorio se llaman "OpenCE Arena".
   Tampoco se vieron en esos builds.
-- La invitación del servidor cambia cada vez que arranca, así que un
-  `server` fijo en `site-config.js` deja de servir al primer reinicio. Dos
-  salidas: que la página lea la invitación vigente de un archivo que el
-  servidor publique, o que el servidor conserve su invitación (cambio en el
-  motor, y entonces hay que compilar una imagen propia del servidor).
-- Entrar con una invitación solo conecta con el servidor: el jugador todavía
-  tiene que ir a Multiplayer, Join Game, LAN y elegir la partida. Entrar
-  solo requiere un cambio en el juego (el modo de pruebas ya lo hace).
+- **Jugar** deja al jugador dentro de la partida. La página lee la
+  invitación vigente de `server.json` (lo escribe `deploy/local/server.sh up`
+  al arrancar el servidor) y el juego recorre solo sus menús hasta la
+  partida (`network.join_invite_at_start`, apagado por defecto; la página lo
+  enciende). Un jugador sin perfil pasa primero por la pantalla de nombre.
+- En el VPS hará falta lo mismo que hace `server.sh`: escribir `server.json`
+  en la carpeta del sitio cada vez que el servidor arranque.
+- Si el servidor está apagado y `server.json` sigue ahí, el jugador queda en
+  la pantalla Direct Link con la lista vacía y un texto genérico; no dice
+  que el servidor no responde.
+- El nombre del jugador nuevo se escribe con el teclado en pantalla del
+  juego; la página todavía no lo pide.
 
 ### Campaña
 
