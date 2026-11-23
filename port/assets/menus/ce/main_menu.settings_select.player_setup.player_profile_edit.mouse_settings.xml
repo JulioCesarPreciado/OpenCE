@@ -40,7 +40,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/mouse_vertical_sensitivity_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/labels" string_index="1" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/mouse_vertical_sensitivity_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SAME|0.1|0.15|0.25|0.4|0.5|0.75|1|1.25|1.5|1.75|2|2.5|3|4" setting="input.mouse_vertical_sensitivity" values="0|0.1|0.15|0.25|0.4|0.5|0.75|1|1.25|1.5|1.75|2|2.5|3|4" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/mouse_vertical_sensitivity_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="IGUAL|0.1|0.15|0.25|0.4|0.5|0.75|1|1.25|1.5|1.75|2|2.5|3|4" setting="input.mouse_vertical_sensitivity" values="0|0.1|0.15|0.25|0.4|0.5|0.75|1|1.25|1.5|1.75|2|2.5|3|4" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/op_invert_mouse" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -49,7 +49,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/invert_mouse_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/labels" string_index="2" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/invert_mouse_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="YES|NO" setting="input.invert_mouse" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/invert_mouse_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="input.invert_mouse" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/op_mouse_aim_assist" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -58,7 +58,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/mouse_aim_assist_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/labels" string_index="3" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/mouse_aim_assist_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ON|OFF" setting="input.mouse_aim_assist" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/mouse_aim_assist_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="input.mouse_aim_assist" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/op_menu_cursor" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF" platform="desktop">
@@ -67,7 +67,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/menu_cursor_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/labels" string_index="4" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/menu_cursor_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="OFF|SMALL|MEDIUM|LARGE|EXTRA LARGE" setting="display.menu_cursor" values="off|small|medium|large|extra_large" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/menu_cursor_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="NO|PEQUEÑO|MEDIANO|GRANDE|EXTRA GRANDE" setting="display.menu_cursor" values="off|small|medium|large|extra_large" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/button_defaults" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" string_list="strings/common_button_captions" string_index="3" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
@@ -81,18 +81,18 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/labels">
-		<string text="HORIZONTAL SENSITIVITY:"/>
-		<string text="VERTICAL SENSITIVITY:"/>
-		<string text="INVERT VERTICAL AXIS:"/>
-		<string text="AIM ASSIST:"/>
-		<string text="MENU CURSOR:"/>
+		<string text="SENSIBILIDAD HORIZONTAL:"/>
+		<string text="SENSIBILIDAD VERTICAL:"/>
+		<string text="INVERTIR EJE VERTICAL:"/>
+		<string text="ASIST. DE PUNTERÍA:"/>
+		<string text="CURSOR DE MENÚS:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/mouse_settings/help_strings">
 		<string text=""/>
-		<string text="How fast the view turns side to side for the\nmouse's movement."/>
-		<string text="How fast the view turns up and down; Same\nturns it as fast as side to side."/>
-		<string text="Moving the mouse forward looks down."/>
-		<string text="Slow and drag the view along with a target while\naiming with the mouse, as with a controller."/>
-		<string text="The menus' blue arrow for the mouse, and its size;\nOff shows the system's pointer."/>
+		<string text="Qué tan rápido gira la vista a los\nlados con el movimiento del mouse."/>
+		<string text="Qué tan rápido gira la vista arriba y abajo;\nIgual la gira tan rápido como a los lados."/>
+		<string text="Mover el mouse hacia adelante mira abajo."/>
+		<string text="Frena y arrastra la vista con un objetivo al\napuntar con el mouse, como con un control."/>
+		<string text="La flecha azul de los menús para el mouse, y\nsu tamaño; No muestra el puntero del sistema."/>
 	</strings>
 </menus>

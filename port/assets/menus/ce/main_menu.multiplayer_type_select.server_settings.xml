@@ -75,7 +75,7 @@
 	</widget>
 	<widget name="main_menu/multiplayer_type_select/server_settings/listing_label" type="text" controller="1" width="300" height="22" string_list="main_menu/multiplayer_type_select/server_settings/labels" string_index="9" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/multiplayer_type_select/server_settings/listing_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="PUBLIC|PRIVATE" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/multiplayer_type_select/server_settings/listing_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="PÚBLICA|PRIVADA" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<widget name="main_menu/multiplayer_type_select/server_settings/op_password" width="512" height="22" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -184,45 +184,45 @@
 	<widget name="main_menu/multiplayer_type_select/server_settings/button_defaults" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" string_list="strings/common_button_captions" string_index="3" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
-	<widget name="main_menu/multiplayer_type_select/server_settings/button_ok" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="START GAME" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
+	<widget name="main_menu/multiplayer_type_select/server_settings/button_ok" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="EMPEZAR" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
 		<on event="a" run="ss start game" open="main_menu/multiplayer_type_select/lobby/lobby_screen"/>
 		<on event="start" run="ss start game" open="main_menu/multiplayer_type_select/lobby/lobby_screen"/>
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/labels">
-		<string text="GAME NAME:"/>
-		<string text="MAXIMUM PLAYERS:"/>
-		<string text="INVITE LINK:"/>
-		<string text="GAME TYPE:"/>
-		<string text="PLAYER OPTIONS:"/>
-		<string text="ITEM OPTIONS:"/>
-		<string text="VEHICLE OPTIONS:"/>
-		<string text="INDICATOR OPTIONS:"/>
-		<string text="TEAMPLAY OPTIONS:"/>
-		<string text="LISTING:"/>
-		<string text="CO-OP OPTIONS:"/>
-		<string text="VOICE AND VOTING:"/>
-		<string text="PASSWORD:"/>
-		<string text="MAP SHARING:"/>
+		<string text="NOMBRE:"/>
+		<string text="MÁX. JUGADORES:"/>
+		<string text="INVITACIÓN:"/>
+		<string text="TIPO DE JUEGO:"/>
+		<string text="JUGADOR:"/>
+		<string text="OBJETOS:"/>
+		<string text="VEHÍCULOS:"/>
+		<string text="INDICADORES:"/>
+		<string text="EQUIPOS:"/>
+		<string text="LISTADO:"/>
+		<string text="CO-OP:"/>
+		<string text="VOZ Y VOTOS:"/>
+		<string text="CONTRASEÑA:"/>
+		<string text="COMPARTIR MAPAS:"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/server_settings/help_strings">
 		<string text=""/>
-		<string text="The name the game shows in the lists of games.\nEnter changes it."/>
-		<string text="The most players the game takes (up to 128)."/>
-		<string text="Players join this game by its invite link, or your\nDiscord invite. Enter copies the link again."/>
-		<string text="The gametype and its rules, for this game."/>
-		<string text="Lives, health, shields and respawning, for this game."/>
-		<string text="Weapons, grenades and starting equipment, for\nthis game."/>
-		<string text="Each team's vehicles and their respawn time, for\nthis game."/>
-		<string text="The motion tracker and nav points, for this game."/>
-		<string text="Friendly fire and team balance, for this game."/>
-		<string text="Anyone can see and join your game: it is listed\nfor everyone through the brokers."/>
-		<string text="Only players with your invite link can join."/>
-		<string text="Team wipes, friendly fire, enemies and collisions,\nfor this game."/>
-		<string text="Voice chat, text chat and votes to kick a player,\nfor this game."/>
-		<string text="Players from the Server Browser must type it to\njoin (an invite link needs none). Enter sets it."/>
-		<string text="Sharing Custom Edition maps and MCC packages\nwith joining players, and how fast."/>
-		<string text="Listed for everyone through the brokers, and on\nthe master servers with your publisher key."/>
+		<string text="El nombre de la partida en las\nlistas de partidas. Enter lo cambia."/>
+		<string text="El máximo de jugadores de la partida (hasta 128)."/>
+		<string text="Los jugadores entran con el enlace de invitación o tu\ninvitación de Discord. Enter copia el enlace otra vez."/>
+		<string text="El tipo de juego y sus reglas, para esta partida."/>
+		<string text="Vidas, salud, escudos y reaparición, para esta partida."/>
+		<string text="Armas, granadas y equipo inicial, para\nesta partida."/>
+		<string text="Los vehículos de cada equipo y su\nreaparición, para esta partida."/>
+		<string text="El sensor de movimiento y los puntos de navegación."/>
+		<string text="Fuego amigo y balance de equipos, para esta partida."/>
+		<string text="Cualquiera puede ver tu partida y entrar:\nse lista para todos a través de los brokers."/>
+		<string text="Solo entran jugadores con tu enlace de invitación."/>
+		<string text="Equipo eliminado, fuego amigo, enemigos\ny colisiones, para esta partida."/>
+		<string text="Chat de voz, chat de texto y votos para expulsar,\npara esta partida."/>
+		<string text="Quien entre desde el navegador de servidores debe\nescribirla (con enlace no hace falta). Enter la pone."/>
+		<string text="Compartir mapas de Custom Edition y paquetes\nde MCC con quienes entran, y a qué velocidad."/>
+		<string text="Listada para todos a través de los brokers, y en\nlos servidores maestros con tu clave de publicador."/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/coop_options_screen" width="640" height="480" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/gradient">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/header_coop_options"/>
@@ -267,10 +267,10 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_friendly_fire">
-		<string text="OFF"/>
-		<string text="ON"/>
-		<string text="SHIELD ONLY"/>
-		<string text="EXPLOSIVES ONLY"/>
+		<string text="NO"/>
+		<string text="SÍ"/>
+		<string text="SOLO ESCUDOS"/>
+		<string text="SOLO EXPLOSIVOS"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/op_coop_extra_enemies" width="512" height="26" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/coop_extra_enemies_label"/>
@@ -282,9 +282,9 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_extra_enemies">
-		<string text="PER PLAYER"/>
-		<string text="STATIC MULTIPLIER"/>
-		<string text="NONE"/>
+		<string text="POR JUGADOR"/>
+		<string text="MULTIPLICADOR FIJO"/>
+		<string text="NINGUNO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/op_coop_extra_pickups" width="512" height="26" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/coop_extra_pickups_label"/>
@@ -296,9 +296,9 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_extra_pickups">
-		<string text="PER PLAYER"/>
-		<string text="STATIC MULTIPLIER"/>
-		<string text="NONE"/>
+		<string text="POR JUGADOR"/>
+		<string text="MULTIPLICADOR FIJO"/>
+		<string text="NINGUNO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/op_coop_extra_vehicles" width="512" height="26" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/coop_extra_vehicles_label"/>
@@ -310,9 +310,9 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_extra_vehicles">
-		<string text="PER PLAYER"/>
-		<string text="STATIC MULTIPLIER"/>
-		<string text="NONE"/>
+		<string text="POR JUGADOR"/>
+		<string text="MULTIPLICADOR FIJO"/>
+		<string text="NINGUNO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/op_coop_enemies_multiplier" width="512" height="26" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/coop_enemies_multiplier_label"/>
@@ -356,8 +356,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_player_collisions">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/op_coop_ally_friendly_fire" width="512" height="26" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/coop_ally_friendly_fire_label"/>
@@ -369,8 +369,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_ally_friendly_fire">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/op_coop_team_wipe" width="512" height="26" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/coop_team_wipe_label"/>
@@ -383,8 +383,8 @@
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_team_wipe">
 		<string text="AUTO"/>
-		<string text="REVERT CHECKPOINT"/>
-		<string text="RESPAWN ONLY"/>
+		<string text="VOLVER AL PUNTO"/>
+		<string text="SOLO REAPARECER"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/coop_options/op_coop_vehicle_riding" width="512" height="26" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/coop_options/coop_vehicle_riding_label"/>
@@ -396,54 +396,54 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/var_coop_vehicle_riding">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/coop_options_labels">
-		<string text="FRIENDLY FIRE:"/>
-		<string text="EXTRA ENEMIES:"/>
-		<string text="EXTRA PICKUPS:"/>
-		<string text="EXTRA VEHICLES:"/>
-		<string text="MULTIPLIER:"/>
-		<string text="PER PLAYER:"/>
-		<string text="PLAYER COLLISIONS:"/>
-		<string text="ALLY FRIENDLY FIRE:"/>
-		<string text="TEAM WIPE:"/>
-		<string text="VEHICLE RIDING:"/>
+		<string text="FUEGO AMIGO:"/>
+		<string text="ENEMIGOS EXTRA:"/>
+		<string text="OBJETOS EXTRA:"/>
+		<string text="VEHÍCULOS EXTRA:"/>
+		<string text="MULTIPLICADOR:"/>
+		<string text="POR JUGADOR:"/>
+		<string text="COLISIONES:"/>
+		<string text="DAÑO A ALIADOS:"/>
+		<string text="EQUIPO CAÍDO:"/>
+		<string text="IR SOBRE VEHÍCULOS:"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/server_settings/coop_options/cap_coop_options">
-		<string text="Players can not be hurt by weapons and explosives\nfired by the other players."/>
-		<string text="Players can be hurt by weapons or explosives\nfired by the other players."/>
-		<string text="Damage from the other players will only reduce\nshields. Health will be unaffected."/>
-		<string text="Players can be hurt by damage from explosives\nfired by the other players."/>
-		<string text="Enemy squads grow with the players: by the value of\n'Per Player' for each player past the first."/>
-		<string text="Enemy squads use 'Multiplier', however many players\nthere are."/>
-		<string text="Enemy squads are as the campaign has them."/>
-		<string text="Pickups grow with the players: by the value of\n'Per Player' for each player past the first."/>
-		<string text="Pickups use 'Multiplier', up to eight times as many,\nhowever many players there are."/>
-		<string text="Pickups are as the campaign has them."/>
-		<string text="Vehicles respawn after being driven a short distance\nbased on the number of players: by two thirds the value of\n'Per Player' for each player past the first."/>
-		<string text="Vehicles respawn after being driven a short distance,\nwith extra copies equal to ('Multiplier' - 1) * 2/3,\nrounded down, however many players there are."/>
-		<string text="Vehicles are as the campaign has them."/>
-		<string text="Static amounts for the options set to this mode.\nPickups are capped at eight times as many."/>
-		<string text="Static amounts for the options set to this mode.\nPickups are capped at eight times as many."/>
-		<string text="Static amounts for the options set to this mode.\nPickups are capped at eight times as many."/>
-		<string text="Static amounts for the options set to this mode.\nPickups are capped at eight times as many."/>
-		<string text="Static amounts for the options set to this mode.\nPickups are capped at eight times as many."/>
-		<string text="For each player past the first, options set to Per\nPlayer get this much more (100%: as many again)."/>
-		<string text="For each player past the first, options set to Per\nPlayer get this much more (100%: as many again)."/>
-		<string text="For each player past the first, options set to Per\nPlayer get this much more (100%: as many again)."/>
-		<string text="For each player past the first, options set to Per\nPlayer get this much more (100%: as many again)."/>
-		<string text="For each player past the first, options set to Per\nPlayer get this much more (100%: as many again)."/>
-		<string text="Players bump into each other, as in the campaign."/>
-		<string text="Players walk through each other, so that no one\nblocks a doorway. The AI's characters still block."/>
-		<string text="Players can hurt and kill their AI allies, as in\nthe campaign."/>
-		<string text="Players can not hurt their AI allies, so that no\none can kill Keyes or the Marines a level needs."/>
-		<string text="Private games revert the checkpoint; public games\nonly respawn. A changed team or missing save\nalways uses respawn only."/>
-		<string text="Revert the checkpoint after everyone dies. A changed\nteam or missing save uses respawn only."/>
-		<string text="Respawn at checkpoint positions after everyone dies.\nThe world keeps its progress."/>
-		<string text="Players standing on a vehicle are carried by it.\nOff: as the original game, riders slide off."/>
-		<string text="Players standing on a vehicle are carried by it.\nOff: as the original game, riders slide off."/>
+		<string text="Las armas y explosivos de los demás jugadores\nno hacen daño."/>
+		<string text="Las armas y explosivos de los\ndemás jugadores hacen daño."/>
+		<string text="El daño de los demás jugadores solo baja los\nescudos. La salud no se ve afectada."/>
+		<string text="Los explosivos de los demás jugadores\nhacen daño."/>
+		<string text="Los escuadrones enemigos crecen con los jugadores: lo\nde 'Por jugador' por cada jugador después del primero."/>
+		<string text="Los escuadrones enemigos usan 'Multiplicador',\nsin importar cuántos jugadores haya."/>
+		<string text="Los escuadrones enemigos son los de la campaña."/>
+		<string text="Los objetos crecen con los jugadores: lo de 'Por\njugador' por cada jugador después del primero."/>
+		<string text="Los objetos usan 'Multiplicador', hasta ocho\nveces más, sin importar cuántos jugadores haya."/>
+		<string text="Los objetos son los de la campaña."/>
+		<string text="Los vehículos reaparecen al manejarlos un tramo corto,\nsegún los jugadores: dos tercios de 'Por jugador'\npor cada jugador después del primero."/>
+		<string text="Los vehículos reaparecen al manejarlos un tramo corto,\ncon copias extra iguales a ('Multiplicador' - 1) * 2/3,\nredondeado hacia abajo, sin importar los jugadores."/>
+		<string text="Los vehículos son los de la campaña."/>
+		<string text="Cantidades fijas para las opciones en este modo.\nLos objetos llegan como máximo a ocho veces más."/>
+		<string text="Cantidades fijas para las opciones en este modo.\nLos objetos llegan como máximo a ocho veces más."/>
+		<string text="Cantidades fijas para las opciones en este modo.\nLos objetos llegan como máximo a ocho veces más."/>
+		<string text="Cantidades fijas para las opciones en este modo.\nLos objetos llegan como máximo a ocho veces más."/>
+		<string text="Cantidades fijas para las opciones en este modo.\nLos objetos llegan como máximo a ocho veces más."/>
+		<string text="Por cada jugador después del primero, las opciones\n'Por jugador' suman esto (100%: otro tanto)."/>
+		<string text="Por cada jugador después del primero, las opciones\n'Por jugador' suman esto (100%: otro tanto)."/>
+		<string text="Por cada jugador después del primero, las opciones\n'Por jugador' suman esto (100%: otro tanto)."/>
+		<string text="Por cada jugador después del primero, las opciones\n'Por jugador' suman esto (100%: otro tanto)."/>
+		<string text="Por cada jugador después del primero, las opciones\n'Por jugador' suman esto (100%: otro tanto)."/>
+		<string text="Los jugadores chocan entre sí, como en la campaña."/>
+		<string text="Los jugadores se atraviesan, para que nadie bloquee\nuna puerta. Los personajes de la IA sí bloquean."/>
+		<string text="Los jugadores pueden herir y matar a sus\naliados de la IA, como en la campaña."/>
+		<string text="Los jugadores no pueden herir a sus aliados de la IA,\nasí nadie mata a Keyes ni a los Marines necesarios."/>
+		<string text="Las partidas privadas vuelven al punto de control;\nlas públicas solo reaparecen. Con equipo cambiado\no sin guardado siempre es solo reaparecer."/>
+		<string text="Volver al punto de control cuando todos mueren. Con\nequipo cambiado o sin guardado es solo reaparecer."/>
+		<string text="Reaparecer en el punto de control cuando\ntodos mueren. El mundo conserva su avance."/>
+		<string text="Los jugadores parados sobre un vehículo viajan con\nél. No: como en el juego original, se resbalan."/>
+		<string text="Los jugadores parados sobre un vehículo viajan con\nél. No: como en el juego original, se resbalan."/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/voice_options/voice_options_screen" width="640" height="480" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/gradient">
 		<child widget="main_menu/multiplayer_type_select/server_settings/voice_options/header_voice_options"/>
@@ -484,11 +484,11 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/voice_options/var_voice_mode">
-		<string text="OFF"/>
-		<string text="TEAM NEAR"/>
-		<string text="ANYONE NEAR"/>
-		<string text="TEAM"/>
-		<string text="TEAM, ENEMIES NEAR"/>
+		<string text="NO"/>
+		<string text="EQUIPO CERCA"/>
+		<string text="TODOS CERCA"/>
+		<string text="EQUIPO"/>
+		<string text="EQUIPO, ENEMIGOS CERCA"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/voice_options/op_voice_lobby" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/voice_options/voice_lobby_label"/>
@@ -500,8 +500,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/voice_options/var_voice_lobby">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/voice_options/op_voice_kbps" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/voice_options/voice_kbps_label"/>
@@ -548,8 +548,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/voice_options/var_votekick">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/voice_options/op_text_chat" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/voice_options/text_chat_label"/>
@@ -561,44 +561,44 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/voice_options/var_text_chat">
-		<string text="ON"/>
-		<string text="WITH LINKS"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="CON ENLACES"/>
+		<string text="NO"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/server_settings/voice_options/voice_options_labels">
-		<string text="VOICE CHAT:"/>
-		<string text="LOBBY VOICE CHAT:"/>
-		<string text="VOICE QUALITY:"/>
-		<string text="VOICE NEAR DISTANCE:"/>
-		<string text="VOTE KICK:"/>
-		<string text="TEXT CHAT:"/>
+		<string text="CHAT DE VOZ:"/>
+		<string text="VOZ EN LA SALA:"/>
+		<string text="CALIDAD DE VOZ:"/>
+		<string text="DISTANCIA DE VOZ:"/>
+		<string text="VOTAR EXPULSIÓN:"/>
+		<string text="CHAT DE TEXTO:"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/server_settings/voice_options/cap_voice_options">
-		<string text="No voice chat during the game."/>
-		<string text="Players hear their teammates who are near them."/>
-		<string text="Players hear everyone who is near them."/>
-		<string text="Players hear all their teammates, wherever they\nare."/>
-		<string text="Players hear all their teammates, and the enemies\nwho are near them."/>
-		<string text="Everyone hears everyone in the lobby, before and\nafter the game."/>
-		<string text="No voice chat in the lobby."/>
-		<string text="Voices at 8 kilobits a second, in the lobby\nand in the game."/>
-		<string text="Voices at 12 kilobits a second, in the lobby\nand in the game."/>
-		<string text="Voices at 16 kilobits a second, in the lobby\nand in the game."/>
-		<string text="Voices at 24 kilobits a second, in the lobby\nand in the game."/>
-		<string text="Voices at 32 kilobits a second, in the lobby\nand in the game."/>
-		<string text="Voices at 48 kilobits a second, in the lobby\nand in the game."/>
-		<string text="Voices at 64 kilobits a second, in the lobby\nand in the game."/>
-		<string text="Players 15 metres apart or less are near\nfor voice chat."/>
-		<string text="Players 30 metres apart or less are near\nfor voice chat."/>
-		<string text="Players 45 metres apart or less are near\nfor voice chat."/>
-		<string text="Players 60 metres apart or less are near\nfor voice chat."/>
-		<string text="Players 90 metres apart or less are near\nfor voice chat."/>
-		<string text="Players 150 metres apart or less are near\nfor voice chat."/>
-		<string text="Players can vote to kick a player, from the\nscoreboard."/>
-		<string text="Players cannot vote to kick anyone."/>
-		<string text="Players can type to each other; lines with links\nare refused. Off in a public internet game."/>
-		<string text="Players can type to each other, links too. Off\nin a public internet game."/>
-		<string text="No text chat in the game."/>
+		<string text="Sin chat de voz durante la partida."/>
+		<string text="Los jugadores oyen a sus compañeros que están cerca."/>
+		<string text="Los jugadores oyen a todos los que están cerca."/>
+		<string text="Los jugadores oyen a todo su\nequipo, estén donde estén."/>
+		<string text="Los jugadores oyen a todo su equipo\ny a los enemigos que están cerca."/>
+		<string text="Todos se oyen en la sala, antes y\ndespués de la partida."/>
+		<string text="Sin chat de voz en la sala."/>
+		<string text="Voces a 8 kilobits por segundo, en la sala\ny en la partida."/>
+		<string text="Voces a 12 kilobits por segundo, en la sala\ny en la partida."/>
+		<string text="Voces a 16 kilobits por segundo, en la sala\ny en la partida."/>
+		<string text="Voces a 24 kilobits por segundo, en la sala\ny en la partida."/>
+		<string text="Voces a 32 kilobits por segundo, en la sala\ny en la partida."/>
+		<string text="Voces a 48 kilobits por segundo, en la sala\ny en la partida."/>
+		<string text="Voces a 64 kilobits por segundo, en la sala\ny en la partida."/>
+		<string text="Jugadores a 15 metros o menos\nestán cerca para el chat de voz."/>
+		<string text="Jugadores a 30 metros o menos\nestán cerca para el chat de voz."/>
+		<string text="Jugadores a 45 metros o menos\nestán cerca para el chat de voz."/>
+		<string text="Jugadores a 60 metros o menos\nestán cerca para el chat de voz."/>
+		<string text="Jugadores a 90 metros o menos\nestán cerca para el chat de voz."/>
+		<string text="Jugadores a 150 metros o menos\nestán cerca para el chat de voz."/>
+		<string text="Los jugadores pueden votar para\nexpulsar a alguien, desde el marcador."/>
+		<string text="Los jugadores no pueden votar para expulsar a nadie."/>
+		<string text="Los jugadores pueden escribirse; las líneas con enlaces\nse rechazan. Apagado en partidas públicas por internet."/>
+		<string text="Los jugadores pueden escribirse, con enlaces.\nApagado en partidas públicas por internet."/>
+		<string text="Sin chat de texto en la partida."/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/map_share_options/map_share_options_screen" width="640" height="480" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/gradient">
 		<child widget="main_menu/multiplayer_type_select/server_settings/map_share_options/header_map_share_options"/>
@@ -635,8 +635,8 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/server_settings/map_share_options/var_map_share">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/server_settings/map_share_options/op_map_share_upload" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
 		<child widget="main_menu/multiplayer_type_select/server_settings/map_share_options/map_share_upload_label"/>
@@ -661,22 +661,22 @@
 		<string text="250 MB/S"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/server_settings/map_share_options/map_share_options_labels">
-		<string text="SHARE MAPS:"/>
-		<string text="UPLOAD LIMIT:"/>
+		<string text="COMPARTIR MAPAS:"/>
+		<string text="LÍMITE DE SUBIDA:"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/server_settings/map_share_options/cap_map_share_options">
-		<string text="Share CE maps and MCC packages automatically.\nMCC base resources must be installed locally."/>
-		<string text="Players who join without the map cannot play."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
-		<string text="The most you send of maps, so that the game\nkeeps the rest of your upload."/>
+		<string text="Compartir mapas de CE y paquetes de MCC solos.\nLos recursos base de MCC deben estar instalados."/>
+		<string text="Quien entre sin el mapa no puede jugar."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
+		<string text="Lo máximo que envías de mapas, para que\nla partida conserve el resto de tu subida."/>
 	</strings>
 </menus>

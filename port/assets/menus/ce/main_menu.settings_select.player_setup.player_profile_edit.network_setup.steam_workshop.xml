@@ -122,7 +122,7 @@
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/steam_workshop/button_bar" type="column_list" width="640" height="28" flags="pass_unhandled_to_focused_child left_right_tabs_items">
 		<child widget="main_menu/settings_select/player_setup/player_profile_edit/network_setup/steam_workshop/button_back" x="510" y="1"/>
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/steam_workshop/button_back" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="BACK" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/steam_workshop/button_back" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="ATRÁS" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
 		<on event="a" run="port steam back"/>
 		<on event="start" run="port steam back"/>
 		<on event="left_mouse" run="mouse emit accept event"/>

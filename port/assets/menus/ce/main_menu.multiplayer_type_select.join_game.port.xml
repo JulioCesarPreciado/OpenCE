@@ -38,72 +38,72 @@
 	<widget name="main_menu/multiplayer_type_select/join_game/password/button_defaults" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" string_list="strings/common_button_captions" string_index="3" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
-	<widget name="main_menu/multiplayer_type_select/join_game/password/button_ok" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="JOIN GAME" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
+	<widget name="main_menu/multiplayer_type_select/join_game/password/button_ok" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="UNIRSE" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
 		<on event="a" run="port password join"/>
 		<on event="start" run="port password join"/>
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/multiplayer_type_select/join_game/password/labels">
-		<string text="PASSWORD:"/>
+		<string text="CONTRASEÑA:"/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/join_game/password/help_strings">
 		<string text=""/>
-		<string text="This game has a password. Type it, then press\nEnter to join."/>
-		<string text="That is not the game's password. Try again."/>
-		<string text="Could not join the game."/>
+		<string text="Esta partida tiene contraseña.\nEscríbela y pulsa Enter para unirte."/>
+		<string text="Esa no es la contraseña de la partida. Intenta otra vez."/>
+		<string text="No se pudo entrar a la partida."/>
 	</strings>
 	<strings name="main_menu/multiplayer_type_select/join_game/browser_words">
-		<string text="of"/>
-		<string text="players"/>
-		<string text="player"/>
-		<string text="under way"/>
-		<string text="full or starting"/>
-		<string text="Dedicated server by"/>
-		<string text="listed on"/>
-		<string text="master server"/>
-		<string text="master servers"/>
-		<string text="Dedicated server"/>
-		<string text="Hosted by a player (anonymous listing)"/>
-		<string text="Password required"/>
-		<string text="Needs the newer build: Settings &gt; Network Setup &gt; Check for updates"/>
-		<string text="Runs an older build: it can be joined once it updates"/>
-		<string text="Asking the brokers for the host..."/>
-		<string text="The host answered: connecting (UDP hole punching)..."/>
-		<string text="Connected: joining the game..."/>
-		<string text="The host did not answer (offline, or its listing is stale)"/>
-		<string text="No route to the host: a forwarded port on either side helps"/>
-		<string text="The host refused: full"/>
-		<string text="The host refused: closed"/>
-		<string text="The host refused: banned"/>
-		<string text="The host refused: wrong password"/>
-		<string text="The host refused: another version"/>
-		<string text="The host refused: its invite changed"/>
-		<string text="Strict NAT: turn on UPnP, or forward a port"/>
-		<string text="Internet play is off (Settings)"/>
-		<string text="The server browser is off (network.public_lobby)"/>
-		<string text="Looking for public games..."/>
-		<string text="Games on a newer version (update the game to join them):"/>
-		<string text="No public games found"/>
-		<string text="No games match the filters"/>
-		<string text="No master server answered: showing player-hosted games only"/>
-		<string text="dedicated"/>
-		<string text="JOINING"/>
-		<string text="NEWER"/>
-		<string text="OLDER"/>
-		<string text="FAILED"/>
-		<string text="LIVE"/>
-		<string text="CLOSED"/>
-		<string text="Internet play is off:\nSettings &gt; Network Setup"/>
-		<string text="Neither the master servers\nnor the brokers answer:\ncheck the connection"/>
-		<string text="The host refused: your player name"/>
-		<string text="The host blocks VPNs: link Discord in Settings &gt; Network Setup"/>
-		<string text="The host refused: it allows no VPNs"/>
-		<string text="The host refused your Discord link: link it again"/>
-		<string text="The host refused: your Discord account is too new"/>
-		<string text="The host refused: your Discord account is in the game"/>
-		<string text="The host blocks VPNs: link Discord with its master (Settings &gt; Network Setup)"/>
-		<string text="The host refused: too many players from your address"/>
-		<string text="Refreshing..."/>
+		<string text="de"/>
+		<string text="jugadores"/>
+		<string text="jugador"/>
+		<string text="en curso"/>
+		<string text="llena o por empezar"/>
+		<string text="Servidor dedicado de"/>
+		<string text="listado en"/>
+		<string text="servidor maestro"/>
+		<string text="servidores maestros"/>
+		<string text="Servidor dedicado"/>
+		<string text="Alojada por un jugador (listado anónimo)"/>
+		<string text="Requiere contraseña"/>
+		<string text="Requiere la versión nueva: Ajustes &gt; Red &gt; Actualizaciones"/>
+		<string text="Usa una versión anterior: se podrá entrar cuando se actualice"/>
+		<string text="Preguntando a los brokers por el anfitrión..."/>
+		<string text="El anfitrión respondió: conectando (UDP hole punching)..."/>
+		<string text="Conectado: entrando a la partida..."/>
+		<string text="El anfitrión no respondió (apagado, o su listado es viejo)"/>
+		<string text="Sin ruta al anfitrión: abrir un puerto en algún lado ayuda"/>
+		<string text="El anfitrión rechazó: partida llena"/>
+		<string text="El anfitrión rechazó: partida cerrada"/>
+		<string text="El anfitrión rechazó: estás expulsado"/>
+		<string text="El anfitrión rechazó: contraseña incorrecta"/>
+		<string text="El anfitrión rechazó: otra versión"/>
+		<string text="El anfitrión rechazó: su invitación cambió"/>
+		<string text="NAT estricto: activa UPnP o abre un puerto"/>
+		<string text="El juego por internet está apagado (Ajustes)"/>
+		<string text="Navegador de servidores apagado (network.public_lobby)"/>
+		<string text="Buscando partidas públicas..."/>
+		<string text="Partidas en versión más nueva (actualiza para entrar):"/>
+		<string text="No se encontraron partidas públicas"/>
+		<string text="Ninguna partida coincide con los filtros"/>
+		<string text="Ningún servidor maestro respondió: solo partidas de jugadores"/>
+		<string text="dedicado"/>
+		<string text="ENTRANDO"/>
+		<string text="NUEVA"/>
+		<string text="VIEJA"/>
+		<string text="FALLÓ"/>
+		<string text="EN VIVO"/>
+		<string text="CERRADA"/>
+		<string text="Juego por internet\napagado: Ajustes &gt; Red"/>
+		<string text="Ni los servidores maestros\nni los brokers responden:\nrevisa la conexión"/>
+		<string text="El anfitrión rechazó: tu nombre de jugador"/>
+		<string text="El anfitrión bloquea VPN: vincula Discord en Ajustes &gt; Red"/>
+		<string text="El anfitrión rechazó: no permite VPN"/>
+		<string text="Vínculo de Discord rechazado: vincúlalo otra vez"/>
+		<string text="El anfitrión rechazó: tu cuenta de Discord es muy nueva"/>
+		<string text="El anfitrión rechazó: tu Discord ya está en la partida"/>
+		<string text="El anfitrión bloquea VPN: vincula Discord con su maestro (Ajustes &gt; Red)"/>
+		<string text="Rechazado: demasiados jugadores desde tu dirección"/>
+		<string text="Actualizando..."/>
 	</strings>
 	<widget name="main_menu/multiplayer_type_select/join_game/error_words" type="text" controller="1" width="280" height="159" bitmap="bitmaps/alert_bkd" font="ui\large_ui" color="#FF2896FF" text_x="9" text_y="35" text_flags="no_focus_test">
 	</widget>
@@ -111,7 +111,7 @@
 	</widget>
 	<widget name="main_menu/multiplayer_type_select/join_game/header_direct_link" controller="1" left="35" top="11" width="363" height="59" bitmap="main_menu/multiplayer_type_select/join_game/header_direct_link">
 	</widget>
-	<widget name="main_menu/multiplayer_type_select/join_game/button_clipboard" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="PASTE LINK" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
+	<widget name="main_menu/multiplayer_type_select/join_game/button_clipboard" type="text" width="128" height="24" bitmap="bitmaps/text_button_background" text="PEGAR ENLACE" font="ui\small_ui" color="#FFFFFFFF" align="center" text_y="2">
 		<on event="a" run="direct ip connect go"/>
 		<on event="start" run="direct ip connect go"/>
 		<on event="left_mouse" run="mouse emit accept event"/>

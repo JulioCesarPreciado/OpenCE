@@ -140,7 +140,9 @@ def test_menu_toggle_defaults_off_and_generator_owns_screens():
     from port_settings import settings_files
     for name,lines in settings_files().items():
         if 'controller_appearance' in name:
-            assert (ROOT/'port/assets/menus/ce'/name).read_text()=='\n'.join(lines)
+            # (the files hold the generator's text in this fork's language: tools/menu_language.py)
+            import menu_language
+            assert (ROOT/'port/assets/menus/ce'/name).read_text()==menu_language.translate_xml('\n'.join(lines))
             assert 'MENU GLYPHS:' in '\n'.join(lines)
 
 

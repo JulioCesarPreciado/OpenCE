@@ -42,7 +42,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/output_device_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/labels" string_index="0" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/output_device_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SYSTEM DEFAULT" setting="audio.output_device" values="default" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/output_device_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="PREDETERMINADO" setting="audio.output_device" values="default" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/op_input_device" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF" platform="desktop">
@@ -51,7 +51,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/input_device_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/labels" string_index="1" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/input_device_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SYSTEM DEFAULT" setting="audio.input_device" values="default" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/input_device_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="PREDETERMINADO" setting="audio.input_device" values="default" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/op_volume" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -87,7 +87,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/enabled_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/labels" string_index="5" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/enabled_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ON|OFF" setting="audio.enabled" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/enabled_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="audio.enabled" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/op_voice_chat" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -96,7 +96,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/voice_chat_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/labels" string_index="6" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/voice_chat_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="PUSH TO TALK|OPEN MIC|OFF" setting="audio.voice_chat" values="push_to_talk|open_mic|off" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/voice_chat_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="AL PULSAR|MICRO ABIERTO|NO" setting="audio.voice_chat" values="push_to_talk|open_mic|off" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/op_voice_volume" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -127,26 +127,26 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/labels">
-		<string text="OUTPUT DEVICE:"/>
-		<string text="INPUT DEVICE:"/>
-		<string text="MASTER VOLUME:"/>
-		<string text="MUSIC VOLUME:"/>
-		<string text="EFFECTS VOLUME:"/>
-		<string text="SOUND:"/>
-		<string text="VOICE CHAT:"/>
-		<string text="VOICE VOLUME:"/>
-		<string text="SOUND PROCESSING:"/>
+		<string text="SALIDA DE AUDIO:"/>
+		<string text="ENTRADA DE AUDIO:"/>
+		<string text="VOLUMEN GENERAL:"/>
+		<string text="VOLUMEN DE MÚSICA:"/>
+		<string text="VOLUMEN DE EFECTOS:"/>
+		<string text="SONIDO:"/>
+		<string text="CHAT DE VOZ:"/>
+		<string text="VOLUMEN DE VOZ:"/>
+		<string text="PROCESADO DE SONIDO:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/audio_settings/help_strings">
 		<string text=""/>
-		<string text="Where the game's sound and the voices play."/>
-		<string text="The microphone voice chat listens to."/>
-		<string text="The volume of everything."/>
-		<string text="The music's volume."/>
-		<string text="The volume of every other sound: effects and\nspeech."/>
-		<string text="Play sound at all; from the next time the game\nstarts."/>
-		<string text="Talk in network games: while PUSH TO TALK is held\n(Controls), whenever you speak, or never."/>
-		<string text="The other players' voices."/>
-		<string text="Directional sound, reverb and how sounds are\nconverted to the output's rate."/>
+		<string text="Dónde suenan el juego y las voces."/>
+		<string text="El micrófono que escucha el chat de voz."/>
+		<string text="El volumen de todo."/>
+		<string text="El volumen de la música."/>
+		<string text="El volumen de todo lo demás: efectos y\ndiálogos."/>
+		<string text="Reproducir sonido o no; desde la\npróxima vez que abras el juego."/>
+		<string text="Hablar en partidas en red: mientras mantienes la tecla\nde hablar (Teclas), siempre que hables, o nunca."/>
+		<string text="Las voces de los demás jugadores."/>
+		<string text="Sonido direccional, reverberación y cómo se\nconvierten los sonidos a la frecuencia de salida."/>
 	</strings>
 </menus>

@@ -201,8 +201,13 @@ def test_the_menus_name_known_platforms_and_match_their_generator():
     for path in sorted((ROOT / "port/assets/menus/ce").glob("*.xml")):
         for value in re.findall(r'platform="([^"]*)"', path.read_text()):
             assert value.split() and set(value.split()) <= {"desktop", "android", "web"}, (path.name, value)
+    # (the files hold the generator's text in this fork's language: tools/menu_language.py)
+    import menu_language
+
     for name, lines in [*port_settings.settings_files().items(), *port_settings.multiplayer_files().items()]:
-        assert (ROOT / "port/assets/menus/ce" / name).read_text() == "\n".join(lines), name
+        assert (ROOT / "port/assets/menus/ce" / name).read_text() == menu_language.translate_xml("\n".join(lines)), name
+    # (and no text the menus show is left without a translation, or a decision to keep it)
+    assert menu_language.missing() == {}
     # the rows a browser has no use for are not on its screens; internet
     # play's is (port/web/src/web_p2p.c)
     network = (ROOT / "port/assets/menus/ce/main_menu.settings_select.player_setup.player_profile_edit."

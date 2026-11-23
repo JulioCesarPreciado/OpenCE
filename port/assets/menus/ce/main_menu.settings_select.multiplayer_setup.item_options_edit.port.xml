@@ -38,23 +38,23 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/item_options_edit/var_map_weapons">
-		<string text="YES"/>
+		<string text="SÍ"/>
 		<string text="NO"/>
 	</strings>
 	<strings name="main_menu/settings_select/multiplayer_setup/item_options_edit/var_loadout">
-		<string text="CATEGORY"/>
-		<string text="CUSTOM"/>
+		<string text="CATEGORÍA"/>
+		<string text="PERSONAL"/>
 	</strings>
 	<strings name="main_menu/settings_select/multiplayer_setup/item_options_edit/var_loadout_weapon">
-		<string text="NONE"/>
-		<string text="RANDOM"/>
-		<string text="ASSAULT RIFLE"/>
-		<string text="PISTOL"/>
-		<string text="SHOTGUN"/>
-		<string text="SNIPER RIFLE"/>
-		<string text="ROCKET LAUNCHER"/>
-		<string text="PLASMA PISTOL"/>
-		<string text="PLASMA RIFLE"/>
+		<string text="NINGUNO"/>
+		<string text="AL AZAR"/>
+		<string text="RIFLE DE ASALTO"/>
+		<string text="PISTOLA"/>
+		<string text="ESCOPETA"/>
+		<string text="FRANCOTIRADOR"/>
+		<string text="LANZACOHETES"/>
+		<string text="PISTOLA DE PLASMA"/>
+		<string text="RIFLE DE PLASMA"/>
 		<string text="NEEDLER"/>
 	</strings>
 </menus>

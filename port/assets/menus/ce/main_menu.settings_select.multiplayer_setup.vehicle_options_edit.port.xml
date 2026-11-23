@@ -11,7 +11,7 @@
 		<on event="left_mouse" run="mouse spinner 1wide click"/>
 	</widget>
 	<strings name="main_menu/settings_select/multiplayer_setup/vehicle_options_edit/var_vehicle_riding">
-		<string text="ON"/>
-		<string text="OFF"/>
+		<string text="SÍ"/>
+		<string text="NO"/>
 	</strings>
 </menus>

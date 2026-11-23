@@ -52,12 +52,12 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/video_settings/hdr_calibration/labels">
-		<string text="PEAK BRIGHTNESS:"/>
-		<string text="PAPER WHITE:"/>
+		<string text="BRILLO MÁXIMO:"/>
+		<string text="BLANCO DE PAPEL:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/video_settings/hdr_calibration/help_strings">
 		<string text=""/>
-		<string text="Raise it until the ring just disappears into\nthe square: the brightest your display shows."/>
-		<string text="How bright white is (the menus, the HUD, the\ngrey bars), in nits. Choose what looks right."/>
+		<string text="Súbelo hasta que el anillo apenas desaparezca en el\ncuadro: lo más brillante que muestra tu pantalla."/>
+		<string text="Qué tan brillante es el blanco (menús, HUD, las\nbarras grises), en nits. Elige lo que se vea bien."/>
 	</strings>
 </menus>

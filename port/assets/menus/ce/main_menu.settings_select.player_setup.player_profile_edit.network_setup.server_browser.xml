@@ -32,7 +32,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/listings_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/labels" string_index="0" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/listings_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="ALL GAMES|DEDICATED|P2P GAMES" setting="network.listings" values="both|masters|brokers" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/listings_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="TODAS|DEDICADOS|DE JUGADORES" setting="network.listings" values="both|masters|brokers" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/op_browser_show_empty" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -41,7 +41,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_show_empty_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/labels" string_index="1" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_show_empty_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="YES|NO" setting="network.browser_show_empty" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_show_empty_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="network.browser_show_empty" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/op_browser_show_full" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -50,7 +50,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_show_full_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/labels" string_index="2" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_show_full_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="YES|NO" setting="network.browser_show_full" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_show_full_spinner" type="spinner" left="3" top="2" width="147" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="SÍ|NO" setting="network.browser_show_full" values="true|false" font="ui\large_ui" color="#FF2896FF" align="center" text_y="1" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -6 19 0" footer_bounds="7 150 19 156">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/op_browser_maps" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -59,7 +59,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_maps_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/labels" string_index="3" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_maps_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="NO|YES|IF DOWNLOADABLE" setting="network.browser_maps" values="no|yes|downloadable" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_maps_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="NO|SÍ|SI SE DESCARGA" setting="network.browser_maps" values="no|yes|downloadable" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/op_browser_sort" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -68,7 +68,7 @@
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_sort_label" type="text" controller="1" width="300" height="22" string_list="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/labels" string_index="4" font="ui\large_ui" color="#FF2896FF" text_x="13" text_y="4">
 	</widget>
-	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_sort_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="DEDICATED FIRST|PLAYERS|NAME|MAP|GAME TYPE|LOCKED FIRST" setting="network.browser_sort" values="servers|players|name|map|type|locked" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
+	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/browser_sort_spinner" type="spinner" top="2" width="206" height="20" flags="pass_unhandled_to_focused_child left_right_tabs_items" strings="DEDICADOS PRIMERO|JUGADORES|NOMBRE|MAPA|TIPO DE JUEGO|CON CLAVE PRIMERO" setting="network.browser_sort" values="servers|players|name|map|type|locked" font="ui\large_ui" color="#FF2896FF" align="center" text_y="4" header_bitmap="bitmaps/arrow_sm_left" footer_bitmap="bitmaps/arrow_sm_right" header_bounds="7 -13 19 -7" footer_bounds="7 208 19 214">
 		<on event="created" run="port setting load"/>
 	</widget>
 	<widget name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/op_master_servers" width="512" height="28" flags="pass_unhandled_to_focused_child" bitmap="bitmaps/option_bkds" color="#FF2896FF">
@@ -90,26 +90,26 @@
 		<on event="left_mouse" run="mouse emit accept event"/>
 	</widget>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/labels">
-		<string text="LISTS:"/>
-		<string text="SHOW EMPTY SERVERS:"/>
-		<string text="SHOW FULL SERVERS:"/>
-		<string text="SHOW MISSING MAPS:"/>
-		<string text="SORT BY:"/>
-		<string text="MASTER SERVERS:"/>
+		<string text="LISTAS:"/>
+		<string text="SERVIDORES VACÍOS:"/>
+		<string text="SERVIDORES LLENOS:"/>
+		<string text="MAPAS QUE NO TIENES:"/>
+		<string text="ORDENAR POR:"/>
+		<string text="SERVIDORES MAESTROS:"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/words">
-		<string text="OF"/>
-		<string text="NONE LISTED"/>
-		<string text="NOT ASKED YET"/>
-		<string text="OFF"/>
+		<string text="DE"/>
+		<string text="NINGUNO"/>
+		<string text="SIN CONSULTAR"/>
+		<string text="NO"/>
 	</strings>
 	<strings name="main_menu/settings_select/player_setup/player_profile_edit/network_setup/server_browser/help_strings">
 		<string text=""/>
-		<string text="The master servers' dedicated servers, the games\nplayers host (through the brokers), or all of them."/>
-		<string text="List games no one is playing yet."/>
-		<string text="List games with no room left."/>
-		<string text="List games on maps you do not have: IF\nDOWNLOADABLE, those Map Sharing can download."/>
-		<string text="The list's order. Its column titles sort it too;\nchoosing one again reverses it."/>
-		<string text="The master servers (masters.txt) that answered\nwhen the Server Browser last asked."/>
+		<string text="Los servidores dedicados de los maestros, las\npartidas de jugadores (por los brokers), o todos."/>
+		<string text="Lista partidas donde aún no juega nadie."/>
+		<string text="Lista partidas sin lugar."/>
+		<string text="Lista partidas en mapas que no tienes: SI SE\nDESCARGA, los que Compartir mapas puede bajar."/>
+		<string text="El orden de la lista. Los títulos de columna\ntambién ordenan; elegir uno otra vez lo invierte."/>
+		<string text="Los servidores maestros (masters.txt) que respondieron\nla última vez que el navegador de servidores preguntó."/>
 	</strings>
 </menus>
