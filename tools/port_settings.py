@@ -1177,8 +1177,11 @@ WIDGET_PATCHES = {
     # to its own size)
     "main_menu/halo_logo": {"set": {"width": LOGO_SIZE[0], "height": LOGO_SIZE[1]}},
     # (the main menu's MODS, before Quit: _mods)
+    # (and, on it and on Multiplayer's list, the presses a game started with
+    # an invite posts: menu_functions.c's invite_join_menu)
     "main_menu/main_menu_select_list": {"insert_before": {"main_menu/main_menu_item_quit_game": [
-        f'<child widget="main_menu/main_menu_item_mods" x="{MODS_ITEM_PLACE[0]}" y="{MODS_ITEM_PLACE[1]}"/>']}},
+        f'<child widget="main_menu/main_menu_item_mods" x="{MODS_ITEM_PLACE[0]}" y="{MODS_ITEM_PLACE[1]}"/>']},
+        "inputs": ["port invite join"]},
     f"{PLAYER_EDIT}/player_options_menu": {"insert_before": {
         f"{PLAYER_EDIT}/player_button_bar": [
             f'<child widget="{PLAYER_EDIT}/op_aim_assist" x="54" y="289"/>',
@@ -1213,6 +1216,7 @@ WIDGET_PATCHES = {
     ]},
     # (Co-op, after Create Game's (_coop), is left out: this fork plays
     # multiplayer alone, and co-op plays the campaign's levels)
+    f"{MT}/multiplayer_type_select_list": {"inputs": ["port invite join"]},
     # (the Map screen's and New Game's lists: SINGLEPLAYER or MULTIPLAYER
     # maps, the first row's chooser's (_map_kind); B on the Map screen goes
     # from a co-op level's difficulties back to the level, else out of the

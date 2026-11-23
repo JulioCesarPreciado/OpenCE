@@ -446,6 +446,9 @@ static char const *const port_game_data_input_names[] =
 	"port map vote update",
 	/* (HDR Calibration's patterns, drawn by the renderer) */
 	"port hdr calibration",
+	/* (the main menu's list and Multiplayer's, for a game started with an
+	invite: menu_functions.c's invite_join_menu) */
+	"port invite join",
 };
 
 static struct

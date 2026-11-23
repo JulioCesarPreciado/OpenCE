@@ -5999,6 +5999,95 @@ static boolean password_screen_edit(struct widget_instance *row, boolean *widget
 	return TRUE;
 }
 
+/* ---- an invite the game was started with (network.join_invite_at_start:
+a web page's ?join=, a link opened): the player is taken to its game by the
+presses they would make themselves, each posted for them once: Multiplayer
+on the main menu, Direct Link on Multiplayer, the game's row once its host
+is reached, JOIN GAME if the game is under way. Each screen is opened by its
+own handlers, so Back leads where it always does, and a player with no
+profile makes one on the way */
+
+/* a press posted as its screen opens is lost with what opened it */
+#define INVITE_JOIN_PRESS_DELAY 500
+
+enum
+{
+	_invite_join_main_menu,
+	_invite_join_multiplayer,
+	_invite_join_game,
+	_invite_join_preview,
+	NUMBER_OF_INVITE_JOIN_STEPS
+};
+
+static struct
+{
+	/* whether the game was started with an invite to follow (asked once,
+	as the first of these screens shows) */
+	boolean checked, wanted;
+	/* the steps whose press was posted, and when each one's screen was
+	first seen (0: not yet) */
+	boolean pressed[NUMBER_OF_INVITE_JOIN_STEPS];
+	unsigned long seen_time[NUMBER_OF_INVITE_JOIN_STEPS];
+} invite_join;
+
+/* whether the step's press is due: an invite to follow, the press not yet
+posted, and its screen up for a moment */
+static boolean invite_join_due(short step)
+{
+	unsigned long now = system_milliseconds();
+
+	if (!invite_join.checked)
+	{
+		int stage;
+
+		invite_join.checked = TRUE;
+		invite_join.wanted = config_boolean("network.join_invite_at_start") && config_boolean("network.online") &&
+			p2p_join_progress(&stage, NULL, 0) != P2P_JOIN_NONE;
+		if (invite_join.wanted)
+			platform_log("menus: started with an invite: taking the player to its game");
+	}
+	if (!invite_join.wanted || invite_join.pressed[step])
+		return FALSE;
+	if (!invite_join.seen_time[step])
+	{
+		invite_join.seen_time[step] = now ? now : 1;
+		return FALSE;
+	}
+	return now - invite_join.seen_time[step] >= INVITE_JOIN_PRESS_DELAY;
+}
+
+static void invite_join_press(short step)
+{
+	invite_join.pressed[step] = TRUE;
+	ui_widget_port_post_button(0, BUTTON_A);
+}
+
+/* "port invite join" (the main menu's list and Multiplayer's): the item
+that leads on focused, and its A press posted */
+static void invite_join_menu(struct widget_instance *list)
+{
+	boolean multiplayer_list = strstr(list->name, "multiplayer_type") != NULL;
+	short step = multiplayer_list ? _invite_join_multiplayer : _invite_join_main_menu;
+	char const *item = multiplayer_list ? "multiplayer_type_join_direct" : "main_menu_item_multiplayer";
+	struct widget_instance *child;
+	short index = 0;
+
+	if (!invite_join_due(step))
+		return;
+	for (child = list->child; child; child = child->next, index++)
+	{
+		if (strstr(child->name, item))
+		{
+			list->focused_child = child;
+			list->parameters.list.selected_index = index;
+			invite_join_press(step);
+			return;
+		}
+	}
+	/* (no such item: a menu of the player's own, menus/) */
+	invite_join.pressed[step] = TRUE;
+}
+
 /* "gamespy screen update": the games' rows (name, map, gametype, players),
 the one chosen's line, the counts over the titles (the PC version's: its
 players, page, servers) */
@@ -6014,6 +6103,16 @@ static void browser_update(struct widget_instance *list)
 		return;
 	}
 	browser_games_read();
+	/* (the invite the game was started with: its host reached, its game
+	listed, its row's A press posted: invite_join) */
+	if (multiplayer.mode == _multiplayer_mode_direct_link && multiplayer.game_count > 0 &&
+		invite_join_due(_invite_join_game))
+	{
+		multiplayer.game_chosen = 0;
+		lobby_browser_focus_row(list, 0);
+		focused = 0;
+		invite_join_press(_invite_join_game);
+	}
 	if (focused != NONE && focused < multiplayer.game_count && !ui_widget_port_hover_focused())
 		multiplayer.game_chosen = focused;
 	for (row = list->child; row; row = row->next)
@@ -7519,6 +7618,20 @@ static void preview_update(struct widget_instance *list)
 	text_set_length(named(list, "preview_status", 0), text, LOBBY_TEXT_LENGTH);
 	lobby_join_help(list);
 	profile_name_show(description);
+	/* (the invite the game was started with, its game under way: JOIN
+	GAME's press posted: invite_join) */
+	if (valid && game->open && invite_join.pressed[_invite_join_game] && invite_join_due(_invite_join_preview))
+	{
+		struct widget_instance *bar = named(list, "preview_button_bar", 0);
+		struct widget_instance *join = named(bar, "preview_button_join", 0);
+
+		if (bar && join)
+		{
+			list->focused_child = bar;
+			bar->focused_child = join;
+		}
+		invite_join_press(_invite_join_preview);
+	}
 }
 
 /* "port lobby preview add" (START): as the lobby's ("port lobby join"), a
@@ -9413,4 +9526,6 @@ void pc_menu_game_data_function_invoke(
 		coop_friendly_fire_text(widget);
 	else if (!strcmp(name, "port playlist edit desc"))
 		playlist_edit_description(widget);
+	else if (!strcmp(name, "port invite join"))
+		invite_join_menu(widget);
 }
