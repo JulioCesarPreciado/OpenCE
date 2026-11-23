@@ -33,6 +33,11 @@ QUIT_ITEM_PLACE = (192, 427)
 LOGO_BITMAP = "main_menu/logo"
 LOGO_SIZE = (543, 181)
 LOGO_PLACE = (48, 66)
+# the frames this fork adds after a PC bitmap's own, of its own drawings
+# (tools/ce_menus.py's OWN_REDRAWS; tools/menu_pictures.py draws them):
+# Multiplayer's list shows a picture for each of its six rows, and the PC
+# version's bitmap has three
+OWN_FRAMES = {"main_menu/multiplayer_type_select/mp_options": 3}
 YES_NO = [("YES", "true"), ("NO", "false")]
 ON_OFF = [("ON", "true"), ("OFF", "false")]
 # the multiplayer armor colors, in the profile's order (player_profile.c)
