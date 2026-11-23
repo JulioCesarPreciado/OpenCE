@@ -50,6 +50,7 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from hud_assets import bleed, render_svg  # noqa: E402
 import port_settings  # noqa: E402
+import site_logo  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 MENUS = ROOT / "port/assets/menus"
@@ -95,6 +96,9 @@ CHILD_OFFSETS = {
        for index, row in enumerate(port_settings.PLAYER_OPTIONS_ROWS)},
     ("ui\\shell\\main_menu\\main_menu_select_list", "ui\\shell\\main_menu\\main_menu_item_quit_game"):
         port_settings.QUIT_ITEM_PLACE,
+    # this fork's logo, smaller than the map's, centred where that was
+    **{(f"ui\\shell\\main_menu\\{screen}", "ui\\shell\\main_menu\\halo_logo"): port_settings.LOGO_PLACE
+       for screen in ("main_menu", "campaign_select\\campaign_menu")},
     ("ui\\shell\\main_menu\\multiplayer_type_select\\multiplayer_type_select_list",
      "ui\\shell\\main_menu\\multiplayer_type_select\\multiplayer_type_gametypes_item"): (0, 358),
     ("ui\\shell\\main_menu\\multiplayer_type_select\\multiplayer_type_select_screen",
@@ -149,9 +153,12 @@ REPLACE = [None, "controller", "build_number", "pid"]
 XBOX_BITMAPS = {
     "ui\\shell\\bitmaps\\colors_sm", "ui\\shell\\bitmaps\\mp_map_grafix", "ui\\shell\\bitmaps\\sp_levels",
     "ui\\shell\\main_menu\\difficulty_select\\difficulty_options",
-    "ui\\shell\\main_menu\\difficulty_select\\difficulty_options_small", "ui\\shell\\main_menu\\halo_logo",
+    "ui\\shell\\main_menu\\difficulty_select\\difficulty_options_small",
     "ui\\shell\\main_menu\\settings_select\\player_setup\\player_profile_edit\\color_edit\\player_color_marine_large",
 }
+# the PC bitmaps this fork has a picture of its own for, and its <bitmap>:
+# the main menu's logo (Art.logo), not the Xbox map's
+OWN_BITMAPS = {"ui\\shell\\main_menu\\halo_logo": port_settings.LOGO_BITMAP}
 # the frames with no redraw that are drawn from a frame of the Xbox map's
 # bitmap of the same name, whose other frames differ (<frame map=...>):
 # the same picture, or for the profile settings the Xbox's for the same
@@ -309,8 +316,8 @@ def text_value(utf16: bytes) -> str:
 
 def strings_xml(lists: dict) -> str:
     """strings.xml: the PC version's string lists (each tag's strings), with
-    the port's changes to them (port_settings.STRING_OVERRIDES and
-    STRING_INSERTS). Each list names its tag (map=) and each of its strings
+    the port's changes to them (port_settings.STRING_OVERRIDES,
+    STRING_CHANGES and STRING_INSERTS). Each list names its tag (map=) and each of its strings
     that is the PC version's its index there (map=), which a map in another
     language has in its language (menu_tags.c's map_strings)."""
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -321,6 +328,9 @@ def strings_xml(lists: dict) -> str:
         if our_name(tag) in port_settings.STRING_OVERRIDES:
             strings = port_settings.STRING_OVERRIDES[our_name(tag)]
             originals = port_settings.OVERRIDE_ORIGINALS.get(our_name(tag), [None] * len(strings))
+        strings, originals = list(strings), list(originals)
+        for index, text in port_settings.STRING_CHANGES.get(our_name(tag), {}).items():
+            strings[index], originals[index] = text, None
         for index, texts in port_settings.STRING_INSERTS.get(our_name(tag), []):
             strings = strings[:index] + texts + strings[index:]
             originals = originals[:index] + [None] * len(texts) + originals[index:]
@@ -378,6 +388,16 @@ class Art:
         self.pngs.append(png)
         return "\n".join([f"\t<bitmap{attributes([('name', name)])}>",
                           f"\t\t<frame{attributes([('png', png), ('width', 512), ('height', 64)])}/>",
+                          "\t</bitmap>"])
+
+    def logo(self) -> str:
+        """the <bitmap> of this fork's logo, drawn from its drawing
+        (tools/site_logo.py)"""
+        width, height = port_settings.LOGO_SIZE
+        site_logo.menu_logo(MENUS / site_logo.MENU_LOGO_PNG)
+        self.pngs.append(site_logo.MENU_LOGO_PNG)
+        return "\n".join([f"\t<bitmap{attributes([('name', port_settings.LOGO_BITMAP)])}>",
+                          f"\t\t<frame{attributes([('png', site_logo.MENU_LOGO_PNG), ('width', width), ('height', height)])}/>",
                           "\t</bitmap>"])
 
     def port_picture(self, name: str, frames: list) -> str:
@@ -490,7 +510,10 @@ def reachable(tags: Tags) -> dict:
 
 
 def bitmap_name(tag: str) -> str:
-    """a bitmap: the Xbox map's (its path) for those it has, else ours"""
+    """a bitmap: the Xbox map's (its path) for those it has, this fork's own
+    for those it draws, else ours"""
+    if tag in OWN_BITMAPS:
+        return OWN_BITMAPS[tag]
     return tag if tag in XBOX_BITMAPS else our_name(tag)
 
 
@@ -681,7 +704,7 @@ def main() -> None:
         if widget["text label unicode strings list"]:
             string_lists.add(widget["text label unicode strings list"])
         for key in ("background bitmap", "list header bitmap", "list footer bitmap"):
-            if widget[key] and widget[key] not in XBOX_BITMAPS:
+            if widget[key] and widget[key] not in XBOX_BITMAPS and widget[key] not in OWN_BITMAPS:
                 bitmaps.add(widget[key])
     for folder, members in sorted(folders.items()):
         lines = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -710,6 +733,8 @@ def main() -> None:
         ((ROOT / "port/assets/icons/lucide" / f"{icon}.svg").read_text().replace('stroke="currentColor"',
                                                                                  'stroke="#FFFFFF"'), 24, 24)
         for icon in ("volume-2", "volume-x")]))
+    # (this fork's logo, on the main menu)
+    lines.append(art.logo())
     # (the main menu's MODS, in the redraws' own letters, and the mods'
     # status icons: Lucide's, port/assets/icons/lucide)
     lines.append(art.port_picture("main_menu/menu_mods", port_settings.menu_item_frames("MODS", art.redraws)))
@@ -739,6 +764,11 @@ def main() -> None:
     ]
     report += [f"- `{tag}`" for tag in sorted(XBOX_BITMAPS)]
     report += [
+        "",
+        "## This fork's own",
+        "",
+        f"The main menu's logo (`{site_logo.MENU_LOGO_PNG}`) is this fork's, drawn from",
+        "`port/assets/logo/logo-wide.png` (`tools/site_logo.py`) in place of `ui\\shell\\main_menu\\halo_logo`.",
         "",
         "These frames are drawn from a frame of the Xbox map's bitmap of the same name, whose other frames differ:",
         "the same picture, or for the profile settings the Xbox's picture for the same thing.",

@@ -2,7 +2,7 @@
 <!-- The PC version's menus: ui\shell\main_menu\campaign_select (tools/ce_menus.py) -->
 <menus>
 	<widget name="main_menu/campaign_select/campaign_menu" width="640" height="480" flags="pass_unhandled_to_focused_child">
-		<child widget="main_menu/halo_logo" y="28"/>
+		<child widget="main_menu/halo_logo" x="48" y="66"/>
 		<child widget="main_menu/campaign_select/campaign_menu_select_list"/>
 	</widget>
 	<widget name="main_menu/campaign_select/campaign_menu_select_list" type="column_list" width="640" height="480" flags="pass_unhandled_to_focused_child up_down_tabs_items">

@@ -43,11 +43,20 @@ const siteInvite = /([0-9a-f]{64})\s*$/i.exec(typeof site.server === 'string' ? 
 let joinSiteServer = !!siteInvite && !params.has('join') && !params.has('room');
 // whether the campaign's levels are copied with the maps (xiso-worker.js)
 const siteCampaign = site.campaign !== false;
+// whether the disc's loading picture is (a game with its own has no use for it)
+const siteLoadingPicture = site.discLoadingPicture !== false;
 
 function applySite() {
   if (typeof site.name === 'string' && site.name) {
     document.title = site.name;
     $('site-name').textContent = site.name;
+  }
+  // (the logo for the name: a file of the site's own folder)
+  if (typeof site.logo === 'string' && /^[\w.-]+\.(png|svg|webp)$/.test(site.logo)) {
+    const logo = document.createElement('img');
+    logo.src = site.logo;
+    logo.alt = $('site-name').textContent;
+    $('site-name').replaceChildren(logo);
   }
   $('site-tagline').textContent = typeof site.tagline === 'string' ? site.tagline : '';
   $('data-help').textContent = 'Elige la imagen de tu propio disco del juego (un .iso de Xbox). ' +
@@ -346,12 +355,12 @@ function setImporting(importing) {
 $('image-input').addEventListener('change', (event) => {
   const file = event.target.files[0];
   event.target.value = '';
-  if (file) importData({ type: 'image', file, campaign: siteCampaign });
+  if (file) importData({ type: 'image', file, campaign: siteCampaign, loadingPicture: siteLoadingPicture });
 });
 $('folder-input').addEventListener('change', (event) => {
   const files = [...event.target.files];
   event.target.value = '';
-  if (files.length) importData({ type: 'folder', files, campaign: siteCampaign });
+  if (files.length) importData({ type: 'folder', files, campaign: siteCampaign, loadingPicture: siteLoadingPicture });
 });
 
 // CE and MCC imports have separate format policy and storage roots. The

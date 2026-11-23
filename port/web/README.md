@@ -175,8 +175,11 @@ address with `?join=` or `?room=` wins over it. `campaign: false` copies
 only the multiplayer maps and the menus' map out of the disc image (about
 300 MB instead of 1.9 GB): the campaign's ten levels, by the names the game
 opens them by, are left out. A browser that already has them keeps them
-until its maps are deleted (Datos guardados, Borrar los mapas). Run
-`ninja web` after changing the file. The page's text is Spanish; the importers' own error
+until its maps are deleted (Datos guardados, Borrar los mapas).
+`discLoadingPicture: false` leaves the disc's loading screen picture out
+too: this fork's game has its own built in (`port/assets/logo/loading.tga`,
+which `tools/site_logo.py` draws from the logo) and never reads the disc's.
+Run `ninja web` after changing the file. The page's text is Spanish; the importers' own error
 messages are still English.
 
 ### Address parameters

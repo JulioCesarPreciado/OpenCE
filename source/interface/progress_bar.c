@@ -319,6 +319,12 @@ does not include) */
 void rasterizer_forget_hardware_state(
 	void);
 
+/* port: this fork's own loading picture, built into the game
+(tools/embed_assets.py, from port/assets/logo/loading.tga): a byte of
+intensity for each texel, the texture's rows in order */
+extern const unsigned int platform_loading_picture[];
+extern const unsigned long platform_loading_picture_size;
+
 extern struct pixel_shader_definition blur_shader;
 extern struct pixel_shader_definition regular_shader;
 extern unsigned long current_time;
@@ -2307,7 +2313,26 @@ static void progress_bar_load_loading_texture(
 	pixels= locked_rect.pBits;
 	csstrcpy(map_directory, cache_files_map_directory());
 	sprintf(source_path, "z%sloading.tga", map_directory + 1);
-	file= fopen(source_path, "rb");
+	/* port: this fork draws its own picture, not the disc's: the file is
+	not read when the game has one built in, whose texels are made of its
+	intensities as tgaLoadImageData makes them */
+	if (platform_loading_picture_size==320*240)
+	{
+		const unsigned char *intensities= (const unsigned char *)platform_loading_picture;
+		long index;
+
+		for (index= 0; index<320*240; index++)
+		{
+			unsigned long intensity= intensities[index];
+
+			pixels[index]= ((intensity<<9) | (intensity & ~1))<<7 | intensity>>2;
+		}
+		file= NULL;
+	}
+	else
+	{
+		file= fopen(source_path, "rb");
+	}
 	if (file)
 	{
 		image.width= 0;

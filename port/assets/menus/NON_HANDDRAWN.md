@@ -15,8 +15,12 @@ from (the player's own; nothing is shipped). `mp_map_grafix`: the Xbox's has the
 - `ui\shell\bitmaps\sp_levels`
 - `ui\shell\main_menu\difficulty_select\difficulty_options`
 - `ui\shell\main_menu\difficulty_select\difficulty_options_small`
-- `ui\shell\main_menu\halo_logo`
 - `ui\shell\main_menu\settings_select\player_setup\player_profile_edit\color_edit\player_color_marine_large`
+
+## This fork's own
+
+The main menu's logo (`ce/shell/main_menu/logo__0.png`) is this fork's, drawn from
+`port/assets/logo/logo-wide.png` (`tools/site_logo.py`) in place of `ui\shell\main_menu\halo_logo`.
 
 These frames are drawn from a frame of the Xbox map's bitmap of the same name, whose other frames differ:
 the same picture, or for the profile settings the Xbox's picture for the same thing.

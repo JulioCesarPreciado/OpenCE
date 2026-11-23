@@ -26,6 +26,13 @@ MODS = "main_menu/mods"
 MOD_ROWS = 11
 MODS_ITEM_PLACE = (192, 391)
 QUIT_ITEM_PLACE = (192, 427)
+# this fork's logo on the main menu, in place of the Xbox map's
+# (tools/ce_menus.py's OWN_BITMAPS; tools/site_logo.py draws it): its
+# <bitmap>, its size in the menus' screen (its drawing's shape, 3 to 1) and
+# where the screens place it, centred where the map's logo was
+LOGO_BITMAP = "main_menu/logo"
+LOGO_SIZE = (543, 181)
+LOGO_PLACE = (48, 66)
 YES_NO = [("YES", "true"), ("NO", "false")]
 ON_OFF = [("ON", "true"), ("OFF", "false")]
 # the multiplayer armor colors, in the profile's order (player_profile.c)
@@ -641,7 +648,7 @@ STRING_OVERRIDES = {
         "Choose a window or the full\\nscreen, the frame rate and more.\\n\\nProfile:",
         "Internet play, updates and the\\nmultiplayer HUD.\\n\\nProfile:",
         "Change the current profile's\\nfree-for-all multiplayer color.\\n\\nProfile:",
-        "Halo: Combat Evolved, the Xbox\\ngame, on this computer.\\n\\nProfile:",
+        "OpenCE Arena, on this\\ncomputer.\\n\\nProfile:",
     ],
 }
 
@@ -1044,7 +1051,7 @@ STRING_INSERTS = {
     f"{VEHICLE_EDIT}/var_vehicle_set": [(8, ["PC"])],
     f"{VEHICLE_EDIT}/vehicle_options_labels": [(9, ["VEHICLE RIDING:"])],
     f"{VEHICLE_EDIT}/cap_vehicle_options": [(17, [
-        "Every vehicle the map places will spawn, as in\\nHalo PC.",
+        "Every vehicle the map places will spawn, as in\\nthe PC version.",
     ]), (7, [VEHICLE_RIDING_HELP] * 2)],
     f"{SLAYER_EDIT}/cap_slayer": [(11, [
         "Seventy-five kills to win. Settle in for a long\\nfight.",
@@ -1140,6 +1147,18 @@ OVERRIDE_ORIGINALS = {
     "main_menu/settings_select/multiplayer_setup/item_options_edit/var_weapon_set": list(range(13)) + [None],
 }
 
+# single strings of the PC version's lists that name the game, said of this
+# fork: a list's index in the PC version's list, and the text there. The
+# rest of each list stays the PC version's (tools/ce_menus.py's strings_xml);
+# a string changed is this fork's own in every language.
+STRING_CHANGES = {
+    "main_menu/quit_select/header_quit_game_prompt": {0: "Are you sure you wish to\\nexit OpenCE Arena?"},
+    f"{MT}/join_game/join_game_ticker_labels": {5: "Welcome to OpenCE Arena!"},
+    "strings/displayed_error_messages": {
+        5: "OpenCE Arena can't\\nconnect to the network.",
+        36: "You have reached the\\nmaximum number of game\\nfiles. Unable to\\ncreate additional ones."},
+}
+
 # the map lists' first row: SINGLEPLAYER, MULTIPLAYER, CUSTOM SINGLEPLAYER or
 # CUSTOM MULTIPLAYER maps (_map_kind)
 MAP_KIND_CHOOSER = "main_menu/new_select/list_item_0_map_kind"
@@ -1150,6 +1169,9 @@ WIDGET_PATCHES = {
     f"{VEHICLE_EDIT}/vehicle_options_menu": {"insert_before": {
         f"{VEHICLE_EDIT}/op_team": [
             f'<child widget="{VEHICLE_EDIT}/op_vehicle_riding" x="54" y="100"/>']}},
+    # (this fork's logo, the size of its picture: a widget cuts its bitmap
+    # to its own size)
+    "main_menu/halo_logo": {"set": {"width": LOGO_SIZE[0], "height": LOGO_SIZE[1]}},
     # (the main menu's MODS, before Quit: _mods)
     "main_menu/main_menu_select_list": {"insert_before": {"main_menu/main_menu_item_quit_game": [
         f'<child widget="main_menu/main_menu_item_mods" x="{MODS_ITEM_PLACE[0]}" y="{MODS_ITEM_PLACE[1]}"/>']}},

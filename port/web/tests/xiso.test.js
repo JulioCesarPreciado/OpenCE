@@ -179,6 +179,9 @@ test("a site without the campaign leaves its levels out, whatever their names' c
   // (a campaign level left out is not read: one the game would not load does not refuse the rest)
   const broken = [...goodMaps, { name: 'b30.map', data: mapHeader({ version: 609 }) }];
   assert.strictEqual((await xiso.imageFiles(image({ maps: broken }), { campaign: false })).length, 3);
+  // (and without the disc's loading picture, a file's or default.xbe's, for a game with its own)
+  const bare = await xiso.imageFiles(image({ maps: goodMaps, xbe: loadingXbe }), { campaign: false, loadingPicture: false });
+  assert.deepStrictEqual(bare.map((file) => file.name).sort(), ['bloodgulch.map', 'ui.map']);
   assert.ok(xiso.campaignLevel('C40.map'));
   assert.ok(!xiso.campaignLevel('bloodgulch.map'));
   assert.ok(!xiso.campaignLevel('ui.map'));
