@@ -170,9 +170,9 @@ boolean menu_button_glyph_inline(short icon, short port, rectangle2d *cursor)
 wchar_t const *menu_button_glyph_join_hint(boolean can_join, short port)
 {
     if (menu_button_glyph_enabled(0, port) && keyboard_prompt_enabled(port))
-        return can_join ? L"SPACE: join" : L"";
-    return can_join ? L"SPACE: join    ENTER: select    ESC: back" :
-        L"ENTER: select    ESC: back";
+        return can_join ? L"ESPACIO: entrar" : L"";
+    return can_join ? L"ESPACIO: entrar    ENTER: elegir    ESC: atr\x00E1s" :
+        L"ENTER: elegir    ESC: atr\x00E1s";
 }
 
 /* The stock mixed text/icon routine measures each run separately. For this

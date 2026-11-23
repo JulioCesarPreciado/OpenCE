@@ -2645,8 +2645,8 @@ static void chat_line_name(
 	wchar_t *name,
 	short size)
 {
-	wchar_t const *suffix = line->channel == _chat_channel_team ? L" (team):" :
-		line->channel == _chat_channel_vehicle ? L" (vehicle):" : L":";
+	wchar_t const *suffix = line->channel == _chat_channel_team ? L" (equipo):" :
+		line->channel == _chat_channel_vehicle ? L" (veh\x00ED" L"culo):" : L":";
 	wchar_t const *player_name = line->name;
 	short length = 0;
 	short index;
@@ -2717,7 +2717,7 @@ static void chat_keyboard_draw(
 			else
 			{
 				static wchar_t const *const wide[NUMBER_OF_CHAT_WIDE_KEYS] =
-					{ L"Aa", L"#+=", L"space", L"DEL", L"SEND" };
+					{ L"Aa", L"#+=", L"espacio", L"DEL", L"ENVIAR" };
 				wchar_t const *text = column / span == _chat_key_symbols && chat_keyboard.symbols ? L"ABC" :
 					wide[column / span];
 				short index;
@@ -2828,8 +2828,8 @@ void network_chat_draw(
 		real_argb_color color;
 		struct chat_layout layout;
 		wchar_t text[CHAT_TEXT_SIZE + 2];
-		wchar_t const *prompt = chat_input.channel == _chat_channel_team ? L"Say to team:" :
-			chat_input.channel == _chat_channel_vehicle ? L"Say to vehicle:" : L"Say:";
+		wchar_t const *prompt = chat_input.channel == _chat_channel_team ? L"Al equipo:" :
+			chat_input.channel == _chat_channel_vehicle ? L"Al veh\x00ED" L"culo:" : L"Decir:";
 		short length;
 		short start = 0;
 
@@ -2880,7 +2880,7 @@ void network_chat_draw(
 		/* (scrolled back: a row saying newer lines are below) */
 		if (chat_scroll > 0 && rows > 0)
 		{
-			wchar_t const *hint = L"(Page Down: newer lines)";
+			wchar_t const *hint = L"(Av P\x00E1g: l\x00EDneas nuevas)";
 			wchar_t empty[1] = { 0 };
 
 			chat_text_color(0.6f, &text_color);

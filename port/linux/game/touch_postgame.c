@@ -90,7 +90,7 @@ boolean touch_postgame_draw(
 	boolean host,
 	real_argb_color const *color)
 {
-	static wchar_t const *const labels[NUMBER_OF_TOUCH_POSTGAME_BUTTONS] = { L"CONTINUE", L"LEAVE" };
+	static wchar_t const *const labels[NUMBER_OF_TOUCH_POSTGAME_BUTTONS] = { L"CONTINUAR", L"SALIR" };
 	pixel32 fill = (pixel32)(PIN(color->alpha, 0.0f, 1.0f) * 160.0f + 0.5f) << 24 | 0x283848;
 	short index;
 

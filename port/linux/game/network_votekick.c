@@ -1469,11 +1469,11 @@ void network_votekick_draw(
 			name[index] = player->name[index];
 		}
 		name[index] = 0;
-		usprintf(text, L"Vote: kick %s", name[0] ? name : L"?");
+		usprintf(text, L"Voto: expulsar a %s", name[0] ? name : L"?");
 	}
 	else
 	{
-		usprintf(text, L"Vote: end the game");
+		usprintf(text, L"Voto: terminar la partida");
 	}
 	votekick_draw_row(font_index, left, top, width, line_height, 0, text, 1.0f, 0.8f, 0.35f);
 	/* (the keys of what the player last used: the controller's D-pad, the
@@ -1481,19 +1481,19 @@ void network_votekick_draw(
 	{
 		boolean pad = halo_gamepad_last_used() != 0;
 
-		usprintf(text, pad ? L"D-pad Left   Yes: %d" : touch ? L"!yes   Yes: %d" : L"F1   Yes: %d", status.votes);
+		usprintf(text, pad ? L"Cruceta izq.   S\x00ED: %d" : touch ? L"!yes   S\x00ED: %d" : L"F1   S\x00ED: %d", status.votes);
 		votekick_draw_row(font_index, left, top, width, line_height, 1, text, status.voted ? 0.5f : 0.45f,
 			status.voted ? 1.0f : 0.85f, 0.45f);
-		usprintf(text, pad ? L"D-pad Right  No: %d" : touch ? L"!no    No: %d" : L"F2   No: %d", status.no_votes);
+		usprintf(text, pad ? L"Cruceta der.  No: %d" : touch ? L"!no    No: %d" : L"F2   No: %d", status.no_votes);
 	}
 	votekick_draw_row(font_index, left, top, width, line_height, 2, text, status.voted_no ? 1.0f : 0.9f,
 		status.voted_no ? 0.45f : 0.5f, 0.4f);
 	if (status.voted || status.voted_no)
-		usprintf(text, L"%d needed, %d s (you voted %s)", status.needed, status.seconds_left, status.voted ? L"yes" : L"no");
+		usprintf(text, L"faltan %d, %d s (votaste %s)", status.needed, status.seconds_left, status.voted ? L"s\x00ED" : L"no");
 	else if (!status.may_vote)
-		usprintf(text, L"%d needed, %d s (too new to vote)", status.needed, status.seconds_left);
+		usprintf(text, L"faltan %d, %d s (muy reciente para votar)", status.needed, status.seconds_left);
 	else
-		usprintf(text, L"%d needed, %d s left", status.needed, status.seconds_left);
+		usprintf(text, L"faltan %d, quedan %d s", status.needed, status.seconds_left);
 	votekick_draw_row(font_index, left, top, width, line_height, 3, text, 0.75f, 0.75f, 0.75f);
 	rasterizer_text_set_scale(1.0f, 0.0f, 0.0f);
 }

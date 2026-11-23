@@ -1284,14 +1284,14 @@ static void mcc_folder_help_text(struct mcc_map_browser const *browser, wchar_t 
 	wchar_t wide[WORKSHOP_AUTHORS_NAME_SIZE + 1];
 
 	help[0] = 0;
-	text_append(help, size, browser->count ? L"Open folder to\r\nchoose a map." : L"No MCC maps found\r\nin this category.");
+	text_append(help, size, browser->count ? L"Abre la carpeta para\r\nelegir un mapa." : L"No hay mapas de MCC\r\nen esta categor\x00ED" L"a.");
 	if (row < 0 || row >= browser->count || !browser->folders[row] || browser->groups[row] != NONE ||
 		!workshop_authors_get(mcc_maps_item_id(browser->entries[row]), author, sizeof(author)))
 	{
 		return;
 	}
 	mods_wide_text(author, wide, NUMBEROF(wide));
-	text_append(help, size, L"\r\nPublisher\r\n");
+	text_append(help, size, L"\r\nPublicador\r\n");
 	text_append(help, size, wide);
 }
 
@@ -2516,7 +2516,7 @@ static boolean coop_player2_choose(short controller)
 	}
 	if (controller == player_ui_get_single_player_local_player_controller(0))
 	{
-		display_error_text_deferred(L"Player 2 chooses their\r\nprofile with their own\r\ncontroller.",
+		display_error_text_deferred(L"El jugador 2 elige su\r\nperfil con su propio\r\ncontrol.",
 			NONE);
 		return campaign_fail();
 	}
@@ -2540,29 +2540,29 @@ static struct
 	short group;
 } const controls[] =
 {
-	{ "controls.move_forward", L"MOVE FORWARD", 0 },
-	{ "controls.move_backward", L"MOVE BACKWARD", 0 },
-	{ "controls.strafe_left", L"STRAFE LEFT", 0 },
-	{ "controls.strafe_right", L"STRAFE RIGHT", 0 },
-	{ "controls.jump", L"JUMP", 0 },
-	{ "controls.crouch", L"CROUCH", 0 },
-	{ "controls.fire", L"FIRE", 1 },
-	{ "controls.throw_grenade", L"THROW GRENADE", 1 },
-	{ "controls.melee", L"MELEE", 1 },
-	{ "controls.reload", L"RELOAD", 1 },
+	{ "controls.move_forward", L"AVANZAR", 0 },
+	{ "controls.move_backward", L"RETROCEDER", 0 },
+	{ "controls.strafe_left", L"MOVER IZQUIERDA", 0 },
+	{ "controls.strafe_right", L"MOVER DERECHA", 0 },
+	{ "controls.jump", L"SALTAR", 0 },
+	{ "controls.crouch", L"AGACHARSE", 0 },
+	{ "controls.fire", L"DISPARAR", 1 },
+	{ "controls.throw_grenade", L"LANZAR GRANADA", 1 },
+	{ "controls.melee", L"GOLPE", 1 },
+	{ "controls.reload", L"RECARGAR", 1 },
 	{ "controls.zoom", L"ZOOM", 1 },
-	{ "controls.switch_weapon", L"SWITCH WEAPON", 1 },
-	{ "controls.switch_grenade", L"SWITCH GRENADE", 1 },
-	{ "controls.action", L"ACTION", 2 },
-	{ "controls.flashlight", L"FLASHLIGHT", 2 },
-	{ "controls.scoreboard", L"SHOW SCORES", 2 },
-	{ "controls.pause", L"PAUSE MENU", 2 },
-	{ "controls.screenshot", L"SCREENSHOT", 2 },
-	{ "controls.push_to_talk", L"PUSH TO TALK", 3 },
+	{ "controls.switch_weapon", L"CAMBIAR ARMA", 1 },
+	{ "controls.switch_grenade", L"CAMBIAR GRANADA", 1 },
+	{ "controls.action", L"ACCI\x00D3N", 2 },
+	{ "controls.flashlight", L"LINTERNA", 2 },
+	{ "controls.scoreboard", L"VER PUNTOS", 2 },
+	{ "controls.pause", L"MEN\x00DA DE PAUSA", 2 },
+	{ "controls.screenshot", L"CAPTURA", 2 },
+	{ "controls.push_to_talk", L"HABLAR POR VOZ", 3 },
 	{ "controls.chat", L"CHAT", 3 },
-	{ "controls.team_chat", L"TEAM CHAT", 3 },
-	{ "controls.vote_yes", L"VOTE YES", 3 },
-	{ "controls.vote_no", L"VOTE NO", 3 },
+	{ "controls.team_chat", L"CHAT DE EQUIPO", 3 },
+	{ "controls.vote_yes", L"VOTAR S\x00CD", 3 },
+	{ "controls.vote_no", L"VOTAR NO", 3 },
 };
 
 static struct
@@ -3237,7 +3237,7 @@ static void mods_update(struct widget_instance *list)
 			mods_screen.row_mods[row_index] = mod;
 			mods_screen.row_fonts[row_index] = mods_screen.fonts[_mod_row_name];
 		}
-		text_set(named(row, "mod_state", 0), port_mods_on(mod) ? L"ON" : L"OFF");
+		text_set(named(row, "mod_state", 0), port_mods_on(mod) ? L"S\x00CD" : L"NO");
 		icon = named(row, "mod_status", 0);
 		visible_set(icon, status != _port_mod_fine);
 		if (icon)
@@ -3966,16 +3966,16 @@ static void gametype_rules_text(long profile_index, wchar_t *text, short size)
 	{
 	case _game_mode_infection:
 		if (options.time_limit > 0)
-			usnprintf(text, size - 1, L"%s\r\nTeams\r\nRound time: %d min", kind, options.time_limit);
+			usnprintf(text, size - 1, L"%s\r\nPor equipos\r\nRonda: %d min", kind, options.time_limit);
 		else
-			usnprintf(text, size - 1, L"%s\r\nTeams\r\nUntil no human is left", kind);
+			usnprintf(text, size - 1, L"%s\r\nPor equipos\r\nHasta que no queden humanos", kind);
 		break;
 	case _game_mode_gun_game:
-		usnprintf(text, size - 1, L"%s\r\nFree for all\r\nA kill with each weapon", kind);
+		usnprintf(text, size - 1, L"%s\r\nTodos contra todos\r\nUna baja con cada arma", kind);
 		break;
 	default:
-		usnprintf(text, size - 1, L"%s\r\n%s\r\nScore to win: %ld", kind ? kind : engine_names[engine],
-			variant.universal_variant.teams ? L"Teams" : L"Free for all", variant.universal_variant.score_to_win);
+		usnprintf(text, size - 1, L"%s\r\n%s\r\nPuntos para ganar: %ld", kind ? kind : engine_names[engine],
+			variant.universal_variant.teams ? L"Por equipos" : L"Todos contra todos", variant.universal_variant.score_to_win);
 		break;
 	}
 	text[size - 1] = 0;
@@ -6012,6 +6012,9 @@ profile makes one on the way */
 
 /* a press posted as its screen opens is lost with what opened it */
 #define INVITE_JOIN_PRESS_DELAY 500
+/* how long the invite's game is looked for before its host is said not to
+answer (internet play itself goes on asking) */
+#define INVITE_JOIN_PATIENCE 20000
 
 enum
 {
@@ -6031,6 +6034,8 @@ static struct
 	first seen (0: not yet) */
 	boolean pressed[NUMBER_OF_INVITE_JOIN_STEPS];
 	unsigned long seen_time[NUMBER_OF_INVITE_JOIN_STEPS];
+	/* when Direct Link's list was first seen without the invite's game */
+	unsigned long waiting_time;
 } invite_join;
 
 /* whether the step's press is due: an invite to follow, the press not yet
@@ -6063,6 +6068,24 @@ static void invite_join_press(short step)
 {
 	invite_join.pressed[step] = TRUE;
 	ui_widget_port_post_button(0, BUTTON_A);
+}
+
+/* what Direct Link's empty list says to a player brought there by the
+invite the game was started with: that its game is looked for, or that its
+host does not answer (it failed, or was looked for long enough); NULL for a
+player who came by themselves */
+static wchar_t const *invite_join_waiting(void)
+{
+	unsigned long now = system_milliseconds();
+	int stage;
+
+	if (!invite_join.wanted || invite_join.pressed[_invite_join_game])
+		return NULL;
+	if (!invite_join.waiting_time)
+		invite_join.waiting_time = now ? now : 1;
+	return p2p_join_progress(&stage, NULL, 0) == P2P_JOIN_FAILED ||
+		now - invite_join.waiting_time >= INVITE_JOIN_PATIENCE ?
+		L"El servidor no responde. Intenta m\x00E1s tarde." : L"Buscando la partida del servidor...";
 }
 
 /* "port invite join" (the main menu's list and Multiplayer's): the item
@@ -6145,7 +6168,7 @@ static void browser_update(struct widget_instance *list)
 		browser_row_pings[index] = (short)ping;
 		browser_row_marked[index] = browser_row_greyed[index] = FALSE;
 		usnprintf(text, ROW_TEXT_LENGTH - 1, L"%d", ping);
-		text_set(named(row, "server_item_ping", 0), ping >= 0 ? text : advertised_in_progress(game) ? L"LIVE" : L"");
+		text_set(named(row, "server_item_ping", 0), ping >= 0 ? text : advertised_in_progress(game) ? L"EN VIVO" : L"");
 		visible_set(named(row, "server_item_locked", 0), FALSE);
 		visible_set(named(row, "server_item_dedicated", 0), FALSE);
 		visible_set(named(row, "server_item_classic", 0), FALSE);
@@ -6157,16 +6180,21 @@ static void browser_update(struct widget_instance *list)
 			text[0] = 0;
 		else if (!multiplayer.game_count)
 		{
-			usnprintf(text, NUMBEROF(text) - 1, L"%s", multiplayer.mode == _multiplayer_mode_direct_link ?
-				L"Copy an invite link and PASTE LINK, or accept a Discord invite" :
-				L"Looking for games on your LAN...");
+			/* (a player the invite brought here is told of its game, not how to
+			paste a link) */
+			wchar_t const *waiting = multiplayer.mode == _multiplayer_mode_direct_link ? invite_join_waiting() : NULL;
+
+			usnprintf(text, NUMBEROF(text) - 1, L"%s", waiting ? waiting :
+				multiplayer.mode == _multiplayer_mode_direct_link ?
+				L"Copia un enlace y PEGAR ENLACE, o acepta una invitaci\x00F3n de Discord" :
+				L"Buscando partidas en tu red local...");
 		}
 		else
 		{
 			struct advertised_game *game = multiplayer.games[multiplayer.game_chosen];
 
-			usnprintf(text, NUMBEROF(text) - 1, L"%d players of %d, on %d machines%s", game->player_count,
-				game->maximum_player_count, game->machine_count, advertised_in_progress(game) ? L": under way" : L"");
+			usnprintf(text, NUMBEROF(text) - 1, L"%d jugadores de %d, en %d m\x00E1quinas%s", game->player_count,
+				game->maximum_player_count, game->machine_count, advertised_in_progress(game) ? L": en curso" : L"");
 		}
 		text[NUMBEROF(text) - 1] = 0;
 		text_set_length(named(list, "ticker_player_info", 0), text, TICKER_TEXT_LENGTH);
@@ -6472,7 +6500,7 @@ static boolean lobby_join_start(struct widget_instance *widget, short controller
 		return campaign_fail();
 	if (lobby_player_count >= game->maximum_players)
 	{
-		display_error_text_deferred(L"The game is full.", NONE);
+		display_error_text_deferred(L"La partida est\x00E1 llena.", NONE);
 		return campaign_fail();
 	}
 	/* (the 4-way screen opens as player 1's, with this controller joining:
@@ -6551,14 +6579,14 @@ static void lobby_join_help(struct widget_instance *list)
 
 	if (lobby_join.adding)
 	{
-		text = L"New player: press START.";
+		text = L"Jugador nuevo: pulsa START.";
 	}
 	else if (lobby_local_player_count() < MAXIMUM_LOCAL_PLAYERS)
 	{
 		for (controller = 0; controller < MAXIMUM_LOCAL_PLAYERS; controller++)
 		{
 			if (input_has_gamepad(controller) && !lobby_controller_playing(controller))
-				text = L"Another controller: START joins.";
+				text = L"Otro control: START entra.";
 		}
 	}
 	text_set(help, text);
@@ -6573,7 +6601,7 @@ static void lobby_row_text(short row, wchar_t *text)
 	ustrncpy(name, player->name, NUMBEROF(player->name));
 	name[NUMBEROF(player->name)] = 0;
 	if (game && game->variant.universal_variant.teams)
-		usnprintf(text, ROW_TEXT_LENGTH - 1, L"%s  (%s)", name, player->team_index ? L"BLUE" : L"RED");
+		usnprintf(text, ROW_TEXT_LENGTH - 1, L"%s  (%s)", name, player->team_index ? L"AZUL" : L"ROJO");
 	else
 		usnprintf(text, ROW_TEXT_LENGTH - 1, L"%s", name);
 	/* (this machine's players, when it has more than one: their controllers) */
@@ -7287,7 +7315,7 @@ static boolean lobby_author_line(char const map_name[128], wchar_t *line, short 
 	{
 		wide[kept] = 0;
 		line[0] = 0;
-		text_append(line, size, L"Publisher: ");
+		text_append(line, size, L"Publicador: ");
 		text_append(line, size, wide);
 		if (kept < length)
 			text_append(line, size, L"...");
@@ -7372,11 +7400,11 @@ static void lobby_update(struct widget_instance *list)
 		}
 		ustrncpy(gametype, game->variant.human_readable_game_description, NUMBEROF(gametype) - 1);
 		gametype[NUMBEROF(gametype) - 1] = 0;
-		usnprintf(text, NUMBEROF(text) - 1, L"%s%s%s%s\r\n%s\r\n%d of %d players\r\n%s%s", authored ? author : L"",
+		usnprintf(text, NUMBEROF(text) - 1, L"%s%s%s%s\r\n%s\r\n%d de %d jugadores\r\n%s%s", authored ? author : L"",
 			authored ? L"\r\n" : L"", name, gametype,
 			kind ? kind : engine_names[PIN(game->variant.game_engine_index, 0, 5)], lobby_player_count,
 			game->maximum_players, authored ? L"" : L"\r\n",
-			seconds > 0 ? L"Starting in:" : game->machine_count < 2 || dedicated ? L"Waiting for players" : L"");
+			seconds > 0 ? L"Empieza en:" : game->machine_count < 2 || dedicated ? L"Esperando jugadores" : L"");
 		text[NUMBEROF(text) - 1] = 0;
 		if (seconds > 0)
 		{
@@ -7388,7 +7416,7 @@ static void lobby_update(struct widget_instance *list)
 		{
 			size_t length = ustrlen(text);
 
-			usnprintf(text + length, NUMBEROF(text) - 1 - length, L"\r\n\r\nInvite link copied:\r\npaste it to friends");
+			usnprintf(text + length, NUMBEROF(text) - 1 - length, L"\r\n\r\nEnlace copiado:\r\np\x00E9galo a tus amigos");
 		}
 		text_set_length(named(description, "lobby_game_data", 0), text, LOBBY_TEXT_LENGTH);
 	}
@@ -7506,7 +7534,7 @@ static void map_vote_update(struct widget_instance *list)
 	if (status->winner != NONE)
 	{
 		map_display_name(status->map_names[status->winner], name);
-		usnprintf(text, NUMBEROF(text) - 1, L"Next game:\r\n%s\r\n%d vote%s", name, status->votes[status->winner],
+		usnprintf(text, NUMBEROF(text) - 1, L"Siguiente partida:\r\n%s\r\n%d voto%s", name, status->votes[status->winner],
 			status->votes[status->winner] == 1 ? L"" : L"s");
 	}
 	else
@@ -7522,9 +7550,9 @@ static void map_vote_update(struct widget_instance *list)
 				character);
 		}
 		gametype[index] = 0;
-		usnprintf(text, NUMBEROF(text) - 1, L"%s\r\n%d vote%s\r\n\r\n%d s left\r\n\r\n%s", gametype,
+		usnprintf(text, NUMBEROF(text) - 1, L"%s\r\n%d voto%s\r\n\r\nquedan %d s\r\n\r\n%s", gametype,
 			status->votes[row], status->votes[row] == 1 ? L"" : L"s", status->seconds_left,
-			status->chosen == NONE ? L"A: vote" : row == status->chosen ? L"Your vote" : L"A: change vote");
+			status->chosen == NONE ? L"A: votar" : row == status->chosen ? L"Tu voto" : L"A: cambiar voto");
 	}
 	text[NUMBEROF(text) - 1] = 0;
 	text_set_length(named(description, "lobby_game_data", 0), text, LOBBY_TEXT_LENGTH);
@@ -7566,7 +7594,7 @@ static void preview_players_text(wchar_t *text, short size)
 	if (lobby_local_player_count() < 2)
 		return;
 	length = ustrlen(text);
-	usnprintf(text + length, size - 1 - length, L"\r\n\r\nJoining from here:");
+	usnprintf(text + length, size - 1 - length, L"\r\n\r\nEntran desde aqu\x00ED:");
 	for (controller = 0; controller < MAXIMUM_LOCAL_PLAYERS; controller++)
 	{
 		struct player_profile profile;
@@ -7601,7 +7629,7 @@ static void preview_update(struct widget_instance *list)
 		boolean authored = lobby_author_line(game->map_name, author, NUMBEROF(author));
 
 		lobby_map_show(description, game->map_name);
-		usnprintf(text, NUMBEROF(text) - 1, L"%s%s%s\r\n%d of %d players\r\non %d machines", authored ? author : L"",
+		usnprintf(text, NUMBEROF(text) - 1, L"%s%s%s\r\n%d de %d jugadores\r\nen %d m\x00E1quinas", authored ? author : L"",
 			authored ? L"\r\n" : L"", game_kind_name(game->engine_type, advertised_game_kind(game), FALSE),
 			game->player_count, game->maximum_player_count, game->machine_count);
 		text[NUMBEROF(text) - 1] = 0;
@@ -7609,14 +7637,14 @@ static void preview_update(struct widget_instance *list)
 		ustrncpy(name, game->game_name, NUMBEROF(game->game_name));
 		name[NUMBEROF(game->game_name)] = 0;
 		/* (the text box does not wrap: lines of up to 28 characters) */
-		usnprintf(text, NUMBEROF(text) - 1, L"%s\r\n\r\nThis game is under way.\r\n\r\n%s", name,
-			game->open ? L"JOIN GAME joins it now;\r\nits players show then." :
-			L"It cannot be joined now:\r\nit is loading, over or full.");
+		usnprintf(text, NUMBEROF(text) - 1, L"%s\r\n\r\nEsta partida est\x00E1 en curso.\r\n\r\n%s", name,
+			game->open ? L"UNIRSE entra ahora;\r\nver\x00E1s a sus jugadores." :
+			L"No se puede entrar ahora:\r\ncarga, termin\x00F3 o est\x00E1 llena.");
 		text[NUMBEROF(text) - 1] = 0;
 		preview_players_text(text, NUMBEROF(text));
 	}
 	else
-		usnprintf(text, NUMBEROF(text) - 1, L"The game is gone.");
+		usnprintf(text, NUMBEROF(text) - 1, L"La partida ya no existe.");
 	text[NUMBEROF(text) - 1] = 0;
 	text_set_length(named(list, "preview_status", 0), text, LOBBY_TEXT_LENGTH);
 	lobby_join_help(list);
@@ -7654,7 +7682,7 @@ static boolean preview_add(struct widget_instance *widget, short controller, boo
 		return campaign_fail();
 	if (game->player_count + count >= game->maximum_player_count)
 	{
-		display_error_text_deferred(L"The game is full.", NONE);
+		display_error_text_deferred(L"La partida est\x00E1 llena.", NONE);
 		return campaign_fail();
 	}
 	lobby_join.controller = controller;
@@ -7855,7 +7883,7 @@ static boolean join4_select(struct widget_instance *widget, struct event_record 
 		return FALSE;
 	if (join4_profile_taken(controller, player_ui_get_active_player_profile_index(controller)))
 	{
-		join4_notice(L"Another player has that profile.");
+		join4_notice(L"Otro jugador tiene ese perfil.");
 		ui_play_audio_feedback_sound(SOUND_ERROR);
 		return FALSE;
 	}
@@ -7895,7 +7923,7 @@ static boolean join4_done(short pressed_by)
 	{
 		if (join4.state[controller] == _join4_choosing)
 		{
-			join4_notice(L"Waiting for every player to select a profile.");
+			join4_notice(L"Esperando a que todos elijan perfil.");
 			return FALSE;
 		}
 	}
@@ -7924,11 +7952,11 @@ static void join4_keyboard(void)
 		return;
 	if (halo_gamepad_count() >= MAXIMUM_LOCAL_PLAYERS)
 	{
-		join4_notice(L"All four controllers are in use.");
+		join4_notice(L"Los cuatro controles est\x00E1n en uso.");
 		return;
 	}
 	halo_keyboard_alone_set(TRUE);
-	join4_notice(L"The keyboard plays alone: controller 1 can join.");
+	join4_notice(L"El teclado juega solo: el control 1 puede entrar.");
 }
 
 /* "port join4 update" (each frame): SPACE, and the keyboard's keys (the
@@ -8609,7 +8637,7 @@ static void gametype_setup_type(wchar_t *text)
 	kind = game_modes_variant_kind_name(&gametype_edit.setup_variant, &gametype_edit.setup_options);
 	usnprintf(text, ROW_TEXT_LENGTH - 1, L"%s (%s%s)", name,
 		kind ? kind : engine_names[PIN(gametype_edit.setup_variant.game_engine_index, 0, 5)],
-		gametype_edit.setup_variant.universal_variant.teams ? L", TEAMS" : L"");
+		gametype_edit.setup_variant.universal_variant.teams ? L", EQUIPOS" : L"");
 	text[ROW_TEXT_LENGTH - 1] = 0;
 }
 
@@ -9491,7 +9519,7 @@ void pc_menu_game_data_function_invoke(
         struct widget_instance *remove=named(widget,"remove",0);
         if (remove) {
             remove->visible=mcc_share_menu_can_remove();
-            text_set(remove,mcc_share_menu_confirming() ? L"CONFIRM REMOVAL" : L"REMOVE SELECTED");
+            text_set(remove,mcc_share_menu_confirming() ? L"CONFIRMAR" : L"QUITAR ELEGIDO");
         }
         if (!widget->focused_child || !widget->focused_child->visible ||
             widget->parameters.list.selected_index<1 || widget->parameters.list.selected_index>4 ||
