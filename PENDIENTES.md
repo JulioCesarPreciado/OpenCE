@@ -30,9 +30,15 @@ partida, assets propios, motor propio.
   e `internet.mjs`.
 - `servers.js` (la lista de servidores públicos) sigue en el sitio aunque la
   página ya no lo carga. Quitarlo, con su prueba, o volver a usarlo.
-- `manifest.webmanifest` todavía dice "OpenCE" como nombre de la aplicación.
-- "Arena" es un nombre provisional: se cambia en
-  `port/web/site/site-config.js`.
+- El sitio se llama "OpenCE Arena" (`port/web/site/site-config.js`), con el
+  logo propio en `port/assets/logo`. `python tools/site_logo.py` vuelve a
+  generar, a partir de esos dos archivos, el logo de la página, el del menú
+  principal y todos los iconos (web, ventana de escritorio, `halo.exe` y
+  Android).
+- Los iconos de escritorio y Android se generaron pero no se vieron en esos
+  builds: no se compilaron en esta Mac.
+- La app de Android y la ventana de escritorio se llaman "OpenCE Arena".
+  Tampoco se vieron en esos builds.
 - La invitación del servidor cambia cada vez que arranca, así que un
   `server` fijo en `site-config.js` deja de servir al primer reinicio. Dos
   salidas: que la página lea la invitación vigente de un archivo que el
@@ -58,8 +64,22 @@ partida, assets propios, motor propio.
 
 ### Menús
 
-- El logotipo del menú principal y el nombre del juego vienen de los datos
-  del disco, no de este repositorio.
+- El menú principal dibuja el logo propio y la pregunta al salir dice
+  "exit OpenCE Arena". El generador de menús (`tools/ce_menus.py`,
+  `tools/port_settings.py`) ya conoce ambos; sus funciones, corridas por
+  separado, dan exactamente lo que está en los archivos.
+- Los textos de los menús que nombraban el juego dicen "OpenCE Arena"
+  (`STRING_CHANGES` en `tools/port_settings.py`). Quedan con el nombre
+  original los de la campaña (nombre de un nivel y tres descripciones), que
+  no se alcanzan, y dos que nombran los mapas de Workshop de Steam.
+- La pantalla de carga usa una imagen propia incrustada en el juego
+  (`port/assets/logo/loading.tga`); el juego ya no lee la del disco y la
+  página ya no la copia. En el navegador esa pantalla no llega a verse: solo
+  aparece mientras un mapa se copia a la caché, y ahí el navegador no
+  muestra cuadros. En escritorio y Android sí se vería, sin probar.
+- Los extractores de escritorio y de Android (`xiso.c`,
+  `XisoExtractor.java`) todavía escriben la imagen del disco junto a los
+  mapas, aunque el juego ya no la lee.
 - La pantalla Multiplayer muestra un "PLACE HOLDER" en el panel de la
   derecha (ya estaba así en el proyecto original).
 
