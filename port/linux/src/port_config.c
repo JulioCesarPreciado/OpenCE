@@ -639,6 +639,10 @@ static const struct config_setting config_settings[] =
 		_platform_all,
 		"Join the game of an invite link found on the clipboard when the game\n"
 		"comes to the front." },
+	{ "game.new_profile_name", _config_string, "\"\"", "HALO_NEW_PROFILE_NAME", _environment_value, _platform_all,
+		"When there is no player profile yet, the first is made with this name\n"
+		"as the main menu shows, and the game does not ask for one (a web page's\n"
+		"own field). Empty: the game asks, with its name screen." },
 	{ "network.host_campaign", _config_boolean, "false", "HALO_NET_HOST_CAMPAIGN", _environment_value, _platform_all,
 		"Create Game's Map screen offers the singleplayer kinds too (the\n"
 		"campaign's levels, custom and MCC singleplayer maps), to host as network\n"

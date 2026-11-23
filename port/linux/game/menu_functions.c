@@ -6088,6 +6088,62 @@ static wchar_t const *invite_join_waiting(void)
 		L"El servidor no responde. Intenta m\x00E1s tarde." : L"Buscando la partida del servidor...";
 }
 
+/* ---- a player with no profile, started with a name for one
+(game.new_profile_name: a web page's own field): the profile is made with
+it as the main menu shows, and the name screen is never reached. The name
+is text from outside: its UTF-8 read into a name's length, then kept to what
+any player's name is (player_name_clean). */
+static void profile_named_at_start(void)
+{
+	static boolean done;
+	const unsigned char *in;
+	wchar_t name[MAXIMUM_PLAYER_PROFILE_NAME_LENGTH];
+	struct player_profile profile;
+	long profile_index = NONE;
+	word count = 1;
+	short length = 0;
+
+	if (done)
+		return;
+	done = TRUE;
+	in = (const unsigned char *)config_string("game.new_profile_name");
+	if (!in || !in[0])
+		return;
+	player_profiles_enumerate_available_to_local_player_index(NONE, &count, &profile_index, FALSE);
+	if ((short)count > 0 && profile_index != NONE)
+		return;
+	while (*in && length < MAXIMUM_PLAYER_PROFILE_NAME_LENGTH - 1)
+	{
+		unsigned long code = *in++;
+		int more = code >= 0xF0 ? 3 : code >= 0xE0 ? 2 : code >= 0xC0 ? 1 : 0;
+
+		if (code >= 0x80 && !more)
+			continue;
+		if (more)
+			code &= 0x3F >> more;
+		for (; more && (*in & 0xC0) == 0x80; more--)
+			code = (code << 6) | (*in++ & 0x3F);
+		/* (a sequence cut short, or a character past the names' 16 bits: left out) */
+		if (more || code > 0xFFFF)
+			continue;
+		name[length++] = (wchar_t)code;
+	}
+	name[length] = 0;
+	if (!player_name_clean(name, NUMBEROF(name)) || !name[0])
+	{
+		platform_log("menus: game.new_profile_name is not a name a player can have");
+		return;
+	}
+	profile_index = player_profile_new(0, name);
+	if (profile_index == NONE || !player_profile_get(profile_index, &profile))
+	{
+		platform_log("menus: could not make the profile game.new_profile_name names");
+		return;
+	}
+	player_ui_set_active_player_profile(0, profile_index, &profile);
+	platform_log("menus: made the first profile with the name it was started with");
+}
+
 /* "port invite join" (the main menu's list and Multiplayer's): the item
 that leads on focused, and its A press posted */
 static void invite_join_menu(struct widget_instance *list)
@@ -6098,6 +6154,10 @@ static void invite_join_menu(struct widget_instance *list)
 	struct widget_instance *child;
 	short index = 0;
 
+	/* (first, the profile a new player was started with a name for: the
+	main menu is where the game would ask for one) */
+	if (!multiplayer_list)
+		profile_named_at_start();
 	if (!invite_join_due(step))
 		return;
 	for (child = list->child; child; child = child->next, index++)
