@@ -57,7 +57,30 @@ SMAA_FILES = (("SMAA.hlsl", "xgpu_smaa_shader"), ("area_tex.zlib", "xgpu_smaa_ar
 WINDOW_ICON = Path("port/assets/icon/opence-icon-256.png")
 # the pointer the menus show in place of the system's (port/linux/src/sdl_platform.c)
 MENU_CURSOR = Path("port/assets/cursor/menu_cursor.png")
+# the loading screen's picture (tools/site_logo.py;
+# source/interface/progress_bar.c): an uncompressed 24-bit TGA of the
+# texture's size, its rows from the bottom
+LOADING_PICTURE = Path("port/assets/logo/loading.tga")
+LOADING_SIZE = (320, 240)
+TGA_HEADER_SIZE = 18
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
+
+
+def loading_intensities() -> bytes:
+    """The loading screen's picture as the game takes it: a byte of
+    intensity (a texel's first, as progress_bar.c's tgaLoadImageData reads)
+    for each texel, the texture's rows from the top; nothing where the
+    checkout has no picture."""
+    path = ROOT / LOADING_PICTURE
+    if not path.is_file():
+        return b""
+    data = path.read_bytes()
+    width, height = LOADING_SIZE
+    if (len(data) != TGA_HEADER_SIZE + width * height * 3 or data[0] != 0 or data[1] != 0 or data[2] != 2 or
+            struct.unpack_from("<HH", data, 12) != LOADING_SIZE or data[16] != 24 or data[17] & 0x20):
+        sys.exit(f"{LOADING_PICTURE}: not an uncompressed 24-bit TGA of {width}x{height}, its rows from the bottom")
+    rows = [data[TGA_HEADER_SIZE + row * width * 3:TGA_HEADER_SIZE + (row + 1) * width * 3:3] for row in range(height)]
+    return b"".join(reversed(rows))
 
 
 def font_files() -> List[str]:
@@ -102,7 +125,8 @@ def hud_asset_inputs() -> List[Path]:
             *(FONT_ASSETS / name for name in font_files()), *(MENU_ASSETS / name for name in menu_files()),
             *(SMAA_ASSETS / name for name, _ in smaa_files()),
             *([WINDOW_ICON] if (ROOT / WINDOW_ICON).is_file() else []),
-            *([MENU_CURSOR] if (ROOT / MENU_CURSOR).is_file() else [])]
+            *([MENU_CURSOR] if (ROOT / MENU_CURSOR).is_file() else []),
+            *([LOADING_PICTURE] if (ROOT / LOADING_PICTURE).is_file() else [])]
 
 
 def hud_configure_inputs() -> List[Path]:
@@ -299,6 +323,14 @@ def main() -> None:
     lines.append(f"const unsigned long platform_menu_cursor_size = {len(data)};")
     lines.append("")
     lines.append("#endif")
+    # the loading screen's picture, its texels' intensities (of size 0 where
+    # the checkout has none), in every build
+    data = loading_intensities()
+    lines.append("")
+    lines.append("const unsigned int platform_loading_picture[] = {")
+    lines.extend(words(data) if data else ["\t0,"])
+    lines.append("};")
+    lines.append(f"const unsigned long platform_loading_picture_size = {len(data)};")
     output = Path(sys.argv[1])
     output.parent.mkdir(parents=True, exist_ok=True)
     text = "\n".join(lines) + "\n"

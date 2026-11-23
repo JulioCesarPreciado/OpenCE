@@ -43,7 +43,8 @@ Without it the light sweeps over black, as the game's own does.
 Messages from the page: { type: 'image', file } (the disc image) or
 { type: 'folder', files } (a chosen folder's File objects), either with
 campaign: false to leave the campaign's levels out (a site that plays
-multiplayer alone: site-config.js). To the page:
+multiplayer alone: site-config.js) and loadingPicture: false to leave the
+loading screen's picture out (a game with its own built in). To the page:
 { type: 'progress', file, done, total }, then { type: 'done', files, bytes }
 or { type: 'error', message }. A new copy first removes the old maps folder
 and writes maps/.complete ({"files":[...],"bytes":n}) last: the page takes
@@ -190,7 +191,8 @@ function mapProblem(header) {
 // The files to copy, of those given ({ name, size, read }): the maps (each
 // checked) and loading.tga, under plain names, the first of names that
 // differ only in case; without the campaign's levels when options.campaign
-// is false; throws why they cannot be used.
+// is false, and without loading.tga when options.loadingPicture is; throws
+// why they cannot be used.
 async function checkedFiles(candidates, options = {}) {
   const kept = [];
   for (const candidate of candidates) {
@@ -202,7 +204,7 @@ async function checkedFiles(candidates, options = {}) {
       const problem = mapProblem(await candidate.read(0, MAP_HEADER_SIZE));
       if (problem) throw new Error(`${candidate.name} cannot be used: ${problem}.`);
       kept.push(candidate);
-    } else if (lower === 'loading.tga') {
+    } else if (lower === 'loading.tga' && options.loadingPicture !== false) {
       kept.push(candidate);
     }
   }
@@ -255,7 +257,7 @@ async function imageFiles(file, options = {}) {
     });
   }
   const files = await checkedFiles(candidates, options);
-  if (!files.some((entry) => sameName(entry.name, 'loading.tga'))) {
+  if (options.loadingPicture !== false && !files.some((entry) => sameName(entry.name, 'loading.tga'))) {
     const picture = await loadingPictureFile(file, partition, rootEntries);
     if (picture) files.push(picture);
   }
@@ -394,7 +396,7 @@ if (typeof onmessage !== 'undefined' || typeof WorkerGlobalScope !== 'undefined'
   onmessage = async (event) => {
     try {
       const message = event.data;
-      const options = { campaign: message.campaign !== false };
+      const options = { campaign: message.campaign !== false, loadingPicture: message.loadingPicture !== false };
       const files = message.type === 'folder' ? await folderFiles(message.files, options) :
         await imageFiles(message.file, options);
       postMessage({ type: 'done', ...(await copy(files)) });

@@ -24,6 +24,9 @@ window.SiteConfig = {
   // multiplayer maps and the menus' (about 300 MB instead of 1.9 GB). A
   // browser that already has them keeps them until its maps are deleted.
   campaign: false,
+  // false: the disc's loading screen picture is not copied either; this
+  // game draws its own (port/assets/logo/loading.tga)
+  discLoadingPicture: false,
   // where the source of this copy is (the AGPL asks that players can get it)
   source: 'https://github.com/JulioCesarPreciado/OpenCE',
 };
