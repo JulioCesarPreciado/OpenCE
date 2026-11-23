@@ -2294,6 +2294,11 @@ void platform_pump_events(void)
 		case SDL_EVENT_QUIT:
 			pthread_mutex_unlock(&input_lock);
 			platform_log("window closed");
+#ifdef HALO_WEB
+			/* (the page starts again: a worker's exit does not end the page's
+			game, whose loop would go on in what exit left: port_mods.c) */
+			web_js_post(4, "quit");
+#endif
 			exit(EXIT_SUCCESS);
 		case SDL_EVENT_KEY_DOWN:
 		case SDL_EVENT_KEY_UP:
