@@ -169,6 +169,21 @@ test('a maps folder chosen as files is checked as an image is', async () => {
   await assert.rejects(xiso.folderFiles(files.filter((file) => file.name !== 'ui.map')), /no ui\.map/);
 });
 
+test("a site without the campaign leaves its levels out, whatever their names' case", async () => {
+  const maps = [...goodMaps, { name: 'D40.MAP', data: mapHeader() }, { name: 'a10b.map', data: mapHeader() }];
+  const kept = ['a10b.map', 'bloodgulch.map', 'loading.tga', 'ui.map'];
+  const fromImage = await xiso.imageFiles(image({ maps }), { campaign: false });
+  assert.deepStrictEqual(fromImage.map((file) => file.name).sort(), kept);
+  const fromFolder = await xiso.folderFiles(maps.map((map) => new File([map.data], map.name)), { campaign: false });
+  assert.deepStrictEqual(fromFolder.map((file) => file.name).sort(), kept);
+  // (a campaign level left out is not read: one the game would not load does not refuse the rest)
+  const broken = [...goodMaps, { name: 'b30.map', data: mapHeader({ version: 609 }) }];
+  assert.strictEqual((await xiso.imageFiles(image({ maps: broken }), { campaign: false })).length, 3);
+  assert.ok(xiso.campaignLevel('C40.map'));
+  assert.ok(!xiso.campaignLevel('bloodgulch.map'));
+  assert.ok(!xiso.campaignLevel('ui.map'));
+});
+
 test("a multi-language disc's maps folder is the browser language's, else English's", () => {
   const folders = (...names) => names.map((name) => ({ name, directory: true }));
   assert.strictEqual(xiso.mapsFolder(folders('$SystemUpdate', 'maps'), 'es-ES').name, 'maps');
