@@ -47,10 +47,12 @@ partida, assets propios, motor propio.
 - En el VPS hará falta lo mismo que hace `server.sh`: escribir `server.json`
   en la carpeta del sitio cada vez que el servidor arranque.
 - Si el servidor está apagado y `server.json` sigue ahí, el jugador queda en
-  la pantalla Direct Link con la lista vacía y un texto genérico; no dice
-  que el servidor no responde.
-- El nombre del jugador nuevo se escribe con el teclado en pantalla del
-  juego; la página todavía no lo pide.
+  la pantalla Enlace directo con "Buscando la partida del servidor..." y, a
+  los 20 segundos, "El servidor no responde. Intenta más tarde.".
+- Un jugador nuevo escribe su nombre en la página (hasta 11 caracteres) y el
+  juego crea su perfil con él (`game.new_profile_name`), sin su pantalla de
+  nombre. Con un perfil ya creado la página muestra "Jugador" y no pregunta;
+  el nombre se cambia después en los ajustes del juego.
 
 ### Español
 
@@ -66,10 +68,20 @@ partida, assets propios, motor propio.
   dibuja con la fuente OpenCE (26 títulos, 4 ítems y los 9 títulos propios
   del port). Para cambiar uno se edita la tabla de ese archivo. La imagen
   de carga dice "CARGANDO...".
-- Siguen en inglés: los textos que escribe el código (la sala, los nombres
-  de los controles, la pantalla de nombre), los textos dentro de la partida
-  (salen de los mapas del disco), los títulos de la campaña (no se
-  alcanzan) y los errores de los importadores de la página.
+- Los textos que escribe el código están en español: la sala, las
+  votaciones, el chat, los nombres de las acciones y los avisos (unos 100,
+  en `menu_functions.c`, `network_votekick.c`, `network_chat.c`,
+  `menu_button_glyphs.c`, `touch_postgame.c` y `mcc_ui.c`). Van escritos en
+  el propio código, con las letras acentuadas como escapes (`\x00F3`).
+- Las letras con acento se dibujaban con un hueco al lado en la letra
+  pequeña ("m á s"): la fuente pequeña del disco trae mal su ancho. Con el
+  texto en alta resolución, una letra con acento toma ahora el ancho de su
+  letra base (`source/text/font_group.c`).
+- Siguen en inglés: los textos dentro de la partida ("Hold BACK for score",
+  los avisos de bajas, el menú de pausa: salen de los mapas del disco), el
+  teclado de la pantalla de nombre (también del disco), los nombres de los
+  tipos de juego de OpenCE, los títulos de la campaña (no se alcanzan) y los
+  errores de los importadores de la página.
 - Al crear una partida, el selector de mapas ya no ofrece los niveles de
   campaña ni los mapas de un jugador (`network.host_campaign`, apagado en
   este fork; el proyecto original siempre los ofrece).

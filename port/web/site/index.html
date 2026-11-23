@@ -23,6 +23,8 @@
         <span class="row-value" id="summary-browser-value">Revisando…</span></div>
       <div class="row" id="summary-data"><span class="row-label">Datos del juego</span>
         <span class="row-value" id="summary-data-value">Revisando…</span></div>
+      <div class="row" id="summary-player" hidden><span class="row-label">Jugador</span>
+        <span class="row-value" id="summary-player-value"></span></div>
       <div class="row" id="summary-server" hidden><span class="row-label">Servidor</span>
         <span class="row-value" id="summary-server-value"></span></div>
     </div>
@@ -41,6 +43,13 @@
         <div class="progress-bar"><div id="import-bar"></div></div>
         <p id="import-text" class="note"></p>
       </div>
+    </div>
+
+    <div id="name-step" hidden>
+      <label class="help" for="player-name">Tu nombre en el juego</label>
+      <input id="player-name" type="text" maxlength="11" autocomplete="nickname" spellcheck="false"
+        placeholder="Hasta 11 caracteres">
+      <p class="help note">Así te verán los demás. Después se cambia en los ajustes del juego.</p>
     </div>
 
     <div id="checks-box" hidden>

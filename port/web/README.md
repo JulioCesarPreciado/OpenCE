@@ -178,7 +178,10 @@ the server's host writes then (`deploy/local/server.sh` does), and which
 wins over `server`; it is never cached. Started with an invite, the game
 goes through its menus to that game itself
 (`network.join_invite_at_start`, which the page sets; `port/linux/README.md`,
-the settings table). `campaign: false` copies
+the settings table). A player with no profile yet gives their name on the
+page (it reads the profiles' names in the game's storage, and shows the
+field only when there is none), and the game makes the profile with it
+(`game.new_profile_name`) instead of showing its own name screen. `campaign: false` copies
 only the multiplayer maps and the menus' map out of the disc image (about
 300 MB instead of 1.9 GB): the campaign's ten levels, by the names the game
 opens them by, are left out. A browser that already has them keeps them

@@ -104,6 +104,18 @@ a:hover { color: #9fd6ff; }
 .keys { margin-top: 8px; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 #data-step { display: flex; flex-direction: column; gap: 14px; }
+#name-step { display: flex; flex-direction: column; gap: 8px; }
+.start input[type="text"] {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 2px solid var(--edge-dim);
+  border-radius: 10px;
+  background: var(--navy-deep);
+  color: var(--text);
+  font: inherit;
+  font-size: 18px;
+}
+.start input[type="text"]:focus-visible { border-color: var(--edge-bright); outline: none; }
 
 /* a row: its label in blue, its value white */
 .row {

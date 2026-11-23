@@ -24,7 +24,9 @@ then fills the page.
   game here make: port/linux/src/p2p.c) joins that internet game once the
   game starts.
 - site-config.js names this copy of the site and the server its Play joins
-  when the address names no game and no room: an invite of its own, or the
+  when the address names no game and no room, and where a new player gives
+  their name, which the game makes their profile with
+  (game.new_profile_name). The server: an invite of its own, or the
   one a file beside the page holds (server.json, which the server's host
   writes as it starts: a server makes a new invite each time). A game
   started with an invite goes through its menus to that game itself
@@ -95,6 +97,58 @@ async function loadServer() {
     // (no file, or not JSON: as without one)
   }
 }
+
+// ---------- the player's name. The game keeps each profile in a folder of
+// its storage (save/u/UDATA/<hash>, port/linux/src/xbox_xapi.c), its name in
+// SaveMeta.xbx as UTF-16. With none yet, the page asks for a name and the
+// game makes the first profile with it, without its own name screen.
+
+const MAXIMUM_NAME_LENGTH = 11;
+const NAME_KEY = 'arena-player-name';
+let profileNames = [];
+
+async function readProfiles() {
+  const names = [];
+  try {
+    const root = await navigator.storage.getDirectory();
+    const saves = await (await (await root.getDirectoryHandle('save')).getDirectoryHandle('u'))
+      .getDirectoryHandle('UDATA');
+    for await (const [, handle] of saves.entries()) {
+      if (handle.kind !== 'directory' || names.length >= 16) continue;
+      try {
+        const file = await (await handle.getFileHandle('SaveMeta.xbx')).getFile();
+        if (file.size > 0 && file.size <= 128) names.push(new TextDecoder('utf-16le').decode(await file.arrayBuffer()));
+      } catch {
+        // (a folder that is no profile's)
+      }
+    }
+  } catch {
+    // (no saved games yet)
+  }
+  profileNames = names;
+}
+
+// the name as the game will take it: no control characters or "|" (its text's
+// own mark), no space before or after, a name's length
+function playerName() {
+  return $('player-name').value.replace(/[\u0000-\u001f\u007f-\u009f|]/g, '').trim().slice(0, MAXIMUM_NAME_LENGTH).trim();
+}
+
+function nameNeeded() {
+  return profileNames.length === 0 && playerName() === '';
+}
+
+$('player-name').addEventListener('input', () => {
+  try {
+    localStorage.setItem(NAME_KEY, playerName());
+  } catch {
+    // (no localStorage: the name is asked for again)
+  }
+  updatePlay();
+});
+$('player-name').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && canPlay()) play();
+});
 
 // ---------- the log: the game's output, for the player to send
 
@@ -682,7 +736,7 @@ let gameStopped = false;
 let wakeLock = null;
 
 function canPlay() {
-  return checksPassed && dataReady && !gameStarted && !mapImportWorker && !launcherStorageActive;
+  return checksPassed && dataReady && !nameNeeded() && !gameStarted && !mapImportWorker && !launcherStorageActive;
 }
 
 // the start screen's rows: a row good or bad, and its value
@@ -697,7 +751,11 @@ function summarize(id, good, text) {
 function updatePlay() {
   const invited = joinSiteServer || /[0-9a-f]{64}\s*$/i.test(params.get('join') || '');
   $('play').disabled = !canPlay();
-  $('play-note').textContent = !checksPassed ? 'Este navegador no puede correr el juego: esto es lo que falta.' : '';
+  $('play-note').textContent = !checksPassed ? 'Este navegador no puede correr el juego: esto es lo que falta.' :
+    dataReady && nameNeeded() ? 'Escribe tu nombre para jugar.' : '';
+  $('name-step').hidden = !checksPassed || profileNames.length > 0;
+  $('summary-player').hidden = profileNames.length === 0;
+  $('summary-player-value').textContent = profileNames.join(', ');
   summarize('summary-browser', checksPassed, checksPassed ? 'Listo' : 'No puede correr el juego');
   summarize('summary-data', dataReady, dataReady ? 'Listos' : 'Faltan');
   $('checks-box').hidden = checksPassed;
@@ -811,6 +869,8 @@ function gameArguments() {
       args.push('--HALO_NET_JOIN_INVITE_AT_START=1');
     }
   }
+  // (a new player's name, for the profile the game makes them)
+  if (profileNames.length === 0 && playerName()) args.push('--HALO_NEW_PROFILE_NAME=' + playerName());
   return args;
 }
 
@@ -1087,6 +1147,13 @@ document.addEventListener('visibilitychange', async () => {
     await refreshData();
     await refreshMods();
     await refreshCustomMaps();
+    await readProfiles();
+    try {
+      $('player-name').value = (localStorage.getItem(NAME_KEY) || '').slice(0, MAXIMUM_NAME_LENGTH);
+    } catch {
+      // (no localStorage)
+    }
+    updatePlay();
   } else {
     updatePlay();
   }

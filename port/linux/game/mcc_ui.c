@@ -159,7 +159,7 @@ static boolean mcc_ui_failure(short controller, wchar_t const *text)
 static boolean mcc_ui_host_required(short controller)
 {
     if (game_connection() == _game_connection_network_client)
-        return mcc_ui_failure(controller, L"Only the host can restart or revert this game.");
+        return mcc_ui_failure(controller, L"Solo el anfitri\x00F3n puede reiniciar o revertir esta partida.");
     return TRUE;
 }
 
@@ -168,7 +168,7 @@ static boolean mcc_ui_restart(short controller)
     if (!mcc_ui_host_required(controller)) return FALSE;
     if (global_network_game_server_get()) {
         if (!mcc_ui_restart_network_game())
-            return mcc_ui_failure(controller, L"The game could not be restarted.");
+            return mcc_ui_failure(controller, L"No se pudo reiniciar la partida.");
     } else main_reset_map();
     return TRUE;
 }
@@ -178,9 +178,9 @@ static boolean mcc_ui_end_round(short controller, boolean *deleted)
     /* End the round normally: connected players reach the carnage report
      * and the host can pick the next map in the native lobby. */
     if (!global_network_game_server_get())
-        return mcc_ui_failure(controller, L"Only the host can choose a new game.");
+        return mcc_ui_failure(controller, L"Solo el anfitri\x00F3n puede elegir otra partida.");
     if (!game_engine_running() || !game_engine_can_score())
-        return mcc_ui_failure(controller, L"This round is already ending.");
+        return mcc_ui_failure(controller, L"Esta ronda ya est\x00E1 terminando.");
     /* game_engine_end_game closes the complete widget tree immediately.
      * The dispatcher must never inspect this widget again afterward. */
     *deleted = TRUE;
@@ -205,9 +205,9 @@ static boolean mcc_ui_request_team(short team, short controller)
     short machine = network_game_client_get_local_machine_index();
     long i;
     if (!game || !game->variant.universal_variant.teams)
-        return mcc_ui_failure(controller, L"This game does not use teams.");
+        return mcc_ui_failure(controller, L"Esta partida no usa equipos.");
     if (!mcc_ui_team_balance_allows(machine, controller, team))
-        return mcc_ui_failure(controller, L"The host's automatic team balance prevents this team change.");
+        return mcc_ui_failure(controller, L"El balance autom\x00E1tico del anfitri\x00F3n impide este cambio de equipo.");
     for (i = 0; i < (long)NUMBEROF(game->players); i++) {
         struct network_player player = game->players[i];
         if (network_player_is_valid(&player) && player.machine_index == machine &&
@@ -218,7 +218,7 @@ static boolean mcc_ui_request_team(short team, short controller)
             break;
         }
     }
-    return mcc_ui_failure(controller, L"The team change could not be sent to the host.");
+    return mcc_ui_failure(controller, L"No se pudo enviar el cambio de equipo al anfitri\x00F3n.");
 }
 
 static boolean mcc_ui_choose_team(struct widget_instance *widget, short controller)
@@ -229,7 +229,7 @@ static boolean mcc_ui_choose_team(struct widget_instance *widget, short controll
     leaf = leaf ? leaf + 1 : name;
     if (leaf && !strcmp(leaf, "red_team_button")) return mcc_ui_request_team(0, controller);
     if (leaf && !strcmp(leaf, "blue_team_button")) return mcc_ui_request_team(1, controller);
-    return mcc_ui_failure(controller, L"This team choice is not supported.");
+    return mcc_ui_failure(controller, L"Esa elecci\x00F3n de equipo no est\x00E1 disponible.");
 }
 
 static void mcc_ui_close_for_controller(short controller, boolean *deleted)
@@ -296,7 +296,7 @@ boolean mcc_ui_event_function(struct widget_instance *widget,
     case 11: /* Confirm revert to checkpoint. */
         if (!mcc_ui_host_required(controller)) { *result = FALSE; break; }
         if (!game_state_port_saved_game_valid()) {
-            *result = mcc_ui_failure(controller, L"There is no saved checkpoint to revert to.");
+            *result = mcc_ui_failure(controller, L"No hay un punto de control guardado al que volver.");
             break;
         }
         main_revert_map(); /* Existing engine host-revert path synchronizes co-op. */
@@ -330,7 +330,7 @@ boolean mcc_ui_event_function(struct widget_instance *widget,
             local_player_count() != 1 ||
             !pc_menu_tag(tag_loaded('DeLa', "pc\\main_menu\\settings_select\\player_setup\\player_profile_edit\\player_profile_edit_screen")) ||
             !mcc_ui_settings_begin(controller)) {
-            *result = mcc_ui_failure(controller, L"Settings could not be opened for this player.");
+            *result = mcc_ui_failure(controller, L"No se pudieron abrir los ajustes para este jugador.");
             break;
         }
         {
@@ -357,12 +357,12 @@ boolean mcc_ui_event_function(struct widget_instance *widget,
         break;
     case 179: /* Explicit save checkpoint from the campaign pause screen. */
         if (game_connection() == _game_connection_network_client) {
-            *result = mcc_ui_failure(controller, L"Only the host can save a checkpoint.");
+            *result = mcc_ui_failure(controller, L"Solo el anfitri\x00F3n puede guardar un punto de control.");
             break;
         }
         game_state_save();
         if (!game_state_port_saved_game_valid()) {
-            *result = mcc_ui_failure(controller, L"The checkpoint could not be saved.");
+            *result = mcc_ui_failure(controller, L"No se pudo guardar el punto de control.");
             break;
         }
         if (!network_coop_active() && mcc_ui_scenario_type(0))
@@ -373,7 +373,7 @@ boolean mcc_ui_event_function(struct widget_instance *widget,
          * and its map-widget permissions. Unknown PC callbacks must fail so
          * their open/close flags cannot claim an operation succeeded. */
         if (function < 102) return FALSE;
-        *result = mcc_ui_failure(controller, L"This map's menu action is not supported by the native game.");
+        *result = mcc_ui_failure(controller, L"El juego no admite esta acci\x00F3n del men\x00FA del mapa.");
         break;
     }
     return TRUE;
