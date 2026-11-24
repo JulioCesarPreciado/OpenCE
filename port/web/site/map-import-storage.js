@@ -94,7 +94,7 @@
     const paths = new Set(), folded = new Set(); let total = 0;
     for (const entry of journal.files) {
       const parts = plainPath(entry.path);
-      if (ce && (parts.length !== 1 || !entry.path.endsWith('.map'))) throw new Error('Invalid CE import path.');
+      if (ce && (parts.length !== 1 || !/\.(map|bmp|txt)$/.test(entry.path))) throw new Error('Invalid CE import path.');
       if (!Number.isSafeInteger(entry.size) || entry.size < 0 || entry.size > 0x7fffffff) throw new Error('Invalid transaction size.');
       if (folded.has(entry.path.toLowerCase()) || ['download.receipt', '.complete'].includes(entry.path.toLowerCase())) throw new Error('Conflicting transaction file.');
       paths.add(entry.path); folded.add(entry.path.toLowerCase()); total += entry.size;

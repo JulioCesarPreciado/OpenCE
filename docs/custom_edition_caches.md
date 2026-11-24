@@ -86,8 +86,9 @@ levels have:
   bitmap, up to 8192 pixels a side; the middle of it is shown with the
   shape of the level pictures, 140 by 114 (`port/linux/game/bmp_files.c`,
   which reads it as untrusted input).
-- `<name>.txt`, its description: plain text, its lines shown as written.
-  Without one, the map is described as "Halo Custom Edition map".
+- `<name>.txt`, its description: plain text (UTF-8; accented Latin letters
+  are kept, other non-ASCII characters are shown as `?`), its lines shown as
+  written. Without one, the map is described as "Mapa de Halo Custom Edition".
 
 A machine joining a network game on a map it has not (a Custom Edition map
 not in its `custom_maps`, or one of the game's own not in `maps`) leaves it
@@ -345,6 +346,15 @@ changed:
   multipurpose map that is also a base map, say) keeps its channels, since
   the renderer has one order for each texture, and is logged: 3 in
   `bloodgulch.map`, all multipurpose maps.
+- **The Xbox's own HUD in a Custom Edition map.** A map compiled from the
+  Xbox's tags holds the Xbox's HUD bitmaps itself, under their stock names,
+  with the Xbox's channels. A bitmap the map holds itself is its own art
+  unless its pixels say otherwise: one whose first mip level, in hardware
+  order, has the checksum of the Xbox's bitmap of its name (the high-res
+  HUD's table, `port/linux/src/hud_hires.c`) is the Xbox's. Its meter is
+  then read as the Xbox's, not as Halo PC's, and the high-res HUD's texture
+  stands for it as in the Xbox's maps (`hud_hires_bitmap_xbox_pixels`).
+  Other pixels under the same name are drawn as they are, as before.
 - **Reads.** The renderer write-protects the memory it has made textures of
   and learns of changes from the faults writes take; the kernel fails a read
   into such memory instead. Every read of the map is therefore made into a

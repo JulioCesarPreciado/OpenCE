@@ -112,6 +112,44 @@ partida, assets propios, motor propio.
   campaña ni los mapas de un jugador (`network.host_campaign`, apagado en
   este fork; el proyecto original siempre los ofrece).
 
+### Mapas custom
+
+- Se pueden hacer mapas nuevos sin Halo Custom Edition, solo con el disco
+  de Xbox: Invader (compilador libre, instalado en `~/invader`) saca los
+  tags del disco y compila un mapa de Custom Edition que no necesita
+  `bitmaps.map`, `sounds.map` ni `loc.map`. La carpeta de trabajo es
+  `assets/mapwork` (fuera del repositorio: tiene datos del juego).
+  `./make_map.sh <escenario> <nombre> <carpeta de tags del mapa>` hace todo.
+- Mapas hechos: Cold Shoulder (sin licencia: pedir permiso al autor) y Rock
+  Bottom (CC BY-NC 4.0, con 3 rocas sustituidas por otras del disco). Están
+  en `assets/mapwork/out`, cada uno con su imagen (`.bmp`) y su descripción
+  (`.txt`).
+- Un mapa que pida contenido exclusivo de PC (Timberland, Gephyrophobia,
+  Banshee o Warthog de cohetes multijugador) no sale fiel desde el disco de
+  Xbox: Alpine se descartó por eso.
+- Compartir mapas funciona: quien no tiene el mapa lo recibe al entrar a la
+  partida (probado entre dos navegadores, 62 MB en un minuto). La imagen y
+  la descripción no viajan: el que recibe el mapa ve el signo de
+  interrogación. El aviso de descarga sale en inglés.
+- En la lista de Crear partida los mapas custom salen después de los del
+  disco, en la misma lista (`display.custom_maps_in_map_list`; el proyecto
+  original los pone en una lista aparte).
+- La página acepta la imagen y la descripción junto al mapa, y tiene un
+  botón para quitar los mapas de CE (una importación nunca reemplaza un
+  archivo: para poner otra versión de un mapa hay que quitarlo antes).
+- El HUD de estos mapas se veía mal: traen las imágenes del HUD de Xbox y
+  el juego las trataba como de PC. Ahora el juego reconoce, por suma de
+  verificación, que son las de Xbox y las dibuja como en los mapas del
+  disco, con las de alta resolución. Las máscaras de armas y armaduras
+  tenían el mismo problema (el rifle salía negro): esas se convierten al
+  compilar el mapa (`assets/mapwork/channels.py`).
+- El servidor dedicado emulado en la Mac no carga mapas de Custom Edition:
+  la partida se crea desde un navegador, o en un VPS x86.
+- Sin probar: jugar una partida entera en estos mapas, banderas y bolas,
+  vehículos, y el color de equipo en otro jugador.
+- La cadena de compilación vive solo en esta Mac. Falta pasarla al
+  repositorio como herramienta (sin datos del juego).
+
 ### Campaña
 
 - La página ya solo copia los mapas multijugador (`campaign: false` en

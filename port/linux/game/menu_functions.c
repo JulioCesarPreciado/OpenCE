@@ -1064,10 +1064,20 @@ static boolean map_kind_mcc(short kind)
 	return kind == MAP_KIND_MCC_SINGLEPLAYER || kind == MAP_KIND_MCC_MULTIPLAYER;
 }
 
+/* whether the chooser passes over a kind: a singleplayer one unless
+`singleplayer`, and the Custom Edition multiplayer maps' when they are listed
+with the game's own (`custom_together`) */
+static boolean map_kind_passed(short kind, boolean singleplayer, boolean custom_together)
+{
+	return (!singleplayer && map_kind_singleplayer(kind)) ||
+		(custom_together && kind == MAP_KIND_CUSTOM_MULTIPLAYER);
+}
+
 /* The kind the chooser shows, kept to the multiplayer kinds unless
-`singleplayer`: a singleplayer kind it was turned to becomes the next
-multiplayer one the way it turned from `previous`. */
-static short map_kind_shown(struct widget_instance *list, boolean singleplayer, short previous)
+`singleplayer`: a kind it was turned to and passes over becomes the next
+one the way it turned from `previous`. */
+static short map_kind_shown(struct widget_instance *list, boolean singleplayer, boolean custom_together,
+	short previous)
 {
 	struct widget_instance *spinner = named(list, "list_item_0_map_kind_spinner", 0);
 	short kind;
@@ -1075,13 +1085,13 @@ static short map_kind_shown(struct widget_instance *list, boolean singleplayer, 
 	if (!spinner)
 		return singleplayer ? MAP_KIND_SINGLEPLAYER : MAP_KIND_MULTIPLAYER;
 	kind = (short)PIN(spinner->parameters.list.selected_index, 0, NUMBER_OF_MAP_KINDS - 1);
-	if (!singleplayer && map_kind_singleplayer(kind))
+	if (map_kind_passed(kind, singleplayer, custom_together))
 	{
 		short step = kind == (previous + NUMBER_OF_MAP_KINDS - 1) % NUMBER_OF_MAP_KINDS ? -1 : 1;
 
 		do
 			kind = (short)((kind + step + NUMBER_OF_MAP_KINDS) % NUMBER_OF_MAP_KINDS);
-		while (map_kind_singleplayer(kind));
+		while (map_kind_passed(kind, singleplayer, custom_together));
 		spinner->parameters.list.selected_index = kind;
 	}
 	return kind;
@@ -1482,7 +1492,7 @@ static void level_row_text(short level, wchar_t *text)
 static void level_list_update(struct widget_instance *list)
 {
 	struct widget_instance *description = list->parameters.list.extended_description;
-	short kind = map_kind_shown(list, TRUE, level_list.kind), count, entry, level;
+	short kind = map_kind_shown(list, TRUE, FALSE, level_list.kind), count, entry, level;
 
 	if (kind != level_list.kind)
 	{
@@ -3611,6 +3621,10 @@ static struct
 	short kind, step;
 	/* hosting over the network, which co-op needs */
 	boolean hosting;
+	/* the Custom Edition multiplayer maps are listed after the Xbox's, in
+	the multiplayer kind, not in a kind of their own
+	(display.custom_maps_in_map_list) */
+	boolean together;
 	/* the multiplayer maps (ui_widget_port_multiplayer_maps): the Xbox's,
 	then the Custom Edition ones */
 	short map_count;
@@ -3626,7 +3640,36 @@ static short map_step_count(void)
 {
 	if (map_list.step == MAP_STEP_DIFFICULTIES)
 		return NUMBER_OF_GAME_DIFFICULTY_LEVELS;
+	if (map_list.together && map_list.kind == MAP_KIND_MULTIPLAYER)
+		return map_list.map_count;
 	return map_kind_count(map_list.kind, map_list.map_count);
+}
+
+/* the Custom Edition map (its entry in its kind) that an entry of the
+multiplayer kind is when they are listed together, or NONE: one of the Xbox's */
+static short map_list_custom_entry(short kind, short entry)
+{
+	short xbox_count = xbox_multiplayer_map_count(map_list.map_count);
+
+	return map_list.together && kind == MAP_KIND_MULTIPLAYER && entry >= xbox_count ? (short)(entry - xbox_count) : NONE;
+}
+
+static void map_list_multiplayer_map_text(short map, wchar_t *text)
+{
+	short custom = map_list_custom_entry(MAP_KIND_MULTIPLAYER, map);
+
+	if (custom != NONE)
+		custom_multiplayer_map_text(custom, text);
+	else
+		multiplayer_map_text(map, text);
+}
+
+/* the display index of the list's entry, for its description */
+static short map_list_display_index(short kind, short entry)
+{
+	short custom = map_list_custom_entry(kind, entry);
+
+	return custom != NONE ? map_kind_display_index(MAP_KIND_CUSTOM_MULTIPLAYER, custom) : map_kind_display_index(kind, entry);
 }
 
 /* opens a step at the entry given */
@@ -3734,6 +3777,7 @@ static boolean map_list_initialize(struct widget_instance *list)
 	network.host_campaign, off in this fork, which plays multiplayer alone) */
 	map_list.hosting = global_network_game_server_get() != NULL && !network_game_is_splitscreen_local() &&
 		config_boolean("network.host_campaign");
+	map_list.together = config_boolean("display.custom_maps_in_map_list");
 	mcc_maps_rescan();
 	csmemset(&mcc_host_list, 0, sizeof(mcc_host_list));
 	mcc_host_list.multiplayer_only = !map_list.hosting;
@@ -3742,7 +3786,7 @@ static boolean map_list_initialize(struct widget_instance *list)
 	map_list.map_count = ui_widget_port_multiplayer_maps(&names, &last_used);
 	/* (a Custom Edition map's kind, when it was one) */
 	map_list.kind = MAP_KIND_MULTIPLAYER;
-	if (last_used >= xbox_multiplayer_map_count(map_list.map_count))
+	if (!map_list.together && last_used >= xbox_multiplayer_map_count(map_list.map_count))
 	{
 		map_list.kind = MAP_KIND_CUSTOM_MULTIPLAYER;
 		last_used -= xbox_multiplayer_map_count(map_list.map_count);
@@ -3766,7 +3810,7 @@ them the level or map chosen: its picture, name and words */
 static void map_list_update(struct widget_instance *list)
 {
 	struct widget_instance *description = list->parameters.list.extended_description;
-	short kind = map_kind_shown(list, map_list.hosting, map_list.kind), count, entry;
+	short kind = map_kind_shown(list, map_list.hosting, map_list.together, map_list.kind), count, entry;
 	short shown;
 
 	if (kind != map_list.kind)
@@ -3796,7 +3840,7 @@ static void map_list_update(struct widget_instance *list)
 	count = map_step_count();
 	entry = map_kind_rows_update(list, &map_list.first, count, map_list.step == MAP_STEP_DIFFICULTIES ?
 		map_difficulty_text : kind == MAP_KIND_SINGLEPLAYER ? map_level_text :
-		kind == MAP_KIND_MULTIPLAYER ? multiplayer_map_text :
+		kind == MAP_KIND_MULTIPLAYER ? map_list_multiplayer_map_text :
 		kind == MAP_KIND_CUSTOM_SINGLEPLAYER ? custom_campaign_map_text : custom_multiplayer_map_text);
 	if (entry != NONE)
 		map_list.chosen = entry;
@@ -3811,7 +3855,7 @@ static void map_list_update(struct widget_instance *list)
 	else
 	{
 		map_description_show(description, NONE,
-			map_list.step == MAP_STEP_DIFFICULTIES || map_list.chosen < count ? map_kind_display_index(kind, shown) :
+			map_list.step == MAP_STEP_DIFFICULTIES || map_list.chosen < count ? map_list_display_index(kind, shown) :
 			NONE);
 	}
 	profile_name_show(description);

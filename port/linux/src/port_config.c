@@ -643,6 +643,12 @@ static const struct config_setting config_settings[] =
 		"When there is no player profile yet, the first is made with this name\n"
 		"as the main menu shows, and the game does not ask for one (a web page's\n"
 		"own field). Empty: the game asks, with its name screen." },
+	{ "display.custom_maps_in_map_list", _config_boolean, "true", "HALO_CUSTOM_MAPS_IN_MAP_LIST", _environment_value,
+		_platform_all,
+		"Create Game's Map screen lists the Custom Edition multiplayer maps\n"
+		"after the game's own, in the one list. false: under a kind of their\n"
+		"own (MULTIPLAYER CUSTOM), which the chooser above the list turns to, as\n"
+		"the original project lists them." },
 	{ "network.host_campaign", _config_boolean, "false", "HALO_NET_HOST_CAMPAIGN", _environment_value, _platform_all,
 		"Create Game's Map screen offers the singleplayer kinds too (the\n"
 		"campaign's levels, custom and MCC singleplayer maps), to host as network\n"

@@ -45,6 +45,9 @@ in the loaded map's tags, once the mods' bitmaps are in them.
 
 #include <stdlib.h>
 
+/* the high-res HUD's (hud_hires_tags.c) */
+boolean hud_hires_bitmap_xbox_pixels(struct bitmap_data const *bitmap, void const *pixels);
+
 /* ---------- constants */
 
 enum
@@ -882,6 +885,11 @@ void custom_edition_bitmap_pixels_arrived(
 					_custom_edition_channels_xbox);
 			/* on failure it logs, and the texture shows the pixels as read */
 			rasterizer_xbox_bitmap_rebuild_hardware_format(bitmap);
+			/* (a HUD bitmap that is the Xbox's own, by its pixels, has the
+			Xbox's channels, and a meter drawn from it reads them as the
+			Xbox's: a map built from the Xbox's tags) */
+			if (hud_hires_bitmap_xbox_pixels(bitmap, pixels))
+				halo_custom_edition_texels_channels(pixels, _custom_edition_channels_hud_meter_xbox);
 			return;
 		}
 	}

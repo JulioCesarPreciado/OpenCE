@@ -81,10 +81,12 @@
       <h2 id="maps-title">Mapas custom</h2>
       <p class="help">Agrega tus mapas de Custom Edition con sus recursos (bitmaps.map, sounds.map y loc.map de tu
         instalación de CE), o la carpeta de un paquete de MCC. Los archivos se quedan en este navegador.</p>
+      <p class="help note">Un mapa puede traer su imagen y su descripción para las listas del juego: mimapa.bmp y
+        mimapa.txt junto a mimapa.map.</p>
       <p id="custom-maps-list" class="help">Revisando…</p>
       <div class="actions">
         <label class="button" id="ce-files-label">Agregar archivos de CE…
-          <input type="file" id="ce-files-input" accept=".map" multiple hidden>
+          <input type="file" id="ce-files-input" accept=".map,.bmp,.txt" multiple hidden>
         </label>
         <label class="button" id="ce-folder-label">Agregar carpeta de CE…
           <input type="file" id="ce-folder-input" webkitdirectory multiple hidden>
@@ -93,6 +95,7 @@
           <input type="file" id="mcc-folder-input" webkitdirectory multiple hidden>
         </label>
         <button id="map-import-cancel" hidden>Cancelar</button>
+        <button id="custom-maps-remove" class="danger">Quitar los mapas de CE</button>
       </div>
       <label class="help" for="mcc-package-name">Nombre del paquete de MCC (opcional)</label>
       <input id="mcc-package-name" type="text" maxlength="40" autocomplete="off">
