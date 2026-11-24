@@ -33,6 +33,7 @@ symbols in this file:
 #include "tag_files/tag_files.h"
 #include "custom_edition_maps.h"
 #include "mcc_maps.h" /* port: port/linux/game/mcc_maps.h */
+#include "game_text.h" /* port: port/linux/game/game_text.c */
 
 #define MULTIPLAYER_GAME_TEXT_TAG_NAME "ui\\multiplayer_game_text"
 #define FIRST_FALLBACK_MULTIPLAYER_GAME_TEXT_STRING 36
@@ -238,7 +239,8 @@ static wchar_t *fallback_string(long tag_index, short string_index)
 	{
 		return NULL;
 	}
-	return fallback_multiplayer_game_text_strings[fallback_index];
+	/* port: in this fork's language, where it has the string */
+	return game_text_translated(fallback_multiplayer_game_text_strings[fallback_index]);
 }
 
 /* ---------- public code */

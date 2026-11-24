@@ -1183,10 +1183,10 @@ static void game_engine_generate_title_string(
 		ticks_to_unicode_time_string(MAX(left, 0), NUMBEROF(time_string), time_string);
 		if (secondary_string[0] && secondary_string != time_left_string)
 		{
-			usnprintf(time_left_string, NUMBEROF(time_left_string), L"%s, %s left", secondary_string, time_string);
+			usnprintf(time_left_string, NUMBEROF(time_left_string), L"%s, quedan %s", secondary_string, time_string);
 		}
 		else
-			usnprintf(time_left_string, NUMBEROF(time_left_string), L"%s left", time_string);
+			usnprintf(time_left_string, NUMBEROF(time_left_string), L"quedan %s", time_string);
 		time_left_string[NUMBEROF(time_left_string) - 1] = 0;
 		secondary_string = time_left_string;
 	}
@@ -1940,13 +1940,13 @@ static void scoreboard_menu_items(
 	if (network_votekick_get_status(&status) && status.kind == _network_vote_kick &&
 		status.player_index == DATUM_INDEX_TO_ABSOLUTE_INDEX(scoreboard_menu.player_index))
 	{
-		usprintf(labels[_scoreboard_item_vote], status.voted ? L"Voted to kick (%d of %d)" :
-			status.voted_no ? L"Voted not to kick (%d of %d)" : L"Vote to kick (%d of %d)", status.votes,
+		usprintf(labels[_scoreboard_item_vote], status.voted ? L"Votaste por expulsar (%d de %d)" :
+			status.voted_no ? L"Votaste por no expulsar (%d de %d)" : L"Votar por expulsar (%d de %d)", status.votes,
 			status.needed);
 	}
 	else
 	{
-		usprintf(labels[_scoreboard_item_vote], L"Start a vote to kick");
+		usprintf(labels[_scoreboard_item_vote], L"Iniciar votaci\x00F3n de expulsi\x00F3n");
 	}
 	/* (its machine's voice and text chat lines: this machine's own choice) */
 	{
@@ -1956,8 +1956,8 @@ static void scoreboard_menu_items(
 		{
 			offered[_scoreboard_item_mute] = TRUE;
 			usprintf(labels[_scoreboard_item_mute],
-				network_voice_machine_muted(player->network_player_data.machine_index) ? L"Unmute voice and chat" :
-					L"Mute voice and chat");
+				network_voice_machine_muted(player->network_player_data.machine_index) ? L"Dejar de silenciar voz y chat" :
+					L"Silenciar voz y chat");
 		}
 	}
 	if (network_votekick_host())
@@ -1967,14 +1967,14 @@ static void scoreboard_menu_items(
 		offered[_scoreboard_item_host_mute] = TRUE;
 		usprintf(labels[_scoreboard_item_host_mute],
 			network_chat_host_mute_minutes((short)DATUM_INDEX_TO_ABSOLUTE_INDEX(scoreboard_menu.player_index)) ?
-				L"Unmute for everyone" : L"Mute for everyone");
+				L"Dejar de silenciar para todos" : L"Silenciar para todos");
 		offered[_scoreboard_item_kick] = TRUE;
 		offered[_scoreboard_item_ban] = TRUE;
-		usprintf(labels[_scoreboard_item_kick], L"Kick");
-		usprintf(labels[_scoreboard_item_ban], scoreboard_menu.ban_picked ? L"Ban: pick again to ban" : L"Ban");
+		usprintf(labels[_scoreboard_item_kick], L"Expulsar");
+		usprintf(labels[_scoreboard_item_ban], scoreboard_menu.ban_picked ? L"Vetar: elige otra vez" : L"Vetar");
 	}
 	offered[_scoreboard_item_cancel] = TRUE;
-	usprintf(labels[_scoreboard_item_cancel], L"Cancel");
+	usprintf(labels[_scoreboard_item_cancel], L"Cancelar");
 }
 
 /* the menu's first row (from the title's): under the name, or above it when
@@ -2478,7 +2478,7 @@ static void game_engine_rasterize_scoreboard(
 
 		color.alpha = alpha;
 		color.red = color.green = color.blue = 0.6f;
-		usprintf(row_string, L"%ld-%ld of %ld   (Page Up / Page Down, mouse wheel)", first, last, total);
+		usprintf(row_string, L"%ld-%ld de %ld   (Re P\x00E1g / Av P\x00E1g, rueda del mouse)", first, last, total);
 		scoreboard_draw_row(row_string, FALSE, &color, 2 + rows, top, left, FALSE);
 	}
 	/* port: the vote running, and how to pick a player */
@@ -2488,8 +2488,8 @@ static void game_engine_rasterize_scoreboard(
 		struct data_iterator iterator;
 		struct player_datum *target;
 		wchar_t const *name = L"?";
-		wchar_t const *note = vote.voted ? L" (you voted yes)" : vote.voted_no ? L" (you voted no)" :
-			vote.may_vote ? L"  F1 yes, F2 no" : L" (too new to vote)";
+		wchar_t const *note = vote.voted ? L" (votaste s\x00ED)" : vote.voted_no ? L" (votaste no)" :
+			vote.may_vote ? L"  F1 s\x00ED, F2 no" : L" (muy reciente para votar)";
 
 		data_iterator_new(&iterator, player_data);
 		while (vote.kind == _network_vote_kick &&
@@ -2499,7 +2499,7 @@ static void game_engine_rasterize_scoreboard(
 			{
 				name = target->name;
 				if (target->local_player_index != NONE)
-					note = L" (against you)";
+					note = L" (contra ti)";
 			}
 		}
 		color.alpha = alpha;
@@ -2508,12 +2508,12 @@ static void game_engine_rasterize_scoreboard(
 		color.blue = 0.3f;
 		if (vote.kind == _network_vote_end_game)
 		{
-			usprintf(row_string, L"Vote to end the game: %d yes, %d no, %d needed, %d s left%s", vote.votes,
+			usprintf(row_string, L"Voto: terminar la partida: %d s\x00ED, %d no, faltan %d, quedan %d s%s", vote.votes,
 				vote.no_votes, vote.needed, vote.seconds_left, note);
 		}
 		else
 		{
-			usprintf(row_string, L"Vote to kick %s: %d yes, %d no, %d needed, %d s left%s", name, vote.votes,
+			usprintf(row_string, L"Voto: expulsar a %s: %d s\x00ED, %d no, faltan %d, quedan %d s%s", name, vote.votes,
 				vote.no_votes, vote.needed, vote.seconds_left, note);
 		}
 		scoreboard_draw_row(row_string, FALSE, &color, next_row++, top, left, FALSE);
@@ -2523,9 +2523,9 @@ static void game_engine_rasterize_scoreboard(
 		color.alpha = alpha;
 		color.red = color.green = color.blue = 0.6f;
 		if (pointer_state == 0)
-			usprintf(row_string, L"Right-click to pick a player");
+			usprintf(row_string, L"Clic derecho para elegir a un jugador");
 		else
-			usprintf(row_string, L"Pick a player   (right-click to aim)");
+			usprintf(row_string, L"Elige a un jugador   (clic derecho para apuntar)");
 		scoreboard_draw_row(row_string, FALSE, &color, next_row++, top, left, FALSE);
 	}
 	/* port: the picked player's menu, over the rows, its item under the
