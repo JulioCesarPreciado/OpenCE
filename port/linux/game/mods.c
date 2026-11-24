@@ -33,6 +33,7 @@ back until mods_enable true, or until the map changes.
 #include "main/console.h"
 #include "mods.h"
 #include "mcc_cache.h"
+#include "game_text.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -248,6 +249,9 @@ void mods_tags_loaded(
 	and menu reapplication, until an Xbox or Custom Edition map loads. */
 	if (mcc_level_name(map_name))
 		return;
+	/* (the map's text in this fork's language first: the mods' string lists
+	go over it as over the map's, game_text.c) */
+	game_text_tags_loaded();
 	mods_globals.map_loaded = TRUE;
 	mods_globals.enabled = TRUE;
 	csstrncpy(mods_globals.map_name, map_name ? map_name : "", sizeof(mods_globals.map_name) - 1);
