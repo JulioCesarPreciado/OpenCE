@@ -56,9 +56,28 @@ The screens' titles and the main menu's items are pictures of text.
 outlines in the redraws' place, size and colours (the redraws' own letters
 have no J, no accents and no ñ), into `own/`; the port's own titles
 (`port_settings.TITLES`) take their text from the catalog's `titles`. Its
-tables say what each one reads. The campaign's titles are left, and the
-text `menu_functions.c` writes itself (the lobby's lines, the controls'
-names) is still English.
+tables say what each one reads. The campaign's titles are left. The text
+`menu_functions.c` writes itself (the lobby's lines, the controls' names)
+is written in Spanish there.
+
+The text a game shows is not in these files: the kill notices, the scores,
+what was picked up, the pause menu and the errors come from the maps'
+string lists and, with the NTSC disc's maps, from the game itself. The game
+shows each of those texts in Spanish where its table has it
+(`port/linux/game/game_text.c`), looking a text up whole, by its
+characters, whichever map or list it is in. `tools/game_text.py` writes
+the table (`game_text_table.h`) from this catalog's `menus` section (the PC
+version's lists have the multiplayer text too) and from
+`port/assets/game_text/es.json`, which wins:
+
+```sh
+python3 tools/game_text.py           # write the table, then build the game
+python3 tools/game_text.py --check   # whether the table is the catalogs'
+```
+
+It refuses a Spanish text that has not its English one's `%s` and `%d` in
+their order. HUD messages ("Hold X to pick up") are not string lists and
+stay as the maps have them.
 
 ## Writing them again
 

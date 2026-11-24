@@ -77,11 +77,37 @@ partida, assets propios, motor propio.
   pequeña ("m á s"): la fuente pequeña del disco trae mal su ancho. Con el
   texto en alta resolución, una letra con acento toma ahora el ancho de su
   letra base (`source/text/font_group.c`).
-- Siguen en inglés: los textos dentro de la partida ("Hold BACK for score",
-  los avisos de bajas, el menú de pausa: salen de los mapas del disco), el
-  teclado de la pantalla de nombre (también del disco), los nombres de los
-  tipos de juego de OpenCE, los títulos de la campaña (no se alcanzan) y los
-  errores de los importadores de la página.
+- Los textos dentro de la partida están en español: avisos de bajas,
+  marcador, lo que se recoge, menú de pausa, errores y el teclado de la
+  pantalla de nombre. No es un mod: en el disco NTSC los avisos de bajas y
+  el marcador no están en los mapas sino escritos en el juego, donde un mod
+  no llega. El juego trae una tabla inglés → español (1,303 textos) y, al
+  cargar cada mapa, muestra en español cada texto que la tabla tiene. Busca
+  el texto completo, no su lugar ni su tag, así que también sirve para los
+  mapas de Custom Edition que traen los mismos textos, y un texto propio de
+  un mapa se queda como está.
+- Para cambiar o agregar una traducción: editar
+  `port/assets/game_text/es.json` (o la sección `menus` de
+  `port/assets/menus/language/es.json`), correr `python tools/game_text.py`
+  y volver a compilar. La herramienta rechaza una traducción que no tenga
+  los mismos `%s` y `%d`, en el mismo orden, que su texto en inglés.
+- De eso solo se vio en pantalla el marcador y el menú de pausa. Los avisos
+  de bajas, lo recogido y los errores salen por la misma vía, pero no se
+  vieron: hacen falta dos jugadores.
+- Las cajas no hacen salto de línea: un texto más largo que el original se
+  corta ("=CANCELAR" se veía "=CANCEL"; por eso dice "=VOLVER", y "LEAVE
+  GAME" quedó en "ABANDONAR").
+- Los renglones del marcador que escribe el código (tiempo restante,
+  votaciones, menú al elegir a un jugador) también están en español
+  (`source/game/game_engine.c`).
+- Siguen en inglés: los avisos del HUD para recoger o subir ("Hold X to
+  pick up", "Press X to enter the driver seat": no son listas de texto, y
+  con ellos los nombres de botones, asientos y vehículos), los nombres de
+  los tipos de juego, los títulos de la campaña (no se alcanzan), los
+  lugares del 17 en adelante en el marcador ("17th") y los errores de los
+  importadores de la página.
+- El servidor dedicado local usa la imagen del proyecto original: lo que
+  él escriba en su registro o su página sigue en inglés.
 - Al crear una partida, el selector de mapas ya no ofrece los niveles de
   campaña ni los mapas de un jugador (`network.host_campaign`, apagado en
   este fork; el proyecto original siempre los ofrece).
