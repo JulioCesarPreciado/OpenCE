@@ -162,7 +162,7 @@ static struct
 };
 
 /* for a map without a description file */
-static wchar_t const default_description[] = L"Halo Custom\r\nEdition map";
+static wchar_t const default_description[] = L"Mapa de Halo\r\nCustom Edition";
 
 /* ---------- private code */
 
@@ -241,7 +241,8 @@ static void display_name_make(
 }
 
 /* Reads <name>.txt into map->description: line ends become \r\n (as in the
-menus' strings), tabs become spaces, and non-ASCII characters become '?'.
+menus' strings), tabs become spaces, UTF-8's Latin-1 characters (accented
+letters) are kept and other non-ASCII characters become '?'.
 A missing or empty file gives the default description. */
 static void custom_edition_map_description_read(
 	struct custom_edition_map *map)
@@ -293,9 +294,17 @@ static void custom_edition_map_description_read(
 		{
 			map->description[length++] = character;
 		}
+		else if ((character == 0xC2 || character == 0xC3) && text_index + 1 < text_size &&
+			(text[text_index + 1] & 0xC0) == 0x80 && (character == 0xC3 || text[text_index + 1] >= 0xA0))
+		{
+			/* a two-byte UTF-8 character of Latin-1 (an accented letter, an
+			inverted mark), which the game's fonts have */
+			map->description[length++] = (wchar_t)(((character & 0x1F) << 6) | (text[text_index + 1] & 0x3F));
+			text_index++;
+		}
 		else if (character >= 0xC0)
 		{
-			/* the lead byte of a multi-byte UTF-8 character */
+			/* the lead byte of another multi-byte UTF-8 character */
 			map->description[length++] = '?';
 		}
 	}
