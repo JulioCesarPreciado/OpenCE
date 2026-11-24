@@ -118,6 +118,15 @@ int hud_hires_ce_stock_matches(long index, unsigned long address, long width, lo
 		crc32(0L, (const Bytef *)address, (uInt)size) == stock->crc;
 }
 
+/* whether the pixels at address (the bitmap's first mip level, level0_size
+bytes, in hardware order) are those of the Xbox's bitmap the texture was
+drawn for */
+int hud_hires_asset_xbox_pixels(long asset, unsigned long address, unsigned long level0_size)
+{
+	return asset >= 0 && asset < hud_hires_asset_count() && address && level0_size &&
+		crc32(0L, (const Bytef *)address, (uInt)level0_size) == hud_hires_embedded[asset].crc;
+}
+
 char const *hud_hires_asset_tag(long asset)
 {
 	return hud_hires_embedded[asset].tag;

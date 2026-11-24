@@ -71,6 +71,7 @@ long hud_hires_ce_stock_find(char const *tag, long bitmap);
 char const *hud_hires_ce_stock_tag(long index);
 long hud_hires_ce_stock_bitmap(long index);
 int hud_hires_ce_stock_matches(long index, unsigned long address, long width, long height, unsigned long size);
+int hud_hires_asset_xbox_pixels(long asset, unsigned long address, unsigned long level0_size);
 /* (custom_edition_cache.c) */
 boolean custom_edition_cache_stock_tag(long tag_index);
 boolean custom_edition_cache_tags_loaded(void);
@@ -238,11 +239,15 @@ void hud_hires_tags_loaded(
 			bitmap_group_try_and_get_bitmap(group_index, (short)hud_hires_asset_bitmap(asset));
 
 		/* Only the verified compatible resource sheets have CE redraws.
-		Embedded custom art keeps its own pixels, even under a stock name. */
-		if (custom_edition_cache_tags_loaded() &&
-			(!hud_hires_asset_custom_edition(asset) || !custom_edition_cache_stock_tag(group_index)))
+		A bitmap the map holds itself under a stock name is either custom
+		art, which keeps its own pixels, or the Xbox's own bitmap (a map
+		built from the Xbox's tags): the platform layer tells them apart
+		by the Xbox signature of the pixels as they are uploaded. */
+		if (custom_edition_cache_tags_loaded() && custom_edition_cache_stock_tag(group_index) &&
+			!hud_hires_asset_custom_edition(asset))
 			continue;
-		if (!custom_edition_cache_tags_loaded() && hud_hires_asset_ce_only(asset))
+		if ((!custom_edition_cache_tags_loaded() || !custom_edition_cache_stock_tag(group_index)) &&
+			hud_hires_asset_ce_only(asset))
 			continue;
 
 		if (!bitmap)
@@ -284,10 +289,19 @@ void hud_hires_tags_loaded(
 		long count = 0;
 		long index;
 
+		/* (not for the bitmaps a Custom Edition map holds itself: most are
+		its own art, which no texture stands for; one that is the Xbox's
+		has its texture decoded when first drawn) */
 		for (index = 0; index < hires_bitmap_count; index++)
-			assets[count++] = hires_bitmaps[index].asset;
+		{
+			if (!custom_edition_cache_tags_loaded() || hires_bitmaps[index].stock_custom_edition)
+				assets[count++] = hires_bitmaps[index].asset;
+		}
 		for (index = 0; index < hires_sprite_bitmap_count; index++)
-			assets[count++] = hires_sprite_bitmaps[index].asset;
+		{
+			if (!custom_edition_cache_tags_loaded())
+				assets[count++] = hires_sprite_bitmaps[index].asset;
+		}
 		hud_hires_map_loaded(assets, count);
 	}
 
@@ -389,6 +403,31 @@ struct bitmap_data const *hud_hires_crosshair_bitmap(struct bitmap_data const *b
             "ui\\hud\\bitmaps\\sniper\\hud_reticles_scope"))
             return hud_hires_sprite_bitmap(bitmap,sequence_index);
     return bitmap;
+}
+
+/* Whether a Custom Edition map's bitmap, its pixels just put
+at `pixels` in hardware order, is the Xbox's own HUD bitmap of its name (a
+map built from the Xbox's tags holds them): its pixels are then laid out and
+ordered as the Xbox's, not as Halo PC's (custom_edition_bitmaps.c). */
+boolean hud_hires_bitmap_xbox_pixels(
+	struct bitmap_data const *bitmap,
+	void const *pixels)
+{
+	unsigned long size = (unsigned long)bitmap_mipmap_get_pixel_data_size(bitmap, 0);
+	long index;
+
+	for (index = 0; index < hires_bitmap_count; index++)
+	{
+		if (hires_bitmaps[index].bitmap == bitmap && !hires_bitmaps[index].stock_custom_edition)
+			return hud_hires_asset_xbox_pixels(hires_bitmaps[index].asset, (unsigned long)pixels, size);
+	}
+	for (index = 0; index < hires_sprite_bitmap_count; index++)
+	{
+		if (hires_sprite_bitmaps[index].bitmap == bitmap)
+			return hud_hires_asset_xbox_pixels(hires_sprite_bitmaps[index].asset, (unsigned long)pixels, size);
+	}
+
+	return FALSE;
 }
 
 /* whether the bitmap at address that `asset` stands for is a Custom Edition
