@@ -50,6 +50,15 @@ Custom Edition `.map` files, including `bitmaps.map`, `sounds.map` and
 from the Xbox `maps/` directory. Maps requiring OpenSauce features are refused;
 an inert OpenSauce header remains acceptable as in the native CE reader.
 
+A map's picture and description for the game's lists go with it:
+`<name>.bmp` and `<name>.txt` beside `<name>.map`
+([docs/custom_edition_caches.md](../../docs/custom_edition_caches.md)),
+chosen with the map or later, alone. A `.bmp` or `.txt` that is no chosen or
+stored map's is left out. An import never replaces a file: **Quitar los mapas
+de CE** removes the stored Custom Edition maps, with their pictures and
+descriptions, so that another version of a map can be added (the resource
+maps stay).
+
 **Add an MCC package folder…** accepts one Halo 1 package, including its
 required JSON metadata and supported referenced PNG previews. Map files
 under `maps/` or `halo1/maps/` are flattened into

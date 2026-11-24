@@ -7,11 +7,42 @@ if (typeof importScripts === 'function') importScripts('map-import-files.js', 'm
 (function (root) {
   const files = root.HaloImportFiles || require('./map-import-files.js');
   const resources = { 'bitmaps.map': 1, 'sounds.map': 2, 'loc.map': 3 };
+  // The two files that give a map its picture and description in the game's
+  // lists (docs/custom_edition_caches.md): <name>.bmp and <name>.txt beside
+  // <name>.map. The engine reads both as untrusted input; here only their
+  // names and sizes are checked. One whose map is neither chosen with it nor
+  // stored already is left out (a folder's readme.txt).
+  const companions = { bmp: 32 * 1024 * 1024, txt: 64 * 1024 };
+
+  async function stored(name) {
+    try {
+      const root = await navigator.storage.getDirectory();
+      await (await root.getDirectoryHandle('custom_maps')).getFileHandle(name);
+      return true;
+    } catch { return false; }
+  }
 
   async function plan(list) {
     const entries = [], names = new Set();
-    for (const input of files.chosen(list, name => /\.map$/i.test(name))) {
+    const chosen = files.chosen(list, name => /\.(map|bmp|txt)$/i.test(name));
+    const maps = new Set(chosen.map(input => input.path.split('/').pop()).filter(name => name.endsWith('.map')));
+    for (const input of chosen) {
       const name = input.path.split('/').pop();
+      const extension = name.slice(name.lastIndexOf('.') + 1);
+      if (Object.hasOwn(companions, extension)) {
+        const map = name.slice(0, -extension.length) + 'map';
+        if (Object.hasOwn(resources, map) || !/^[a-z0-9][a-z0-9 _-]*\.(bmp|txt)$/.test(name) ||
+            !(maps.has(map) || await stored(map))) continue;
+        if (input.file.size > companions[extension]) throw new Error('A map picture or description is too large: ' + name);
+        if (extension === 'bmp') {
+          const head = await files.bytes(input.file, 0, 2);
+          if (head[0] !== 0x42 || head[1] !== 0x4d) throw new Error('Not a Windows bitmap: ' + name);
+        }
+        if (names.has(name)) throw new Error('Conflicting CE filenames: ' + name);
+        names.add(name);
+        entries.push(files.entry(name, input.file));
+        continue;
+      }
       if (!name.endsWith('.map')) continue;
       if (!/^[a-z0-9][a-z0-9 _-]*\.map$/.test(name) || name.length - 4 + 'custom_maps/'.length > 63) throw new Error('Unlaunchable CE map name: ' + name);
       if (names.has(name)) throw new Error('Conflicting CE filenames: ' + name);

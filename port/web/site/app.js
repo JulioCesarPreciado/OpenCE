@@ -451,7 +451,7 @@ $('folder-input').addEventListener('change', (event) => {
 // CE and MCC imports have separate format policy and storage roots. The
 // worker's transaction owns cancellation/recovery; terminating it is not cancel.
 let mapImportWorker = null;
-const mapImportControls = ['ce-files-input', 'ce-folder-input', 'mcc-folder-input', 'mcc-package-name'];
+const mapImportControls = ['ce-files-input', 'ce-folder-input', 'mcc-folder-input', 'mcc-package-name', 'custom-maps-remove'];
 
 async function refreshCustomMaps() {
   const counts = { ce: 0, mcc: 0 };
@@ -514,6 +514,40 @@ $('map-import-cancel').addEventListener('click', () => {
   $('map-import-cancel').disabled = true;
   $('map-import-status').textContent = 'Cancelando y quitando lo que quedó a medias…';
   mapImportWorker.postMessage({ type: 'cancel' });
+});
+
+// The Custom Edition maps out of this browser, with their pictures and
+// descriptions, for another version of a map to be added (an import never
+// replaces a file). The resource maps (bitmaps.map, sounds.map, loc.map) stay.
+$('custom-maps-remove').addEventListener('click', async () => {
+  if (!confirm('¿Quitar de este navegador todos los mapas de Custom Edition? Los mapas del disco se quedan.')) return;
+  const release = await beginStorageTask('map-import-status');
+  if (!release) return;
+  let removed = 0;
+  try {
+    const root = await navigator.storage.getDirectory();
+    const folder = await root.getDirectoryHandle('custom_maps').catch(() => null);
+    const names = [];
+    if (folder) {
+      for await (const [name, handle] of folder.entries()) {
+        if (handle.kind === 'file' && /\.(map|bmp|txt|part)$/i.test(name) && !/^(bitmaps|sounds|loc)\.map$/i.test(name)) names.push(name);
+      }
+      for (const name of names) {
+        await folder.removeEntry(name).then(() => { if (/\.map$/i.test(name)) removed++; }).catch(() => {});
+      }
+    }
+    // (and the game's copies of maps, save/z/cache000.map and on, as Borrar los mapas does)
+    try {
+      const drive = await (await root.getDirectoryHandle('save')).getDirectoryHandle('z');
+      for await (const [name] of drive.entries()) {
+        if (/^cache\d+\.map$/i.test(name)) await drive.removeEntry(name).catch(() => {});
+      }
+    } catch {
+      // no saved games yet
+    }
+  } finally { await release(); }
+  $('map-import-status').textContent = removed ? `Se quitaron ${removed} mapas de Custom Edition.` : 'No había mapas de Custom Edition.';
+  await refreshCustomMaps();
 });
 
 // ---------- mods (mods-worker.js): /data/mods, all of them played unless
